@@ -4,12 +4,9 @@ sfdx-aura-helper
 Aura Helper CLI tool converted into SFDX Plugin
 
 [![Version](https://img.shields.io/npm/v/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
-[![CircleCI](https://circleci.com/gh/Workspace/sfdx-aura-helper/tree/master.svg?style=shield)](https://circleci.com/gh/Workspace/sfdx-aura-helper/tree/master)
-[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/Workspace/sfdx-aura-helper?branch=master&svg=true)](https://ci.appveyor.com/project/heroku/sfdx-aura-helper/branch/master)
-[![Greenkeeper](https://badges.greenkeeper.io/Workspace/sfdx-aura-helper.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io/test/github/Workspace/sfdx-aura-helper/badge.svg)](https://snyk.io/test/github/Workspace/sfdx-aura-helper)
 [![Downloads/week](https://img.shields.io/npm/dw/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
-[![License](https://img.shields.io/npm/l/sfdx-aura-helper.svg)](https://github.com/Workspace/sfdx-aura-helper/blob/master/package.json)
+[![License](https://img.shields.io/npm/l/sfdx-aura-helper.svg)](https://github.com/Workspace/sfdx-aura-helper/blob/main/package.json)
 
 <!-- toc -->
 <!-- install -->

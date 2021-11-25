@@ -4,9 +4,9 @@ sfdx-aura-helper
 Aura Helper CLI tool converted into SFDX Plugin
 
 [![Version](https://img.shields.io/npm/v/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
-[![Known Vulnerabilities](https://snyk.io/test/github/Workspace/sfdx-aura-helper/badge.svg)](https://snyk.io/test/github/Workspace/sfdx-aura-helper)
+[![Known Vulnerabilities](https://snyk.io/test/github/Workspace/sfdx-aura-helper/badge.svg)](https://snyk.io/test/github/JJLongoria/sfdx-aura-helper)
 [![Downloads/week](https://img.shields.io/npm/dw/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
-[![License](https://img.shields.io/npm/l/sfdx-aura-helper.svg)](https://github.com/Workspace/sfdx-aura-helper/blob/main/package.json)
+[![License](https://img.shields.io/npm/l/sfdx-aura-helper.svg)](https://github.com/JJLongoria/sfdx-aura-helper/blob/main/package.json)
 
 <!-- toc -->
 <!-- install -->

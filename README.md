@@ -3,10 +3,13 @@ sfdx-aura-helper
 
 Aura Helper CLI tool converted into SFDX Plugin
 
-[![Version](https://img.shields.io/npm/v/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
-[![Known Vulnerabilities](https://snyk.io/test/github/Workspace/sfdx-aura-helper/badge.svg)](https://snyk.io/test/github/JJLongoria/sfdx-aura-helper)
-[![Downloads/week](https://img.shields.io/npm/dw/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
-[![License](https://img.shields.io/npm/l/sfdx-aura-helper.svg)](https://github.com/JJLongoria/sfdx-aura-helper/blob/main/package.json)
+[![Version](https://img.shields.io/npm/v/sfdx-aura-helper.svg?logo=npm)](https://npmjs.org/package/sfdx-aura-helper)
+[![Total Downloads](https://img.shields.io/npm/dt/sfdx-aura-helper?logo=npm)](https://www.npmjs.com/package/sfdx-aura-helper)
+[![Downloads/Month](https://img.shields.io/npm/dm/sfdx-aura-helper?logo=npm)](https://www.npmjs.com/package/sfdx-aura-helper)
+[![Issues](https://img.shields.io/github/issues/jjlongoria/sfdx-aura-helper)](https://github.com/JJLongoria/sfdx-aura-helper/issues)
+[![Known Vulnerabilities](https://snyk.io/test/github/JJLongoria/sfdx-aura-helper/badge.svg)](https://snyk.io/test/github/JJLongoria/sfdx-aura-helper)
+[![Code Size](https://img.shields.io/github/languages/code-size/jjlongoria/sfdx-aura-helper)](https://github.com/JJLongoria/sfdx-aura-helper)
+[![License](https://img.shields.io/github/license/jjlongoria/sfdx-aura-helper?logo=github)](https://github.com/JJLongoria/sfdx-aura-helper/blob/master/LICENSE)
 
 <!-- toc -->
 <!-- install -->

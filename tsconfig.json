@@ -1,0 +1,15 @@
+{
+  "extends": "@salesforce/dev-config/tsconfig",
+  "compilerOptions": {
+    "outDir": "lib",
+    "allowJs": true,
+    "rootDir": "src",
+    "emitDeclarationOnly": true,
+		"sourceMap": true,
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": [
+    "node_modules"
+  ]
+}

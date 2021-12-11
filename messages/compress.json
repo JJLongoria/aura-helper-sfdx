@@ -1,0 +1,19 @@
+{
+    "commandDescription": "Compress XML Metadata Files for best conflict handling with SVC systems. Works with relative or absolute paths.",
+    "sortOrderFlagDescription": "Sort order for the XML elements when compress XML files. By default, the elements are sorted with simple XML elements first.",
+    "allFlagDescription": "Compress all XML files with support compression in your project.",
+    "directoryFlagDescription": "Compress XML Files from specific directory. This options does not take effect if you choose compress all.",
+    "fileFlagDescription": "Compress the specified XML file. This options does not take effect if you choose compress directory or all.",
+    "missingCompressTargetError": "You must select compress all, entire directory(s) or single file(s)",
+    "fileNotCompressed": "File %s does not support XML compression. '( %d%)'",
+    "fileCompressed": "File %s compressed succesfully. '( %d%)'",
+    "compressedSuccesfully": "Compress XML files finish successfully",
+    "compressProgress": "Compressing XML Files... (%d%)",
+    "examples": [
+        "sfdx ah:metadata:local:compress -a",
+        "sfdx ah:metadata:local:compress -d force-app/main/default/objects --json",
+        "sfdx ah:metadata:local:compress -d force-app/main/default/objects, force-app/main/default/applications",
+        "sfdx ah:metadata:local:compress -f force-app/main/default/objects/Account/Account.object-meta-xml -p",
+        "sfdx ah:metadata:local:compress -f force-app/main/default/objects/Account/Account.object-meta-xml, force-app/main/default/objects/Case/Case.object-meta-xml --json"
+    ]
+}

@@ -1,0 +1,13 @@
+*-debug.log
+*-error.log
+/.nyc_output
+/dist
+/lib
+/tmp
+node_modules
+.circleci/
+.images/
+.vscode/
+bin/
+link/
+src/commands/ah/org.ts

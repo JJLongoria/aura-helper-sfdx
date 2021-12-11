@@ -1,0 +1,7 @@
+{
+    "rootFlagDescription": "Path to project root. By default is your current folder.",
+    "progressFlagDescription": "Option to report the command progress (into the selected format) or show a spinner loader",
+    "wrongRootPathError": "Wrong --root path (%s). Error: %s",
+    "projectNotFoundError": "Wrong project folder. sfdx-project.json file not found on %s",
+    "worngParamPath": "'Wrong %s path. Select a valid path. Error: %s"
+}

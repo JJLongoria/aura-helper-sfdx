@@ -1,0 +1,7 @@
+{
+  "commandDescription": "Command for get the installed Aura Helper SFDX version",
+  "examples": [
+    "sfdx ah:version",
+    "sfdx ah:version --json"
+  ]
+}

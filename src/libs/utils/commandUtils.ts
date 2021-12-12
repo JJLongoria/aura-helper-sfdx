@@ -1,4 +1,5 @@
-import { CoreUtils, MetadataItem, MetadataObject, MetadataType } from '@aurahelper/core';
+import { CoreUtils, MetadataDetail, MetadataItem, MetadataObject, MetadataType } from '@aurahelper/core';
+import { AnyJson } from '@salesforce/ts-types';
 const Validator = CoreUtils.Validator;
 const Utils = CoreUtils.Utils;
 
@@ -74,5 +75,88 @@ export default class CommandUtils {
       }
     }
     return types;
+  }
+
+  public static transformMetadataTypesToTable(metadata: { [key: string]: MetadataType }): AnyJson[] {
+    const result: AnyJson[] = [];
+    for (const metadataTypeName of Object.keys(metadata)) {
+      const metadataType = metadata[metadataTypeName];
+      if (metadataType.hasChilds()) {
+        for (const metadataObjectName of metadataType.getChildKeys()) {
+          const metadataObject = metadataType.getChild(metadataObjectName);
+          if (metadataObject && metadataObject.hasChilds()) {
+            for (const metadataItemName of metadataObject.getChildKeys()) {
+              const metadataItem = metadataObject.getChild(metadataItemName);
+              if (metadataItem) {
+                result.push({
+                  type: metadataTypeName,
+                  object: metadataObjectName,
+                  item: metadataItemName,
+                  path: metadataItem.path,
+                });
+              }
+            }
+          } else if (metadataObject) {
+            result.push({
+              type: metadataTypeName,
+              object: metadataObjectName,
+              path: metadataObject.path,
+            });
+          }
+        }
+      } else {
+        result.push({
+          type: metadataTypeName,
+          path: metadataType.path,
+        });
+      }
+    }
+    return result;
+  }
+
+  public static transformMetadataTypesToCSV(metadata: { [key: string]: MetadataType }): string {
+    let result = 'Metadata Type;Metadata Object;Metadata Item;Path';
+    for (const metadataTypeName of Object.keys(metadata)) {
+      const metadataType = metadata[metadataTypeName];
+      if (metadataType.hasChilds()) {
+        for (const metadataObjectName of metadataType.getChildKeys()) {
+          const metadataObject = metadataType.getChild(metadataObjectName);
+          if (metadataObject && metadataObject.hasChilds()) {
+            for (const metadataItemName of metadataObject.getChildKeys()) {
+              const metadataItem = metadataObject.getChild(metadataItemName);
+              if (metadataItem) {
+                result +=
+                  '\n' + metadataTypeName + ';' + metadataObjectName + ';' + metadataItemName + ';' + metadataItem.path;
+              }
+            }
+          } else if (metadataObject) {
+            result += '\n' + metadataTypeName + ';' + metadataObjectName + ';;' + metadataObject.path;
+          }
+        }
+      } else {
+        result += '\n' + metadataTypeName + ';;;' + metadataType.path;
+      }
+    }
+    return result;
+  }
+
+  public static transformMetadataDetailsToTable(metadataDetails: MetadataDetail[]): AnyJson[] {
+    const result: AnyJson[] = [];
+    for (const detail of metadataDetails) {
+      result.push({
+        name: detail.xmlName,
+        directory: detail.directoryName,
+        suffix: detail.suffix,
+      });
+    }
+    return result;
+  }
+
+  public static transformMetadataDetailsToCSV(metadataDetails: MetadataDetail[]): string {
+    let result = 'Name;Directory;Suffix';
+    for (const detail of metadataDetails) {
+      result += '\n' + detail.xmlName + ';' + detail.directoryName + ';' + detail.suffix;
+    }
+    return result;
   }
 }

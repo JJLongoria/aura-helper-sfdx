@@ -24,10 +24,11 @@ SFDX PLugin to work with Salesforce Projects. This application are entire develo
 - **Ignore** any metadata type from your local project or from the package files for maintance different configuration into your sandbox and production enviroments with simple file and command.
 - Specially designed for **DevOps workflows**.
 - And much more
----
-
 
 ### **Specially Designed for DevOps Workflows**
+
+---
+
 <br/>
 
 Supported Operative Systems:
@@ -65,8 +66,9 @@ To install cloning the source code repository, follow the next steps
 
 1. Clone the repository
 2. Go to the root project folder
-3. Run the next command
-    sfdx plugins:link
+3. Run the next command   
+
+        sfdx plugins:link
 
 # [**Aura Helper SFDX Commands**](#ah-sfdx-commands)
 All commands from Aura Helper CLI have the next structure: 
@@ -123,6 +125,9 @@ Metadata commands are the commands for work with your metadata files. You can co
 
     Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
+- [**metadata\:local\:ignore**](#metadatalocalignore)
+
+    Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
 
 ---
 ### [**metadata:local:compress**](#metadatalocalcompress)
@@ -183,6 +188,57 @@ Compress objects folder (and subfolders) and applications folder
 Compress Account and Case object file with json response:
 
     sfdx ah:metadata:local:compress -f force-app/main/default/objects/Account/Account.object-meta-xml, force-app/main/default/objects/Case/Case.object-meta-xml --json
+
+---
+
+### [**metadata:local:ignore**](#metadatalocalignore)
+Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
+
+### **Usage**:
+
+    $ sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+                                                                        first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
+    -a | --all                                                          Ignore all metadata types according to the ignore file.
+    -t | --type <MetadataTypeName>[,<MetadataTypeName>...]              Ignore the specified metadata types according to the ignore file. You can select a sigle or a list 
+                                                                        separated by commas.
+    [-i | --ignore-file <path/to/ignore/file>]                          Path to the ignore file. Use this if you not want to use the project root ignore file or have 
+                                                                        different name. By default use .ahignore.json file from your project root.
+    [-c | --compress]                                                   Add this option for compress modified files for ignore operation.
+    [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
+                                                                        simple XML elements 
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+
+
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+        "message": "Compress XML files finish successfully",
+      }
+    }
+```
+### **Examples**:
+
+Ignore All metadata types specified in .ahignore.json file with progress report, colors and compressing files with JSON response
+
+    sfdx ah:metadata:local:ignore -a --json
+
+Ignore only Custom Application, Custom Labels and Profiles specified in .ahignore.json file with another .ahignore.json with progress report
+
+    sfdx ah:metadata:local:ignore -t "CustomApplication, Profile, CustomLabels" -i "Path/to/the/file/.myignoreFile.json" -p
+
+---
+
 
 
 ## [**Org Metadata Commands**](#org-metadata-commands)

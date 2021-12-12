@@ -6,6 +6,7 @@
   "author": "Juan José Longoria López",
   "bugs": "https://github.com/JJLongoria/aura-helper-sfdx/issues",
   "dependencies": {
+    "@aurahelper/connector": "file:../../nodeJS/Aura Helper Framework/ah-connector",
     "@aurahelper/core": "file:../../nodeJS/Aura Helper Framework/ah-core",
     "@aurahelper/dependencies-manager": "file:../../nodeJS/Aura Helper Framework/ah-dependencies-manager",
     "@aurahelper/git-manager": "file:../../nodeJS/Aura Helper Framework/ah-git-manager",
@@ -68,7 +69,7 @@
   "keywords": [
     "sfdx-plugin"
   ],
-  "license": "GPLv3",
+  "license": "GPL-3.0-only",
   "oclif": {
     "commands": "./lib/commands",
     "bin": "sfdx",

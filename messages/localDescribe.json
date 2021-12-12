@@ -8,7 +8,8 @@
     "missingTypesToDescribeError": "You must select describe all or describe specific types",
     "noDataToShowError": "Not metadata types found to describe",
     "examples": [
-        "sfdx ah:metadata:local:ignore -a --json",
-        "sfdx ah:metadata:local:ignore -t  \"CustomApplication, Profile, CustomLabels\" -i \"Path/to/the/file/.myignoreFile.json\" -p"
+        "sfdx ah:metadata:local:describe -a -p plaintext -s \"path/to/the/output/file.txt\" --csv",
+        "sfdx ah:metadata:local:describe -t \"CustomObject, CustomField, Profile, ValidatiionRule\" -p",
+        "sfdx ah:metadata:local:describe -t \"CustomObject, CustomField\" --json"
     ]
 }

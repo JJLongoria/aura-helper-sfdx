@@ -125,9 +125,13 @@ Metadata commands are the commands for work with your metadata files. You can co
 
     Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
-- [**metadata\:local\:ignore**](#metadatalocalignore)
+- [**metadata:local:ignore**](#metadatalocalignore)
 
     Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
+
+- [**metadata:local:describe**](#metadatalocaldescribe)
+
+    Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
 ---
 ### [**metadata:local:compress**](#metadatalocalcompress)
@@ -135,25 +139,24 @@ Command for compress XML files for ocuppy less data storage, and make more usefu
 
 ### **Usage**:
 
-    $ sfdx ah:metadata:local:compress [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -d <array> | -f <array>] [-p] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+    sfdx ah:metadata:local:compress [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -d <array> | -f <array>] [-p] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ### **Options**:
-
-    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
-    [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with simple XML elements 
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder. 
                                                                         first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
     -a | --all                                                          Compress all XML files with support compression in your project.
     -d | --directory <path/to/directory>[,<path/to/directory>...]       Compress XML Files from specific directory or directories separated by commas.  
                                                                         This options does not take effect if you 
                                                                         choose compress all.
-    -f | --file <path/to/file> [, <path/to/file>...]                    Compress the specified XML file or files separated by commas. This options does not take effect if you choose compress 
-                                                                        directory or all.
-    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
-                                                                        spinner loader
+    -f | --file <path/to/file> [, <path/to/file>...]                    Compress the specified XML file or files separated by commas. This options does not take effect if you                                                                 choose compress directory or all.
+    [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
+                                                                        simple XML elements
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
     [--json]                                                            Format output as JSON.
     [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
                                                                         Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
-
+```
 ### **JSON Response**:
 ```json
     {
@@ -196,13 +199,12 @@ Command for ignore some metadata types. If you use git or other SVC systems, you
 
 ### **Usage**:
 
-    $ sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel 
+    sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ### **Options**:
-
+```
     [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
-                                                                        first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
     -a | --all                                                          Ignore all metadata types according to the ignore file.
     -t | --type <MetadataTypeName>[,<MetadataTypeName>...]              Ignore the specified metadata types according to the ignore file. You can select a sigle or a list 
                                                                         separated by commas.
@@ -216,14 +218,14 @@ Command for ignore some metadata types. If you use git or other SVC systems, you
     [--json]                                                            Format output as JSON.
     [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
                                                                         Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
-
+```
 
 ### **JSON Response**:
 ```json
     {
       "status": 0,
       "result": {
-        "message": "Compress XML files finish successfully",
+        "message": "Ignore metadata finished successfully",
       }
     }
 ```
@@ -239,6 +241,56 @@ Ignore only Custom Application, Custom Labels and Profiles specified in .ahignor
 
 ---
 
+### [**metadata:local:describe**](#metadatalocaldescribe)
+Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
+
+### **Usage**:
+
+    sfdx ah:metadata:local:describe [-r <filepath>] [-a | -t <array>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    -a | --all                                                          Describe all metadata types stored in your local project
+    -t | --type <MetadataTypeName>[,<MetadataTypeName>...]              Describe the specified metadata types. You can select a single metadata or a list separated by commas. 
+                                                                        This option does not take effect if you choose describe all.
+    [-g | --group]                                                      Option to group global Quick Actions into GlobalActions group, false to list as object and item
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+See [**Metadata JSON Format**](#metadata-json-format) section to understand about Metadata JSON Object returned by Aura Helper
+```json
+    {
+      "status": 0,
+      "result": {
+        // Metadata JSON Object
+      }
+    }
+```
+### **Examples**:
+
+Describe all metadata types stored in your local project with progress report and save the response into a file and csv response
+
+    sfdx ah:metadata:local:describe -a -p plaintext -s "path/to/the/output/file.txt" --csv
+
+Describe Custom Objects, Custom Fields, Profiles and ValidationRules with progress report and show results as table (by default)
+
+    sfdx ah:metadata:local:describe -t "CustomObject, CustomField, Profile, ValidatiionRule" -p   
+
+Describe Custom Objects and Custom Fields with json response
+
+    sfdx ah:metadata:local:describe -t "CustomObject, CustomField" --json 
+
+---
 
 
 ## [**Org Metadata Commands**](#org-metadata-commands)

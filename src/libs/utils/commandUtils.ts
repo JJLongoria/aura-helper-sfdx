@@ -1,4 +1,4 @@
-import { CoreUtils, FileChecker, MetadataItem, MetadataObject, MetadataType } from '@aurahelper/core';
+import { CoreUtils, MetadataItem, MetadataObject, MetadataType } from '@aurahelper/core';
 const Validator = CoreUtils.Validator;
 const Utils = CoreUtils.Utils;
 

@@ -9,10 +9,7 @@
     "processingMetadataType": "'Processing %s Metadata Type'",
     "ignoreFinishSuccesfully": "Ignore metadata finished successfully",
     "examples": [
-        "sfdx ah:metadata:local:compress -a",
-        "sfdx ah:metadata:local:compress -d force-app/main/default/objects --json",
-        "sfdx ah:metadata:local:compress -d force-app/main/default/objects, force-app/main/default/applications",
-        "sfdx ah:metadata:local:compress -f force-app/main/default/objects/Account/Account.object-meta-xml -p",
-        "sfdx ah:metadata:local:compress -f force-app/main/default/objects/Account/Account.object-meta-xml, force-app/main/default/objects/Case/Case.object-meta-xml --json"
+        "sfdx ah:metadata:local:ignore -a --json",
+        "sfdx ah:metadata:local:ignore -t  \"CustomApplication, Profile, CustomLabels\" -i \"Path/to/the/file/.myignoreFile.json\" -p"
     ]
 }

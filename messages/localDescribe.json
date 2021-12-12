@@ -1,0 +1,14 @@
+{
+    "commandDescription": "Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.",
+    "allFlagDescription": "Describe all metadata types stored in your local project",
+    "typeFlagDescription": "Describe the specified metadata types. You can select a single metadata or a list separated by commas. This option does not take effect if you choose describe all",
+    "groupFlagDescription": "Option to group global Quick Actions into GlobalActions group, false to list as object and item",
+    "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
+    "describeLocalTypesMessage": "Describing Local Metadata Types",
+    "missingTypesToDescribeError": "You must select describe all or describe specific types",
+    "noDataToShowError": "Not metadata types found to describe",
+    "examples": [
+        "sfdx ah:metadata:local:ignore -a --json",
+        "sfdx ah:metadata:local:ignore -t  \"CustomApplication, Profile, CustomLabels\" -i \"Path/to/the/file/.myignoreFile.json\" -p"
+    ]
+}

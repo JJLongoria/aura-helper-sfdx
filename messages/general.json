@@ -1,5 +1,6 @@
 {
     "sortOrderFlagDescription": "Sort order for the XML elements when compress XML files. By default, the elements are sorted with simple XML elements first.",
+    "outputPathFlagDescription": "Path to file for redirect the output",
     "rootFlagDescription": "Path to project root. By default is your current folder.",
     "progressFlagDescription": "Option to report the command progress (into the selected format) or show a spinner loader",
     "wrongRootPathError": "Wrong --root path (%s). Error: %s",

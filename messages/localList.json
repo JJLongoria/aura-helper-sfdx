@@ -1,0 +1,10 @@
+{
+    "commandDescription": "Command for list all metadata from the local project",
+    "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
+    "noDataToShowError": "Not metadata types found to list",
+    "examples": [
+        "sfdx ah:metadata:local:describe -a -p plaintext -s \"path/to/the/output/file.txt\" --csv",
+        "sfdx ah:metadata:local:describe -t \"CustomObject, CustomField, Profile, ValidatiionRule\" -p",
+        "sfdx ah:metadata:local:describe -t \"CustomObject, CustomField\" --json"
+    ]
+}

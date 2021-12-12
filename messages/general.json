@@ -6,5 +6,6 @@
     "wrongRootPathError": "Wrong --root path (%s). Error: %s",
     "projectNotFoundError": "This command is required to run from within an SFDX project",
     "worngParamPath": "'Wrong %s path. Select a valid path. Error: %s",
-    "gettingAvailableMetadataTypesMessage": "Getting All Available Metadata Types"
+    "gettingAvailableMetadataTypesMessage": "Getting All Available Metadata Types",
+    "outputSavedMessage": "'Output saved in: %s"
 }

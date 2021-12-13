@@ -3,8 +3,8 @@
     "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
     "noDataToShowError": "Not metadata types found to list",
     "examples": [
-        "sfdx ah:metadata:local:describe -a -p plaintext -s \"path/to/the/output/file.txt\" --csv",
-        "sfdx ah:metadata:local:describe -t \"CustomObject, CustomField, Profile, ValidatiionRule\" -p",
-        "sfdx ah:metadata:local:describe -t \"CustomObject, CustomField\" --json"
+        "sfdx ah:metadata:local:list -p",
+        "sfdx ah:metadata:local:list --csv",
+        "sfdx ah:metadata:local:list -r \"path/to/other/project/root\" --outputfile \"path/to/the/output/file.txt\" --json"
     ]
 }

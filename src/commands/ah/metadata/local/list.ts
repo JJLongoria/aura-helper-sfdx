@@ -2,7 +2,7 @@ import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
-import { CoreUtils, FileChecker, MetadataDetail, PathUtils } from '@aurahelper/core';
+import { CoreUtils, FileChecker, FileWriter, MetadataDetail, PathUtils } from '@aurahelper/core';
 import { MetadataFactory } from '@aurahelper/metadata-factory';
 import CommandUtils from '../../../../libs/utils/commandUtils';
 const Validator = CoreUtils.Validator;
@@ -40,21 +40,13 @@ export default class Describe extends SfdxCommand {
   };
 
   public async run(): Promise<MetadataDetail[]> {
-    try {
-      this.flags.root = Validator.validateFolderPath(this.flags.root);
-    } catch (error) {
-      const err = error as Error;
-      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
-    }
-    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
-      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
-    }
+    this.validateProjectPath();
     if (this.flags.outputfile) {
       try {
         this.flags.outputfile = PathUtils.getAbsolutePath(this.flags.outputfile);
       } catch (error) {
         const err = error as Error;
-        throw new SfdxError(generalMessages.getMessage('worngParamPath', ['--output-file', err.message]));
+        throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--output-file', err.message]));
       }
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
@@ -106,6 +98,26 @@ export default class Describe extends SfdxCommand {
         this.ux.log(messages.getMessage('noDataToShowError'));
       }
     }
+    if (this.flags.outputfile) {
+      const baseDir = PathUtils.getDirname(this.flags.outputfile);
+      if (!FileChecker.isExists(baseDir)) {
+        FileWriter.createFolderSync(baseDir);
+      }
+      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(metadata, null, 2));
+      this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
+    }
     return metadata;
+  }
+
+  private validateProjectPath(): void {
+    try {
+      this.flags.root = Validator.validateFolderPath(this.flags.root);
+    } catch (error) {
+      const err = error as Error;
+      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
+    }
+    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
+      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
+    }
   }
 }

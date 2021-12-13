@@ -53,15 +53,7 @@ export default class Describe extends SfdxCommand {
   };
 
   public async run(): Promise<{ [key: string]: MetadataType }> {
-    try {
-      this.flags.root = Validator.validateFolderPath(this.flags.root);
-    } catch (error) {
-      const err = error as Error;
-      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
-    }
-    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
-      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
-    }
+    this.validateProjectPath();
     if (this.flags.all === undefined && this.flags.type === undefined) {
       throw new SfdxError(messages.getMessage('missingTypesToDescribeError'));
     }
@@ -70,7 +62,7 @@ export default class Describe extends SfdxCommand {
         this.flags.outputfile = PathUtils.getAbsolutePath(this.flags.outputfile);
       } catch (error) {
         const err = error as Error;
-        throw new SfdxError(generalMessages.getMessage('worngParamPath', ['--output-file', err.message]));
+        throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--outputfile', err.message]));
       }
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
@@ -145,5 +137,17 @@ export default class Describe extends SfdxCommand {
       this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
     }
     return metadata;
+  }
+
+  private validateProjectPath(): void {
+    try {
+      this.flags.root = Validator.validateFolderPath(this.flags.root);
+    } catch (error) {
+      const err = error as Error;
+      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
+    }
+    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
+      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
+    }
   }
 }

@@ -1,0 +1,25 @@
+{
+    "commandDescription": "Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (event only your active branch) to create the files",
+    "outputPathFlagDescription":"Path to save the generated files. By default is your manifest folder",
+    "fileTypeFlagDesciption": "Option to select the generated file type(s). You can choose between package, destructive or both. Both by default",
+    "deleteBeforeFlagDescription": "Option to create the Descructive XML file to deploy it before package file (delete files before deploy new changes insted delete files after deploy changes).",
+    "sourceFlagDescription": "Source branch, commit, tag... to compare changes and create delta files. That is the new code source or the \"source salesforce org to get changes\". You can select only source to create files from active branch changes",
+    "targetFlagDescription": "Target branch, commit, tag... to compare changes and create delta files. That is the old code source or the \"target salesforce org to deploy changes\"",
+    "rawFlagDescription": "Option to return the raw data instead create xml files. This option returns a JSON Object with the extracted data from git changes. Only work with --json flag",
+    "useIgnoreFlagDescription": "Option to ignore the metadata included in ignore file from the package",
+    "ignoreFileFlagDescription": "Path to the ignore file. Use this if you don't want to use the project root ignore file or has a different name.",
+    "ignoreDestructiveFlagDescription": "Option to ignore metadata from destructive changes created file",
+    "destructiveIgnoreFileFlagDescription": "Path to use different ignore file to ignore destructive changes instead the ignore file to ignore changes to deploy",
+    "getActiveBranchMessage": "Get active branch...",
+    "runningGitDiffMessage": "Running Git Diff...",
+    "describeLocalTypesMessage": "Describe Local Metadata Types...",
+    "analyzingDiffMessage": "Analyzing Diffs to get Metadata changes...",
+    "ignoringMetadataMessage": "Ignoring Metadata from package...",
+    "ignoringDestructiveMessage": "Ignoring Metadata from destructive...",
+    "creatingFileMessage": "Creating %s file...",
+    "filesCreatedMessage": "Files created on %s",
+    "examples": [
+      "sfdx hello:org --targetusername myOrg@example.com --targetdevhubusername devhub@org.com",
+      "sfdx hello:org --name myname --targetusername myOrg@example.com"
+    ]
+  }

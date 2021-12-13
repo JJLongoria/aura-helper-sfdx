@@ -61,15 +61,7 @@ export default class Compress extends SfdxCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    try {
-      this.flags.root = Validator.validateFolderPath(this.flags.root);
-    } catch (error) {
-      const err = error as Error;
-      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
-    }
-    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
-      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
-    }
+    this.validateProjectPath();
     if (this.flags.all === undefined && this.flags.directory === undefined && this.flags.file === undefined) {
       throw new SfdxError(messages.getMessage('missingCompressTargetError'));
     }
@@ -84,14 +76,14 @@ export default class Compress extends SfdxCommand {
         compressor.addPaths(paths);
       } catch (error) {
         const err = error as Error;
-        throw new SfdxError(generalMessages.getMessage('worngParamPath', [param, err.message]));
+        throw new SfdxError(generalMessages.getMessage('wrongParamPath', [param, err.message]));
       }
     } else {
       try {
         this.flags.file = CommandUtils.getPaths(this.flags.file, this.flags.root);
       } catch (error) {
         const err = error as Error;
-        throw new SfdxError(generalMessages.getMessage('worngParamPath', ['--file', err.message]));
+        throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--file', err.message]));
       }
       compressor.addPaths(this.flags.file);
     }
@@ -137,6 +129,18 @@ export default class Compress extends SfdxCommand {
     } catch (error) {
       const err = error as Error;
       throw new SfdxError(err.message);
+    }
+  }
+
+  private validateProjectPath(): void {
+    try {
+      this.flags.root = Validator.validateFolderPath(this.flags.root);
+    } catch (error) {
+      const err = error as Error;
+      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
+    }
+    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
+      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
     }
   }
 }

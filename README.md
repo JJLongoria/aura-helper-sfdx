@@ -1,5 +1,4 @@
 # **Aura Helper SFDX**
-================
 
 Aura Helper CLI Tools converted into SFDX Plugin
 
@@ -11,7 +10,7 @@ Aura Helper CLI Tools converted into SFDX Plugin
 [![Downloads/week](https://img.shields.io/npm/dw/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
 [![License](https://img.shields.io/npm/l/sfdx-aura-helper.svg)](https://github.com/JJLongoria/sfdx-aura-helper/blob/master/package.json)
 
-SFDX PLugin to work with Salesforce Projects. This application are entire developed using Aura Helper Framework and has powerfull commands to manage your projects, create Continous Integration and DevOps workflows and support developers to make some utils task on every project like import and export data, create package files (including from git differences), compare metadata from two orgs or from your local project and the auth org, and to much more. It is the Aura Helper CLI natural evolution to integrate better to other salesforce tools.
+SFDX Plugin to work with Salesforce Projects. This application are entire developed using Aura Helper Framework and has powerfull commands to manage your projects, create Continous Integration and DevOps workflows and support developers to make some utils task on every project like import and export data, create package files (including from git differences), compare metadata from two orgs or from your local project and the auth org, and to much more. It is the Aura Helper CLI natural evolution to integrate better to other salesforce tools.
 
 ## [**Features**](#features)
 
@@ -77,7 +76,7 @@ All commands from Aura Helper CLI have the next structure:
 
 Al commands start by **ah**. For example
 
-    sfdx ah:.....:..... [command:input] [options]
+    sfdx ah:topic:command [command:input] [options]
 
 ---
 
@@ -128,6 +127,10 @@ Metadata commands are the commands for work with your metadata files. You can co
 - [**metadata:local:ignore**](#metadatalocalignore)
 
     Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
+
+- [**metadata:local:list**](#metadatalocallist)
+
+    Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
 - [**metadata:local:describe**](#metadatalocaldescribe)
 
@@ -239,6 +242,67 @@ Ignore only Custom Application, Custom Labels and Profiles specified in .ahignor
 
     sfdx ah:metadata:local:ignore -t "CustomApplication, Profile, CustomLabels" -i "Path/to/the/file/.myignoreFile.json" -p
 
+---
+### [**metadata:local:list**](#metadatalocallist) 
+Command for list all Metadata Types stored in your local project. 
+
+### **Usage**:
+
+    sfdx ah:metadata:local:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+        [
+            {
+                "xmlName": "APIName",
+                "directoryName": "directoryName",
+                "suffix": "fileSuffix",
+                "inFolder": false,
+                "metaFile": false,
+            },
+            {
+                "xmlName": "APIName",
+                "directoryName": "directoryName",
+                "suffix": "fileSuffix",
+                "inFolder": false,
+                "metaFile": false,
+            },
+            {
+                // More data...
+            },
+        ]
+      }
+    }
+```
+### **Examples**:
+
+List all types with progress an table result (default)
+
+    sfdx ah:metadata:local:list -p
+
+List all types with csv result
+
+    sfdx ah:metadata:local:list --csv
+
+List all types from different project and save the output into a file and json result
+
+    sfdx ah:metadata:local:list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --json
 ---
 
 ### [**metadata:local:describe**](#metadatalocaldescribe)

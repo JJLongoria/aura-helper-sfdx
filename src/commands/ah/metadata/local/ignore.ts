@@ -67,27 +67,19 @@ export default class Ignore extends SfdxCommand {
   };
 
   public async run(): Promise<AnyJson> {
-    try {
-      this.flags.root = Validator.validateFolderPath(this.flags.root);
-    } catch (error) {
-      const err = error as Error;
-      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
-    }
-    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
-      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
-    }
+    this.validateProjectPath();
     if (this.flags.all === undefined && this.flags.type === undefined) {
       throw new SfdxError(messages.getMessage('missingTypesToCompressError'));
     }
-    if (!this.flags.ignoreFile) {
-      this.flags.ignoreFile = (this.flags.root as string) + '/' + IGNORE_FILE_NAME;
+    if (!this.flags.ignorefile) {
+      this.flags.ignorefile = (this.flags.root as string) + '/' + IGNORE_FILE_NAME;
     }
     try {
-      Validator.validateJSONFile(this.flags.ignoreFile);
-      this.flags.ignoreFile = PathUtils.getAbsolutePath(this.flags.ignoreFile);
+      Validator.validateJSONFile(this.flags.ignorefile);
+      this.flags.ignorefile = PathUtils.getAbsolutePath(this.flags.ignorefile);
     } catch (error) {
       const err = error as Error;
-      throw new SfdxError(messages.getMessage('worngIgnoreFilePathError', [err.message]));
+      throw new SfdxError(messages.getMessage('wrongParamPath', ['--ignorefile', err.message]));
     }
     let types;
     if (this.flags.type) {
@@ -103,8 +95,8 @@ export default class Ignore extends SfdxCommand {
     }
     try {
       const metadataDetails = await connector.listMetadataTypes();
-      const ignore = new MetadataIgnore(this.flags.ignoreFile);
-      ignore.setCompress(this.flags.compress).setSortOrder(this.flags.sortOrder).setTypesToIgnore(types);
+      const ignore = new MetadataIgnore(this.flags.ignorefile);
+      ignore.setCompress(this.flags.compress).setSortOrder(this.flags.sortorder).setTypesToIgnore(types);
       ignore.onStartProcessType((metadataTypeName) => {
         if (this.flags.progress) {
           this.ux.log(messages.getMessage('processingMetadataType', [metadataTypeName]));
@@ -125,5 +117,17 @@ export default class Ignore extends SfdxCommand {
     return {
       message: messages.getMessage('ignoreFinishSuccesfully'),
     };
+  }
+
+  private validateProjectPath(): void {
+    try {
+      this.flags.root = Validator.validateFolderPath(this.flags.root);
+    } catch (error) {
+      const err = error as Error;
+      throw new SfdxError(generalMessages.getMessage('wrongRootPathError', [this.flags.root, err.message]));
+    }
+    if (!FileChecker.isSFDXRootPath(this.flags.root)) {
+      throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
+    }
   }
 }

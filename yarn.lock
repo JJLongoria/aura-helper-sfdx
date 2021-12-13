@@ -2,76 +2,96 @@
 # yarn lockfile v1
 
 
-"@aurahelper/connector@file:../../nodeJS/Aura Helper Framework/ah-connector":
+"@aurahelper/connector@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/connector/-/connector-2.0.0.tgz#9ca00af14c6de4d52a098f76999c38181d39c410"
+  integrity sha512-LoHNDO8mAXD1hP3SngVmNVmrKpkqOsU3y3HE1GAouB6AshRllYdbj5F6wGo/qDTWLCeL5PXuGVKV27YZycKOjg==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-connector-2.0.0-39597815-f3c0-4386-b3a8-2bb67dcd5af7-1639341030880/node_modules/@aurahelper/ah-core"
-    "@aurahelper/languages" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-connector-2.0.0-39597815-f3c0-4386-b3a8-2bb67dcd5af7-1639341030880/node_modules/@aurahelper/ah-languages"
-    "@aurahelper/metadata-factory" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-connector-2.0.0-39597815-f3c0-4386-b3a8-2bb67dcd5af7-1639341030880/node_modules/@aurahelper/ah-metadata-factory"
-    "@aurahelper/package-generator" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-connector-2.0.0-39597815-f3c0-4386-b3a8-2bb67dcd5af7-1639341030880/node_modules/@aurahelper/ah-package-generator"
-    "@aurahelper/xml-compressor" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-connector-2.0.0-39597815-f3c0-4386-b3a8-2bb67dcd5af7-1639341030880/node_modules/@aurahelper/ah-xml-compressor"
+    "@aurahelper/core" "^2.0.0"
+    "@aurahelper/languages" "^2.0.0"
+    "@aurahelper/metadata-factory" "^2.0.0"
+    "@aurahelper/package-generator" "^2.0.0"
+    "@aurahelper/xml-compressor" "^2.0.0"
     "@salesforce/core" "^2.31.1"
 
-"@aurahelper/core@file:../../nodeJS/Aura Helper Framework/ah-core":
+"@aurahelper/core@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/core/-/core-2.0.0.tgz#96ea06804af96eb4b0e5ef8953db9c19f8adfdc3"
+  integrity sha512-0EdW7WG7/dCVLqtzV9pNAE2VNVSbmmqlHLlC/c+J6VcxBJhd8ovaaFzY/KD2qYeIzX1IkH3LqOpe4DDg7xuttw==
   dependencies:
     fs-extra "^9.1.0"
     unzipper "^0.10.11"
 
-"@aurahelper/dependencies-manager@file:../../nodeJS/Aura Helper Framework/ah-dependencies-manager":
+"@aurahelper/dependencies-manager@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/dependencies-manager/-/dependencies-manager-2.0.0.tgz#b73c5dc1a305f7f424fd1adb032e2b2c01da7de5"
+  integrity sha512-v66vXaQJ1I2eDVylk5Ekkact5gYQeVoN0r8x0r38D54qwOaQbIl0DFu1a628n1JVYejtJ60EB+Mbq0BoeHKIqg==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-dependencies-manager-2.0.0-1ee03321-1fd4-440b-9dd0-a4187350781e-1639341030588/node_modules/@aurahelper/ah-core"
-    "@aurahelper/languages" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-dependencies-manager-2.0.0-1ee03321-1fd4-440b-9dd0-a4187350781e-1639341030588/node_modules/@aurahelper/ah-languages"
-    "@aurahelper/metadata-factory" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-dependencies-manager-2.0.0-1ee03321-1fd4-440b-9dd0-a4187350781e-1639341030588/node_modules/@aurahelper/ah-metadata-factory"
-    "@aurahelper/xml-compressor" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-dependencies-manager-2.0.0-1ee03321-1fd4-440b-9dd0-a4187350781e-1639341030588/node_modules/@aurahelper/ah-xml-compressor"
-    "@aurahelper/xml-definitions" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-dependencies-manager-2.0.0-1ee03321-1fd4-440b-9dd0-a4187350781e-1639341030588/node_modules/@aurahelper/ah-xml-definitions"
+    "@aurahelper/core" "^2.0.0"
+    "@aurahelper/languages" "^2.0.0"
+    "@aurahelper/metadata-factory" "^2.0.0"
+    "@aurahelper/xml-compressor" "^2.0.0"
+    "@aurahelper/xml-definitions" "^2.0.0"
 
-"@aurahelper/git-manager@file:../../nodeJS/Aura Helper Framework/ah-git-manager":
-  version "2.0.0"
+"@aurahelper/git-manager@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@aurahelper/git-manager/-/git-manager-2.0.2.tgz#55bfcda9f1c6eb254547a13edc506825762f2611"
+  integrity sha512-DAAbw8lxs4xiO2jR4nj11/1yc1Cw9Ey/8Hpv5QC+46kqnYaWWh5m1c92ODs/rCxjLgSca4ExoTWjUUkNzMEmmg==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-git-manager-2.0.0-fdf45c7b-23e7-4d36-a3ba-e47fe10e291d-1639341030596/node_modules/@aurahelper/ah-core"
+    "@aurahelper/core" "^2.0.0"
 
-"@aurahelper/ignore@file:../../nodeJS/Aura Helper Framework/ah-ignore":
+"@aurahelper/ignore@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/ignore/-/ignore-2.0.0.tgz#6d7c59ac0a968410cf5419fe1a8127126ab68bc5"
+  integrity sha512-KyFza6Iyr9sXjb5rTV4VrrJ9A2k7j3nQQKAF8YlSOGPDzrFPQ2hb9IfCEWLcVQOGPmYpr4xKHmqAa6Dw1DamJw==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-ignore-2.0.0-a38afc74-b158-4348-a887-c211c40da947-1639341028871/node_modules/@aurahelper/ah-core"
-    "@aurahelper/languages" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-ignore-2.0.0-a38afc74-b158-4348-a887-c211c40da947-1639341028871/node_modules/@aurahelper/ah-languages"
-    "@aurahelper/metadata-factory" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-ignore-2.0.0-a38afc74-b158-4348-a887-c211c40da947-1639341028871/node_modules/@aurahelper/ah-metadata-factory"
-    "@aurahelper/xml-compressor" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-ignore-2.0.0-a38afc74-b158-4348-a887-c211c40da947-1639341028871/node_modules/@aurahelper/ah-xml-compressor"
+    "@aurahelper/core" "^2.0.0"
+    "@aurahelper/languages" "^2.0.0"
+    "@aurahelper/metadata-factory" "^2.0.0"
+    "@aurahelper/xml-compressor" "^2.0.0"
 
-"@aurahelper/languages@file:../../nodeJS/Aura Helper Framework/ah-languages":
+"@aurahelper/languages@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/languages/-/languages-2.0.0.tgz#04a2b6b3f8e9465b5038a55780c1689deb541d23"
+  integrity sha512-5fIXZoFkSG0YuQcN/fCrM9uKSN4JYFroVWp4G/6/+1nVV1tNKmOzAPobNFatME3nxcWMhDKmVIGRYvieqKWzPA==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-languages-2.0.0-dd718d2b-afbf-4cac-8a03-fd1f6804a91a-1639341028828/node_modules/@aurahelper/ah-core"
+    "@aurahelper/core" "^2.0.0"
     fast-xml-parser "^3.19.0"
     he "^1.2.0"
 
-"@aurahelper/metadata-factory@file:../../nodeJS/Aura Helper Framework/ah-metadata-factory":
+"@aurahelper/metadata-factory@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/metadata-factory/-/metadata-factory-2.0.0.tgz#7b1617a2c79f7d57ef2dd025c306ecbeb5e4dda6"
+  integrity sha512-9OjOCE9nvpkYZauPDYXvte/RobQMQMYJ0iJATFJXseVLK2lW81VlkQ6ZMxCMo24YMcPCAgqHWxKS4DB+mnwRpg==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-metadata-factory-2.0.0-2a5b1015-abab-45b1-92b9-f9d653e8dbff-1639341028832/node_modules/@aurahelper/ah-core"
-    "@aurahelper/languages" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-metadata-factory-2.0.0-2a5b1015-abab-45b1-92b9-f9d653e8dbff-1639341028832/node_modules/@aurahelper/ah-languages"
+    "@aurahelper/core" "^2.0.0"
+    "@aurahelper/languages" "^2.0.0"
 
-"@aurahelper/package-generator@file:../../nodeJS/Aura Helper Framework/ah-package-generator":
+"@aurahelper/package-generator@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/package-generator/-/package-generator-2.0.0.tgz#77db0f98963e25cdbe88c6a72c45968f14360de0"
+  integrity sha512-rbFCh7M+V1C4++dKmvdRSRLTpihwvx2npxBBV66AuvbMeWQhyWlooDRMWogb1cAgCSYf1WI/1U6VTWEFG07tcg==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-package-generator-2.0.0-c918a125-d1f1-4c34-8610-f0c6794fca87-1639341028860/node_modules/@aurahelper/ah-core"
-    "@aurahelper/ignore" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-package-generator-2.0.0-c918a125-d1f1-4c34-8610-f0c6794fca87-1639341028860/node_modules/@aurahelper/ah-ignore"
-    "@aurahelper/languages" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-package-generator-2.0.0-c918a125-d1f1-4c34-8610-f0c6794fca87-1639341028860/node_modules/@aurahelper/ah-languages"
-    "@aurahelper/metadata-factory" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-package-generator-2.0.0-c918a125-d1f1-4c34-8610-f0c6794fca87-1639341028860/node_modules/@aurahelper/ah-metadata-factory"
+    "@aurahelper/core" "^2.0.0"
+    "@aurahelper/ignore" "^2.0.0"
+    "@aurahelper/languages" "^2.0.0"
+    "@aurahelper/metadata-factory" "^2.0.0"
 
-"@aurahelper/xml-compressor@file:../../nodeJS/Aura Helper Framework/ah-xml-compressor":
+"@aurahelper/xml-compressor@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/xml-compressor/-/xml-compressor-2.0.0.tgz#4b6bc6d2c47c73d12f127f53f76ca8df2beeaf1a"
+  integrity sha512-aNlR45ccrYwwux4oUvn1ibdvMaghdQVJMJfjUN3g0y3lrN3MsNWBU9L7feK2U6hg93yuTRxpIUUPLAg/m5ZcIA==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-xml-compressor-2.0.0-6e575447-3009-456c-b269-89f05c636372-1639341028858/node_modules/@aurahelper/ah-core"
-    "@aurahelper/languages" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-xml-compressor-2.0.0-6e575447-3009-456c-b269-89f05c636372-1639341028858/node_modules/@aurahelper/ah-languages"
-    "@aurahelper/xml-definitions" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-xml-compressor-2.0.0-6e575447-3009-456c-b269-89f05c636372-1639341028858/node_modules/@aurahelper/ah-xml-definitions"
+    "@aurahelper/core" "^2.0.0"
+    "@aurahelper/languages" "^2.0.0"
+    "@aurahelper/xml-definitions" "^2.0.0"
 
-"@aurahelper/xml-definitions@file:../../nodeJS/Aura Helper Framework/ah-xml-definitions":
+"@aurahelper/xml-definitions@^2.0.0":
   version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/xml-definitions/-/xml-definitions-2.0.0.tgz#6346046f70ff562e3356a684d8243681ce01dcb0"
+  integrity sha512-XckalE56krF5+1894bW9qNeIvi/9Lm4Xseu+nA7GcyuySltbSgC6K1Y/RBGDNVrygPxg8SUn0EOdCtqufw1PIg==
   dependencies:
-    "@aurahelper/core" "file:C:/Users/El Puto Kanko/AppData/Local/Yarn/Cache/v6/npm-@aurahelper-xml-definitions-2.0.0-820389cf-252e-4b7d-808c-edfa006277e4-1639341028867/node_modules/@aurahelper/ah-core"
+    "@aurahelper/core" "^2.0.0"
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"
@@ -5720,9 +5740,9 @@ typescript@4, typescript@^4.1.3:
   integrity sha512-eVYaEHALSt+s9LbvgEv4Ef+Tdq7hBiIZgii12xXJnukryt3pMgJf6aKhoCZ3FWQsu6sydEnkg11fYXLzhLBjeQ==
 
 uglify-js@^3.1.4:
-  version "3.14.4"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.14.4.tgz#68756f17d1b90b9d289341736cb9a567d6882f90"
-  integrity sha512-AbiSR44J0GoCeV81+oxcy/jDOElO2Bx3d0MfQCUShq7JRXaM4KtQopZsq2vFv8bCq2yMaGrw1FgygUd03RyRDA==
+  version "3.14.5"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.14.5.tgz#cdabb7d4954231d80cb4a927654c4655e51f4859"
+  integrity sha512-qZukoSxOG0urUTvjc2ERMTcAy+BiFh3weWAkeurLwjrCba73poHmG3E36XEjd/JGukMzwTL7uCxZiAexj8ppvQ==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"

@@ -65,19 +65,22 @@ export default class Describe extends SfdxCommand {
         throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--outputfile', err.message]));
       }
     }
+    if (!this.flags.progress) {
+      this.ux.startSpinner(generalMessages.getMessage('runningDescribeMessage'));
+    }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
     const connector = new SFConnector(alias, undefined, this.flags.root, namespace);
     if (this.flags.progress) {
       this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     } else {
-      this.ux.startSpinner(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
+      this.ux.setSpinnerStatus(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     }
     const metadataDetails = await connector.listMetadataTypes();
     if (this.flags.progress) {
       this.ux.log(messages.getMessage('describeLocalTypesMessage'));
     } else {
-      this.ux.startSpinner(messages.getMessage('describeLocalTypesMessage'));
+      this.ux.setSpinnerStatus(messages.getMessage('describeLocalTypesMessage'));
     }
     const folderMetadataMap = MetadataFactory.createFolderMetadataMap(metadataDetails);
     const metadataFromFileSystem = MetadataFactory.createMetadataTypesFromFileSystem(

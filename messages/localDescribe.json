@@ -7,6 +7,7 @@
     "describeLocalTypesMessage": "Describing Local Metadata Types",
     "missingTypesToDescribeError": "You must select describe all or describe specific types",
     "noDataToShowError": "Not metadata types found to describe",
+    "runningDescribeMessage": "Describing Types...",
     "examples": [
         "sfdx ah:metadata:local:describe -a -p plaintext -s \"path/to/the/output/file.txt\" --csv",
         "sfdx ah:metadata:local:describe -t \"CustomObject, CustomField, Profile, ValidatiionRule\" -p",

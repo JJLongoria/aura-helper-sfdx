@@ -85,13 +85,16 @@ export default class Ignore extends SfdxCommand {
     if (this.flags.type) {
       types = CommandUtils.getTypes(this.flags.type);
     }
+    if (!this.flags.progress) {
+      this.ux.startSpinner(generalMessages.getMessage('runningIgnoreMessage'));
+    }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
     const connector = new SFConnector(alias, this.flags.apiversion, this.flags.root, namespace);
     if (this.flags.progress) {
       this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     } else {
-      this.ux.startSpinner(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
+      this.ux.setSpinnerStatus(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     }
     try {
       const metadataDetails = await connector.listMetadataTypes();

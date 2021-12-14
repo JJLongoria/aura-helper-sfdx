@@ -8,6 +8,7 @@
     "worngIgnoreFilePathError": "Wrong --ignorefile path. Error: %s",
     "processingMetadataType": "'Processing %s Metadata Type'",
     "ignoreFinishSuccesfully": "Ignore metadata finished successfully",
+    "runningIgnoreMessage": "Ignoring Metadata...",
     "examples": [
         "sfdx ah:metadata:local:ignore -a --json",
         "sfdx ah:metadata:local:ignore -t  \"CustomApplication, Profile, CustomLabels\" -i \"Path/to/the/file/.myignoreFile.json\" -p"

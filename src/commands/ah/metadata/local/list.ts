@@ -49,13 +49,16 @@ export default class Describe extends SfdxCommand {
         throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--output-file', err.message]));
       }
     }
+    if (!this.flags.progress) {
+      this.ux.startSpinner(generalMessages.getMessage('runningListMessage'));
+    }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
     const connector = new SFConnector(alias, undefined, this.flags.root, namespace);
     if (this.flags.progress) {
       this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     } else {
-      this.ux.startSpinner(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
+      this.ux.setSpinnerStatus(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     }
     const metadata: MetadataDetail[] = [];
     const metadataDetails = await connector.listMetadataTypes();

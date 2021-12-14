@@ -1,0 +1,22 @@
+{
+  "commandDescription": "Create a Package XML file or Destructive XML file from a JSON Metadata File",
+  "outputPathFlagDescription": "Path to save the generated file. By default is your manifest folder",
+  "deleteBeforeFlagDescription": "Option to create the Descructive XML file to deploy it before package file (delete files before deploy new changes insted delete files after deploy changes).",
+  "sourceFlagDescription": "Metadata JSON file path to create the Package or Destructive file",
+  "useIgnoreFlagDescription": "Option to ignore the metadata included in ignore file from the package",
+  "ignoreFileFlagDescription": "Path to the ignore file. Use this if you don't want to use the project root ignore file or has a different name.",
+  "wildcardsFlagDescription": "Option to use wildcards instead the explicit names when apply",
+  "runningCreatePackageMessage": "Creating Package from JSON...",
+  "readingJSONFileMessage": "Reading JSON File",
+  "ignoringMetadataMessage": "Ignoring Metadata from package",
+  "validateIgnoreFileMessage": "Validate ignore file",
+  "creatingFileMessage": "Creating %s file",
+  "filesCreatedMessage": "File created on %s",
+  "examples": [
+    "sfdx ah:package:git:create",
+    "sfdx ah:package:git:create -f both -t Develop --json",
+    "sfdx ah:package:git:create -f package -s 1n3a5d3 -t 4a345da",
+    "sfdx ah:package:git:create -f destructive --deletebefore -s v2.0.0 -t v1.0.0 --raw --json",
+    "sfdx ah:package:git:create -f both -s UAT -t main -u --ignoredestructive --destructiveignorefile \"./.ahignoreDestructive.json\" --json"
+  ]
+}

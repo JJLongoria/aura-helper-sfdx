@@ -70,7 +70,7 @@ To install cloning the source code repository, follow the next steps
         sfdx plugins:link
 
 # [**Aura Helper SFDX Commands**](#ah-sfdx-commands)
-All commands from Aura Helper CLI have the next structure: 
+All commands from Aura Helper SFDX have the next structure: 
 
     sfdx <command:name> [command:input] [options]
 
@@ -82,6 +82,8 @@ Al commands start by **ah**. For example
 
 ### *Commands Group*
 
+Aura Helper SFDX has little bit different commands organizations. To make it more usefull and easy to use, all options to create packages files using Aura Helper has its own topics to organize it better. Now has specific commands to create packages from git, json file or merge package files.
+
 - [**Help**](#help)
 <p></p>
 
@@ -89,6 +91,11 @@ Al commands start by **ah**. For example
   - [**Local Metadata Commands**](#local-metadata-commands)
   - [**Org Metadata Commands**](#org-metadata-commands)
 <p></p>
+
+- [**Package Commands**](#package-commands)
+  - [**git**](#package-command-git)
+  - [**json**](#package-command-json)
+  - [**merge**](#package-command-merge)
 
 - [**Data Commands**](#data-commands)
 <p></p>
@@ -98,7 +105,7 @@ Al commands start by **ah**. For example
 ---
 
 # [**Help**](#help)
-If you need help with Aura Helper CLI, you can run:
+If you need help with Aura Helper SFDX, you can run:
 
     sfdx help ah
 
@@ -120,24 +127,24 @@ Metadata commands are the commands for work with your metadata files. You can co
 
 ## [**Local Metadata Commands**](#local-metadata-commands)
 
-- [**metadata:local:compress**](#metadatalocalcompress)
+- [**ah:metadata:local:compress**](#metadatalocalcompress)
 
     Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
-- [**metadata:local:ignore**](#metadatalocalignore)
+- [**ah:metadata:local:ignore**](#metadatalocalignore)
 
     Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
 
-- [**metadata:local:list**](#metadatalocallist)
+- [**ah:metadata:local:list**](#metadatalocallist)
 
     Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
-- [**metadata:local:describe**](#metadatalocaldescribe)
+- [**ah:metadata:local:describe**](#metadatalocaldescribe)
 
     Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
 ---
-### [**metadata:local:compress**](#metadatalocalcompress)
+### [**ah:metadata:local:compress**](#metadatalocalcompress)
 Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
 ### **Usage**:
@@ -147,14 +154,13 @@ Command for compress XML files for ocuppy less data storage, and make more usefu
 ### **Options**:
 ```
     [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder. 
-                                                                        first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
     -a | --all                                                          Compress all XML files with support compression in your project.
     -d | --directory <path/to/directory>[,<path/to/directory>...]       Compress XML Files from specific directory or directories separated by commas.  
                                                                         This options does not take effect if you 
                                                                         choose compress all.
     -f | --file <path/to/file> [, <path/to/file>...]                    Compress the specified XML file or files separated by commas. This options does not take effect if you                                                                 choose compress directory or all.
     [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
-                                                                        simple XML elements
+                                                                        simple XML elements first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
     [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
     [--json]                                                            Format output as JSON.
     [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
@@ -197,7 +203,7 @@ Compress Account and Case object file with json response:
 
 ---
 
-### [**metadata:local:ignore**](#metadatalocalignore)
+### [**ah:metadata:local:ignore**](#metadatalocalignore)
 Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
 
 ### **Usage**:
@@ -215,7 +221,7 @@ Command for ignore some metadata types. If you use git or other SVC systems, you
                                                                         different name. By default use .ahignore.json file from your project root.
     [-c | --compress]                                                   Add this option for compress modified files for ignore operation.
     [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
-                                                                        simple XML elements 
+                                                                        simple XML elements first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
     [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
                                                                         spinner loader
     [--json]                                                            Format output as JSON.
@@ -243,7 +249,7 @@ Ignore only Custom Application, Custom Labels and Profiles specified in .ahignor
     sfdx ah:metadata:local:ignore -t "CustomApplication, Profile, CustomLabels" -i "Path/to/the/file/.myignoreFile.json" -p
 
 ---
-### [**metadata:local:list**](#metadatalocallist) 
+### [**ah:metadata:local:list**](#metadatalocallist) 
 Command for list all Metadata Types stored in your local project. 
 
 ### **Usage**:
@@ -305,7 +311,7 @@ List all types from different project and save the output into a file and json r
     sfdx ah:metadata:local:list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --json
 ---
 
-### [**metadata:local:describe**](#metadatalocaldescribe)
+### [**ah:metadata:local:describe**](#metadatalocaldescribe)
 Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
 ### **Usage**:
@@ -358,6 +364,101 @@ Describe Custom Objects and Custom Fields with json response
 
 
 ## [**Org Metadata Commands**](#org-metadata-commands)
+
+# [**Package Commands**](#package-commands)
+The Package commands are commands to create Package or Destructive XML files from different sources. You can create Package or Destructive XML files from git. Compare two branches, commits, tags...  to create package files with git changes, or create package files usings a Metadata JSON Object (See [**Metadata JSON Format**](#metadata-file) section to understand about it), or merge several Package or Destructive files into one file by type, all into only one file or other options to merge. 
+
+## [**GIT**](#package-command-git)
+
+- [**package:git:create**](#package-git-create)
+
+    Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
+
+---
+
+### [**package:git:create**](#package-git-create)
+Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
+
+### **Usage**:
+
+    sfdx ah:package:git:create [-r <filepath>] [--outputpath <filepath>] [-f package|p|destructive|d|both|b] [-b] [-s <string>] [-t <string>] [-r] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [-f | --filetype] <fileTypeValue>                                   Option to select the generated file type(s). You can choose between package (p), destructive (d) or 
+                                                                        both (b). Both by default.
+    [-s | --source]                                                     Source branch, commit, tag... to compare changes and create delta files. That is the new code source 
+                                                                        or the "source salesforce org to get changes". You can select only source to create files from active branch changes (If not select source, also get the active branch)
+    [-t | --target]                                                     Target branch, commit, tag... to compare changes and create delta files. That is the old code source 
+                                                                        or the "target salesforce org to deploy changes"
+    [-b | --deletebefore]                                               Option to create the Descructive XML file to deploy it before package file (delete files before deploy 
+                                                                        new changes insted delete files after deploy changes).
+    [-u | -useignore]                                                   Option to ignore the metadata included in ignore file from the package
+    [-i | --ignorefile]                                                 Path to the ignore file. Use this if you don't want to use the project root ignore file or has a 
+                                                                        different name.
+    [--ignoredestructive]                                               Option to ignore metadata from destructive changes created file
+    [--destructiveignorefile]                                           Path to use different ignore file to ignore destructive changes instead the ignore file to ignore 
+                                                                        changes to deploy
+    [-r | --raw]                                                        Option to return the raw data instead create xml files. This option returns a JSON Object with the 
+                                                                        extracted data from git changes. Only work with --json flag
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+        "package": "path/to/the/created/package/file",                          // undefined if file not created
+        "destructiveChanges": "path/to/the/created/destructive/file",           // undefined if file not created
+        "destructiveChangesPost": "path/to/the/created/destructive/post/file"   // undefined if file not created
+      }
+    }
+```
+
+### **JSON RAW Response**:
+See [**Metadata JSON Format**](#metadata-json-format) section to understand about Metadata JSON Object returned by Aura Helper
+
+```json
+    {
+      "status": 0,
+      "result": {
+        "toDeploy": {
+            // Metadata JSON Object with metadata to Deploy
+        },
+        "toDelete": {
+            // Metadata JSON Object with metadata to Delete
+        },
+      }
+    }
+```
+
+### **Examples**:
+
+Create both files with not commited changes on active branch (default behaviour without parameters)
+
+    sfdx ah:package:git:create
+
+Create both files with changes between to the active branch and another branch. 
+
+    sfdx ah:package:git:create -f both -t Develop --json
+
+Create package file only with changes between two commits (the source commit must be the most recent commit from both)
+
+    sfdx ah:package:git:create -f package -s 1n3a5d3 -t 4a345da
+
+Create destructive file only to delete metadata before deploy and raw response with changes between to tags (source must be the most recent tag from both) with:
+
+    sfdx ah:package:git:create -f destructive --deletebefore -s v2.0.0 -t v1.0.0 --raw --json
+
+Create both files with changes between to branches, using ignore files to package and destructive files (using project ignore to package file).
+
+    sfdx ah:package:git:create -f both -s UAT -t main -u --ignoredestructive --destructiveignorefile "./.ahignoreDestructive.json" --json
+
+---
 
 # [**Data Commands**](#data-commands)
 

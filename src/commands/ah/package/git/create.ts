@@ -2,7 +2,15 @@ import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
-import { CoreUtils, FileChecker, GitDiff, PackageGeneratorResult, PathUtils, TypesFromGit } from '@aurahelper/core';
+import {
+  CoreUtils,
+  FileChecker,
+  FileWriter,
+  GitDiff,
+  PackageGeneratorResult,
+  PathUtils,
+  TypesFromGit,
+} from '@aurahelper/core';
 import { MetadataFactory } from '@aurahelper/metadata-factory';
 import { GitManager } from '@aurahelper/git-manager';
 import { Ignore } from '@aurahelper/ignore';
@@ -69,16 +77,13 @@ export default class Create extends SfdxCommand {
       char: 'i',
       description: messages.getMessage('ignoreFileFlagDescription'),
       helpValue: '<path/to/ignore/file>',
-      dependsOn: ['useignore'],
     }),
     ignoredestructive: flags.boolean({
       description: messages.getMessage('ignoreDestructiveFlagDescription'),
-      dependsOn: ['useignore'],
     }),
     destructiveignorefile: flags.filepath({
       description: messages.getMessage('destructiveIgnoreFileFlagDescription'),
       helpValue: '<path/to/ignore/file>',
-      dependsOn: ['useignore', 'ignoredestructive'],
     }),
     progress: flags.boolean({
       char: 'p',
@@ -89,11 +94,11 @@ export default class Create extends SfdxCommand {
 
   public async run(): Promise<TypesFromGit | PackageGeneratorResult> {
     this.validateProjectPath();
-    try {
-      this.flags.outputPath = PathUtils.getAbsolutePath(this.flags.outputPath);
-    } catch (error) {
-      const err = error as Error;
-      throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--outputpath', err.message]));
+    this.validateOutputPath();
+    if (this.flags.progress) {
+      this.ux.log(messages.getMessage('runningCreatePackageMessage'));
+    } else {
+      this.ux.startSpinner(messages.getMessage('runningCreatePackageMessage'));
     }
     this.validateIgnoreFiles();
     try {
@@ -117,6 +122,15 @@ export default class Create extends SfdxCommand {
     }
   }
 
+  private validateOutputPath(): void {
+    try {
+      this.flags.outputpath = PathUtils.getAbsolutePath(this.flags.outputpath);
+    } catch (error) {
+      const err = error as Error;
+      throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--outputpath', err.message]));
+    }
+  }
+
   private validateProjectPath(): void {
     try {
       this.flags.root = Validator.validateFolderPath(this.flags.root);
@@ -131,7 +145,9 @@ export default class Create extends SfdxCommand {
 
   private createPackages(typesFromGit: TypesFromGit): PackageGeneratorResult {
     const result = new PackageGeneratorResult();
-    const packageGenerator = new PackageGenerator(this.flags.apiversion).setExplicit();
+    const packageGenerator = new PackageGenerator(
+      this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion
+    ).setExplicit();
     if (
       this.flags.filetype === 'package' ||
       this.flags.filetype === 'p' ||
@@ -144,7 +160,8 @@ export default class Create extends SfdxCommand {
         this.ux.setSpinnerStatus(messages.getMessage('creatingFileMessage', [PACKAGE_FILENAME]));
       }
       result.package = packageGenerator.createPackage(typesFromGit.toDeploy, this.flags.outputpath);
-    } else if (
+    }
+    if (
       this.flags.filetype === 'destructive' ||
       this.flags.filetype === 'd' ||
       this.flags.filetype === 'both' ||
@@ -167,7 +184,7 @@ export default class Create extends SfdxCommand {
           this.ux.setSpinnerStatus(messages.getMessage('creatingFileMessage', [DESTRUCT_AFTER_FILENAME]));
         }
         result.destructiveChangesPost = packageGenerator.createAfterDeployDestructive(
-          typesFromGit.toDeploy,
+          typesFromGit.toDelete,
           this.flags.outputpath
         );
       }
@@ -182,6 +199,11 @@ export default class Create extends SfdxCommand {
 
   private validateIgnoreFiles(): void {
     if (this.flags.useignore) {
+      if (this.flags.progress) {
+        this.ux.log(messages.getMessage('validateIgnoreFilesMessage'));
+      } else {
+        this.ux.setSpinnerStatus(messages.getMessage('validateIgnoreFilesMessage'));
+      }
       if (!this.flags.ignorefile) {
         this.flags.ignorefile = (this.flags.root as string) + '/' + IGNORE_FILE_NAME;
       }
@@ -207,17 +229,22 @@ export default class Create extends SfdxCommand {
   private ignoreMetadata(typesFromGit: TypesFromGit): Promise<TypesFromGit> {
     return new Promise<TypesFromGit>((resolve, reject) => {
       try {
-        if (this.flags.progress) {
-          this.ux.log(messages.getMessage('analyzingDiffMessage'));
-        } else {
-          this.ux.setSpinnerStatus(messages.getMessage('analyzingDiffMessage'));
-        }
         const ignorePackage = new Ignore(this.flags.ignorefile);
         const ignoreDestructive = new Ignore(this.flags.destructiveignorefile || this.flags.ignorefile);
         if (typesFromGit.toDeploy) {
+          if (this.flags.progress) {
+            this.ux.log(messages.getMessage('ignoringMetadataMessage'));
+          } else {
+            this.ux.setSpinnerStatus(messages.getMessage('ignoringMetadataMessage'));
+          }
           typesFromGit.toDeploy = ignorePackage.ignoreMetadata(typesFromGit.toDeploy);
         }
         if (typesFromGit.toDelete) {
+          if (this.flags.progress) {
+            this.ux.log(messages.getMessage('analyzingDiffMessage'));
+          } else {
+            this.ux.setSpinnerStatus(messages.getMessage('analyzingDiffMessage'));
+          }
           typesFromGit.toDelete = ignoreDestructive.ignoreMetadata(typesFromGit.toDelete);
         }
         resolve(typesFromGit);
@@ -231,7 +258,12 @@ export default class Create extends SfdxCommand {
     return new Promise<TypesFromGit>((resolve, reject) => {
       const alias = ProjectUtils.getOrgAlias(this.flags.root);
       const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
-      const connector = new SFConnector(alias, undefined, this.flags.root, namespace);
+      const connector = new SFConnector(
+        alias,
+        this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion,
+        this.flags.root,
+        namespace
+      );
       if (this.flags.progress) {
         this.ux.log(messages.getMessage('describeLocalTypesMessage'));
       } else {
@@ -251,6 +283,7 @@ export default class Create extends SfdxCommand {
             gitDiffs,
             folderMetadataMap
           );
+          FileWriter.createFileSync('./diffs.json', JSON.stringify(metadataFromGitDiffs, null, 2));
           resolve(metadataFromGitDiffs);
         })
         .catch((error) => {
@@ -264,7 +297,7 @@ export default class Create extends SfdxCommand {
       if (this.flags.progress) {
         this.ux.log(messages.getMessage('getActiveBranchMessage'));
       } else {
-        this.ux.startSpinner(messages.getMessage('getActiveBranchMessage'));
+        this.ux.setSpinnerStatus(messages.getMessage('getActiveBranchMessage'));
       }
       gitManager
         .getBranches()
@@ -289,8 +322,12 @@ export default class Create extends SfdxCommand {
       } else {
         this.ux.setSpinnerStatus(messages.getMessage('runningGitDiffMessage'));
       }
+      if (!this.flags.target) {
+        this.flags.target = this.flags.source as string;
+        this.flags.source = undefined;
+      }
       gitManager
-        .getDiffs(this.flags.source, this.flags.target)
+        .getDiffs(this.flags.target, this.flags.source)
         .then((gitDiffs) => {
           resolve(gitDiffs);
         })

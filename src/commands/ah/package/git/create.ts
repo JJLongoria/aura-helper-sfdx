@@ -2,15 +2,7 @@ import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
-import {
-  CoreUtils,
-  FileChecker,
-  FileWriter,
-  GitDiff,
-  PackageGeneratorResult,
-  PathUtils,
-  TypesFromGit,
-} from '@aurahelper/core';
+import { CoreUtils, FileChecker, GitDiff, PackageGeneratorResult, PathUtils, TypesFromGit } from '@aurahelper/core';
 import { MetadataFactory } from '@aurahelper/metadata-factory';
 import { GitManager } from '@aurahelper/git-manager';
 import { Ignore } from '@aurahelper/ignore';
@@ -283,7 +275,6 @@ export default class Create extends SfdxCommand {
             gitDiffs,
             folderMetadataMap
           );
-          FileWriter.createFileSync('./diffs.json', JSON.stringify(metadataFromGitDiffs, null, 2));
           resolve(metadataFromGitDiffs);
         })
         .catch((error) => {

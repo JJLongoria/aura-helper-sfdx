@@ -144,7 +144,7 @@ Metadata commands are the commands for work with your metadata files. You can co
     Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
 ---
-### [**ah:metadata:local:compress**](#metadatalocalcompress)
+## [**ah:metadata:local:compress**](#metadatalocalcompress)
 Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
 ### **Usage**:
@@ -203,7 +203,7 @@ Compress Account and Case object file with json response:
 
 ---
 
-### [**ah:metadata:local:ignore**](#metadatalocalignore)
+## [**ah:metadata:local:ignore**](#metadatalocalignore)
 Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
 
 ### **Usage**:
@@ -249,7 +249,7 @@ Ignore only Custom Application, Custom Labels and Profiles specified in .ahignor
     sfdx ah:metadata:local:ignore -t "CustomApplication, Profile, CustomLabels" -i "Path/to/the/file/.myignoreFile.json" -p
 
 ---
-### [**ah:metadata:local:list**](#metadatalocallist) 
+## [**ah:metadata:local:list**](#metadatalocallist) 
 Command for list all Metadata Types stored in your local project. 
 
 ### **Usage**:
@@ -259,8 +259,8 @@ Command for list all Metadata Types stored in your local project.
 ### **Options**:
 ```
     [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
-    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
     [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
     [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
                                                                         spinner loader
     [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
@@ -311,7 +311,7 @@ List all types from different project and save the output into a file and json r
     sfdx ah:metadata:local:list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --json
 ---
 
-### [**ah:metadata:local:describe**](#metadatalocaldescribe)
+## [**ah:metadata:local:describe**](#metadatalocaldescribe)
 Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
 ### **Usage**:
@@ -326,8 +326,8 @@ Command to describe all or specific Metadata Types like Custom Objects, Custom F
     -t | --type <MetadataTypeName>[,<MetadataTypeName>...]              Describe the specified metadata types. You can select a single metadata or a list separated by commas. 
                                                                         This option does not take effect if you choose describe all.
     [-g | --group]                                                      Option to group global Quick Actions into GlobalActions group, false to list as object and item
-    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
     [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
     [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
                                                                         spinner loader
     [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
@@ -370,13 +370,25 @@ The Package commands are commands to create Package or Destructive XML files fro
 
 ## [**GIT**](#package-command-git)
 
-- [**package:git:create**](#package-git-create)
+- [**ah:package:git:create**](#package-git-create)
 
     Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
 
+## [**JSON**](#package-command-json)
+
+- [**ah:package:json:create**](#package-git-create)
+
+    Create a Package XML file or Destructive XML file from a JSON Metadata File
+
+## [**Merge**](#package-command-merge)
+
+- [**ah:package:merge**](#package-merge-create)
+
+    Create a Package XML file and/or Destructive XML file(s) from several package or destructive files.
+
 ---
 
-### [**package:git:create**](#package-git-create)
+## [**ah:package:git:create**](#package-git-create)
 Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
 
 ### **Usage**:
@@ -386,6 +398,7 @@ Create a Package XML file and/or Destructive XML file from Git Changes to create
 ### **Options**:
 ```
     [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--outputpath <target/files/path>]                                  Path to save the generated files. By default is your manifest folder
     [-f | --filetype] <fileTypeValue>                                   Option to select the generated file type(s). You can choose between package (p), destructive (d) or 
                                                                         both (b). Both by default.
     [-s | --source]                                                     Source branch, commit, tag... to compare changes and create delta files. That is the new code source 
@@ -402,6 +415,7 @@ Create a Package XML file and/or Destructive XML file from Git Changes to create
                                                                         changes to deploy
     [-r | --raw]                                                        Option to return the raw data instead create xml files. This option returns a JSON Object with the 
                                                                         extracted data from git changes. Only work with --json flag
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
     [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
     [--json]                                                            Format output as JSON.
     [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
@@ -459,6 +473,143 @@ Create both files with changes between to branches, using ignore files to packag
     sfdx ah:package:git:create -f both -s UAT -t main -u --ignoredestructive --destructiveignorefile "./.ahignoreDestructive.json" --json
 
 ---
+
+## [**ah:package:json:create**](#package-json-create)
+Create a Package XML file or Destructive XML file from a JSON Metadata File
+
+### **Usage**:
+
+    sfdx ah:package:json:create -s <filepath> [-r <filepath>] [--outputpath <filepath>] [-d] [-b] [-u] [-i <filepath>] [-w] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--outputpath <target/files/path>]                                  Path to save the generated file. By default is your manifest folder
+    -s | --source                                                       Metadata JSON file path to create the Package or Destructive file
+    [-d | --todelete]                                                   Option to create the package to delete metadata (Destructive XML File).
+    [-b | --deletebefore]                                               Option to create the Descructive XML file to deploy it before package file (delete files before deploy 
+                                                                        new changes insted delete files after deploy changes).
+    [-w | --wildcards]                                                  Option to use wildcards instead the explicit names when apply.
+    [-u | -useignore]                                                   Option to ignore the metadata included in ignore file from the package
+    [-i | --ignorefile]                                                 Path to the ignore file. Use this if you don't want to use the project root ignore file or has a 
+                                                                        different name.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+        "package": "path/to/the/created/package/file",                          // undefined if file not created
+        "destructiveChanges": "path/to/the/created/destructive/file",           // undefined if file not created
+        "destructiveChangesPost": "path/to/the/created/destructive/post/file"   // undefined if file not created
+      }
+    }
+```
+### **Examples**:
+
+Create package XML file using data from JSON file
+
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json
+
+Create package XML file using data from JSON file and use project ignore file to ignore Metadata from package 
+
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json -u
+
+Create destructive XML file using data from JSON file and use project ignore file to ignore Metadata from package 
+
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json --todelete -u
+
+Create destructive XML file using data from JSON file to deploy before package XML file.
+
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json --todelete --deletebefore
+
+
+---
+
+## [**ah:package:merge**](#package-merge-create)
+Create a Package XML file and/or Destructive XML file(s) from several package or destructive files.
+
+### **Usage**:
+
+    sfdx ah:package:merge -s <array> [--outputpath <filepath>] [--bytype | --fullpackage | --fulldestructive | --onlypackage | --onlydestructive] [-b] [-u] [-i <filepath>  [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--outputpath <target/files/path>]                                  Path to save the generated file(s). By default is your manifest folder
+    -s | --source                                                       Paths to the package XML and/or Destructive XML files separated by commas
+    [--bytype]                                                          Merge packages by type, that is, the package XML files into ine package xml file and destructive files 
+                                                                        into one destructive. Default option.
+    [--onlypackage]                                                     Merge only the package XML files into one package XML file
+    [--onlydestructive]                                                 Merge only the destructive XML files into one destructive XML file
+    [--fullpackage]                                                     Merge all package and destructive XML files into one package XML file
+    [--fulldestructive]                                                 Merge all package and destructive XML files into one destructive XML file
+    [-b | --deletebefore]                                               Option to create the Descructive XML file to deploy it before package file (delete files before deploy 
+                                                                        new changes insted delete files after deploy changes).
+    [-u | -useignore]                                                   Option to ignore the metadata included in ignore file from the package
+    [-i | --ignorefile]                                                 Path to the ignore file. Use this if you don't want to use the project root ignore file or has a 
+                                                                        different name.
+    [--ignoredestructive]                                               Option to ignore metadata from destructive changes created file
+    [--destructiveignorefile]                                           Path to use different ignore file to ignore destructive changes instead the ignore file to ignore 
+                                                                        changes to deploy
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+        "package": "path/to/the/created/package/file",                          // undefined if file not created
+        "destructiveChanges": "path/to/the/created/destructive/file",           // undefined if file not created
+        "destructiveChangesPost": "path/to/the/created/destructive/post/file"   // undefined if file not created
+      }
+    }
+```
+### **Examples**:
+
+Merge package and destructive files by type (default behaviour)
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\"
+
+Merge package and destructive files by type and create the destructive XML file to deploy before 
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --bytype --deletebefore
+
+Merge only package XML files into one package XML file (destructive files will be omitted)
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --onlypackage
+
+Merge only destructive XML files into one destructive XML file (package files will be omitted)
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --onlydestructive
+
+Merge only destructive XML files into one destructive XML file (package files will be omitted) and create destructive to deploy before
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --onlydestructive --deletebefore
+
+Merge all files into only one package XML file (including destructives)
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --fullpackage
+
+Merge all files into only one destructive XML file (including packages)
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --fulldestructive
+
+Merge all files into only one destructive XML file (including packages) to deploy before
+
+    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --fulldestructive --deletebefore
+
+---
+
 
 # [**Data Commands**](#data-commands)
 

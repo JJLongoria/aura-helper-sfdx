@@ -35,6 +35,10 @@ export default class Create extends SfdxCommand {
       helpValue: '<target/files/path>',
       default: './manifest',
     }),
+    todelete: flags.boolean({
+      char: 'd',
+      description: messages.getMessage('toDeleteFlagDescription'),
+    }),
     deletebefore: flags.boolean({
       char: 'b',
       description: messages.getMessage('deleteBeforeFlagDescription'),
@@ -111,25 +115,14 @@ export default class Create extends SfdxCommand {
     const packageGenerator = new PackageGenerator(
       this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion
     ).setExplicit();
-    if (
-      this.flags.filetype === 'package' ||
-      this.flags.filetype === 'p' ||
-      this.flags.filetype === 'both' ||
-      this.flags.filetype === 'b'
-    ) {
+    if (!this.flags.todelete) {
       if (this.flags.progress) {
         this.ux.log(messages.getMessage('creatingFileMessage', [PACKAGE_FILENAME]));
       } else {
         this.ux.setSpinnerStatus(messages.getMessage('creatingFileMessage', [PACKAGE_FILENAME]));
       }
       result.package = packageGenerator.createPackage(metadataTypes, this.flags.outputpath);
-    }
-    if (
-      this.flags.filetype === 'destructive' ||
-      this.flags.filetype === 'd' ||
-      this.flags.filetype === 'both' ||
-      this.flags.filetype === 'b'
-    ) {
+    } else {
       if (this.flags.deletebefore) {
         if (this.flags.progress) {
           this.ux.log(messages.getMessage('creatingFileMessage', [DESTRUCT_BEFORE_FILENAME]));

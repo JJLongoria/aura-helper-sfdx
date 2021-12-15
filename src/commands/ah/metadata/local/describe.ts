@@ -37,6 +37,10 @@ export default class Describe extends SfdxCommand {
       exclusive: ['all'],
       helpValue: '<MetadataTypeName>[,<MetadataTypeName>...]',
     }),
+    group: flags.boolean({
+      description: messages.getMessage('groupFlagDescription'),
+      default: false,
+    }),
     outputfile: flags.filepath({
       description: generalMessages.getMessage('outputPathFlagDescription'),
       helpValue: '<path/to/output/file>',

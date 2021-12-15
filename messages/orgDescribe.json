@@ -1,0 +1,18 @@
+{
+    "commandDescription": "Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org",
+    "allFlagDescription": "Describe all metadata types",
+    "typeFlagDescription": "Describe the specified metadata types. You can select a single metadata or a list separated by commas. This option does not take effect if you choose describe all",
+    "groupFlagDescription": "Option to group global Quick Actions into GlobalActions group, false to list as object and item",
+    "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
+    "downloadAllFlagDescription": "Option to download all Metadata Types from any Namespaces (including managed packages). If this options is not selected, only download data from your org namespace",
+    "describeOrgTypesMessage": "Describing Org Metadata Types",
+    "missingTypesToDescribeError": "You must select describe all or describe specific types",
+    "noDataToShowError": "Not metadata types found to describe",
+    "afterDownloadMessage": "%s downloaded",
+    "runningDescribeMessage": "Describing Types...",
+    "examples": [
+        "sfdx ah:metadata:org:describe -a -p plaintext -s \"path/to/the/output/file.txt\" --csv",
+        "sfdx ah:metadata:org:describe -t \"CustomObject, CustomField, Profile, ValidatiionRule\" -p",
+        "sfdx ah:metadata:org:describe -t \"CustomObject, CustomField\" --json"
+    ]
+}

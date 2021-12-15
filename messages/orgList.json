@@ -4,8 +4,8 @@
     "noDataToShowError": "Not metadata types found to list",
     "runningListMessage": "Listing Types...",
     "examples": [
-        "sfdx ah:metadata:local:list -p",
-        "sfdx ah:metadata:local:list --csv",
-        "sfdx ah:metadata:local:list -r \"path/to/other/project/root\" --outputfile \"path/to/the/output/file.txt\" --json"
+        "sfdx ah:metadata:org:list -p",
+        "sfdx ah:metadata:org:list --csv",
+        "sfdx ah:metadata:org:list -r \"path/to/other/project/root\" --outputfile \"path/to/the/output/file.txt\" --json"
     ]
 }

@@ -66,6 +66,7 @@ export default class Execute extends SfdxCommand {
         this.flags.root,
         namespace
       );
+      connector.setMultiThread();
       for (let i = 0; i < this.flags.iterations; i++) {
         if (this.flags.progress) {
           this.ux.log(messages.getMessage('executingIterationMessage', [i + 1, this.flags.iterations]));

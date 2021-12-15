@@ -60,6 +60,7 @@ export default class Describe extends SfdxCommand {
       this.flags.root,
       namespace
     );
+    connector.setMultiThread();
     if (this.flags.progress) {
       this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     } else {

@@ -110,6 +110,7 @@ export default class Repair extends SfdxCommand {
         this.flags.root,
         namespace
       );
+      connector.setMultiThread();
       const metadataDetails = await connector.listMetadataTypes();
       const manager = new DependenciesManager(this.flags.root, metadataDetails);
       manager

@@ -2,16 +2,19 @@ import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
-import { CoreUtils, FileChecker, FileWriter, MetadataDetail, PathUtils } from '@aurahelper/core';
+import { CoreUtils, FileChecker, FileWriter, MetadataType, PathUtils } from '@aurahelper/core';
+import { MetadataFactory } from '@aurahelper/metadata-factory';
 import CommandUtils from '../../../../libs/utils/commandUtils';
 const Validator = CoreUtils.Validator;
 const ProjectUtils = CoreUtils.ProjectUtils;
+const Utils = CoreUtils.Utils;
+const MetadataUtils = CoreUtils.MetadataUtils;
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('aura-helper-sfdx', 'orgList');
+const messages = Messages.loadMessages('aura-helper-sfdx', 'orgCompare');
 const generalMessages = Messages.loadMessages('aura-helper-sfdx', 'general');
 
-export default class Describe extends SfdxCommand {
+export default class Compare extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
   public static examples = messages.getMessage('examples').split(os.EOL);
   protected static flagsConfig: FlagsConfig = {
@@ -27,10 +30,6 @@ export default class Describe extends SfdxCommand {
       description: generalMessages.getMessage('outputPathFlagDescription'),
       helpValue: '<path/to/output/file>',
     }),
-    csv: flags.boolean({
-      description: messages.getMessage('csvFlagDescription'),
-      default: false,
-    }),
     progress: flags.boolean({
       char: 'p',
       description: generalMessages.getMessage('progressFlagDescription'),
@@ -38,18 +37,18 @@ export default class Describe extends SfdxCommand {
     apiversion: flags.builtin(),
   };
 
-  public async run(): Promise<MetadataDetail[]> {
+  public async run(): Promise<{ [key: string]: MetadataType }> {
     this.validateProjectPath();
     if (this.flags.outputfile) {
       try {
         this.flags.outputfile = PathUtils.getAbsolutePath(this.flags.outputfile);
       } catch (error) {
         const err = error as Error;
-        throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--output-file', err.message]));
+        throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--outputfile', err.message]));
       }
     }
     if (!this.flags.progress) {
-      this.ux.startSpinner(generalMessages.getMessage('runningListMessage'));
+      this.ux.startSpinner(messages.getMessage('runningCompareMessage'));
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
@@ -61,31 +60,56 @@ export default class Describe extends SfdxCommand {
     );
     connector.setMultiThread();
     if (this.flags.progress) {
-      this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
+      this.ux.log(messages.getMessage('describeLocalTypesMessage'));
     } else {
-      this.ux.setSpinnerStatus(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
+      this.ux.setSpinnerStatus(messages.getMessage('describeLocalTypesMessage'));
     }
     const metadataDetails = await connector.listMetadataTypes();
+    const folderMetadataMap = MetadataFactory.createFolderMetadataMap(metadataDetails);
+    const typesFromLocal = MetadataFactory.createMetadataTypesFromFileSystem(folderMetadataMap, this.flags.root, true);
+    if (this.flags.progress) {
+      this.ux.log(messages.getMessage('describeOrgTypesMessage'));
+    } else {
+      this.ux.setSpinnerStatus(messages.getMessage('describeOrgTypesMessage'));
+    }
+    connector.onAfterDownloadType((status) => {
+      if (this.flags.progress) {
+        this.ux.log(messages.getMessage('afterDownloadMessage', [status.entityType]));
+      } else {
+        this.ux.setSpinnerStatus(messages.getMessage('afterDownloadMessage', [status.entityType]));
+      }
+    });
+    const typesFromOrg = await connector.describeMetadataTypes(metadataDetails, false, true);
+    if (this.flags.progress) {
+      this.ux.log(messages.getMessage('comparingMessage'));
+    } else {
+      this.ux.setSpinnerStatus(messages.getMessage('comparingMessage'));
+    }
+    const compareResult = MetadataUtils.compareMetadata(typesFromLocal, typesFromOrg);
     if (!this.flags.json) {
-      if (metadataDetails && metadataDetails.length) {
+      if (compareResult && Utils.hasKeys(compareResult)) {
         if (this.flags.csv) {
-          const csvData = CommandUtils.transformMetadataDetailsToCSV(metadataDetails);
+          const csvData = CommandUtils.transformMetadataTypesToCSV(compareResult);
           this.ux.log(csvData);
         } else {
-          const datatable = CommandUtils.transformMetadataDetailsToTable(metadataDetails);
+          const datatable = CommandUtils.transformMetadataTypesToTable(compareResult);
           this.ux.table(datatable, {
             columns: [
               {
-                key: 'name',
-                label: 'Name',
+                key: 'type',
+                label: 'Metadata Type',
               },
               {
-                key: 'directory',
-                label: 'Directory',
+                key: 'object',
+                label: 'Metadata Object',
               },
               {
-                key: 'suffix',
-                label: 'Suffix',
+                key: 'item',
+                label: 'Metadata Item',
+              },
+              {
+                key: 'path',
+                label: 'Path',
               },
             ],
           });
@@ -99,10 +123,10 @@ export default class Describe extends SfdxCommand {
       if (!FileChecker.isExists(baseDir)) {
         FileWriter.createFolderSync(baseDir);
       }
-      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(metadataDetails, null, 2));
+      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(compareResult, null, 2));
       this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
     }
-    return metadataDetails;
+    return compareResult;
   }
 
   private validateProjectPath(): void {

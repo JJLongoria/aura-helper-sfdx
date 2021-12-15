@@ -231,8 +231,7 @@ Command for ignore some metadata types. If you use git or other SVC systems, you
     [-c | --compress]                                                   Add this option for compress modified files for ignore operation.
     [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
                                                                         simple XML elements first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
-    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
-                                                                        spinner loader
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
     [--json]                                                            Format output as JSON.
     [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
                                                                         Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
@@ -579,9 +578,21 @@ Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and
 
 ## [**Org Metadata Commands**](#org-metadata-commands)
 
+- [**metadata:org:list**](#metadataorglist)
+
+    Command for list all Metadata Types stored in your auth org
+
 - [**metadata:org:describe**](#metadataorgdescribe)
 
     Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
+
+- [**ah:metadata:org:compare**](#metadataorgcompare)
+
+    Command for compare your local project with your auth org for get the differences. The result are the metadata types and objects that you have in your org, but don't have in your local project.
+
+- [**ah:metadata:org:between:compare**](#metadataorgcomparebetween)
+
+    Command to compare two organization to get the differences. Return the metadata that exists on target but not exists on source
 
 - [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
 
@@ -589,6 +600,69 @@ Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and
 
 
 ---
+
+## [**ah:metadata:org:list**](#metadataorglist) 
+Command for list all Metadata Types stored in your local project. 
+
+### **Usage**:
+
+    sfdx ah:metadata:local:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+        [
+            {
+                "xmlName": "APIName",
+                "directoryName": "directoryName",
+                "suffix": "fileSuffix",
+                "inFolder": false,
+                "metaFile": false,
+            },
+            {
+                "xmlName": "APIName",
+                "directoryName": "directoryName",
+                "suffix": "fileSuffix",
+                "inFolder": false,
+                "metaFile": false,
+            },
+            {
+                // More data...
+            },
+        ]
+      }
+    }
+```
+### **Examples**:
+
+List all types with progress an table result (default)
+
+    sfdx ah:metadata:org:list -p
+
+List all types with csv result
+
+    sfdx ah:metadata:org:list --csv
+
+List all types from different project and save the output into a file and json result
+
+    sfdx ah:metadata:org:list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --json
+---
+
 
 ## [**ah:metadata:org:describe**](#metadataorgapexexecutor)
 Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
@@ -639,6 +713,95 @@ Describe Custom Objects, Custom Fields, Profiles and ValidationRules with progre
 Describe Custom Objects and Custom Fields with json response
 
     sfdx ah:metadata:local:describe -t "CustomObject, CustomField" --json 
+
+---
+
+
+## [**ah:metadata:org:compare**](#metadataorgcompare)
+Command for compare your local project with your auth org for get the differences. The result are the metadata types and objects that you have in your org, but don't have in your local project.
+
+### **Usage**:
+
+    sfdx ah:metadata:org:compare [-r <filepath>] [--outputfile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+See [**Metadata JSON Format**](#metadata-json-format) section to learn about Metadata JSON Object returned by Aura Helper
+```json
+    {
+      "status": 0,
+      "result": {
+        // Metadata JSON Object
+      }
+    }
+```
+### **Examples**:
+
+Compare the local and org data with json result
+
+    aura-helper metadata:org:compare --json
+
+Compare the local and org data with csv result
+
+    aura-helper metadata:org:compare --csv
+
+Compare the local and org data with table result
+
+    aura-helper metadata:org:compare
+
+---
+
+## [**ah:metadata:org:between:compare**](#metadataorgcomparebetween)
+Command to compare two organization to get the differences. Return the metadata that exists on target but not exists on source
+
+### **Usage**:
+
+    sfdx ah:metadata:org:between:compare -t <string> [-r <filepath>] [-s <string>] [--outputfile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-s | --source]                                                     Source Salesforce org to compare. If you want to compare your active org with other, this options is not 
+                                                                        necessary because use the --root option for get the project's auth org. If you choose source, --root will be ignored
+    [-t | --target]                                                     Target Salesforce org to compare
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
+    [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+See [**Metadata JSON Format**](#metadata-json-format) section to learn about Metadata JSON Object returned by Aura Helper
+```json
+    {
+      "status": 0,
+      "result": {
+        // Metadata JSON Object
+      }
+    }
+```
+### **Examples**:
+
+Compare project org with another
+
+    sfdx ah:metadata:org:between:compare -t test.username@salesforceOrg.com.qa
+
+Compare between to orgs
+
+    sfdx ah:metadata:org:between:compare -s test.username@salesforceOrg.com.uat -t test.username@salesforceOrg.com.qa
 
 ---
 

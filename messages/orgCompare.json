@@ -1,0 +1,14 @@
+{
+    "commandDescription": "Command to compare your local project with your auth org for get the differences. The result are the metadata types and objects that you have in your org, but don't have in your local project.",
+    "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
+    "noDataToShowError": "Not metadata types found to describe",
+    "describeOrgTypesMessage": "Describing Org Metadata Types",
+    "describeLocalTypesMessage": "Describing Local Metadata Types",
+    "runningCompareMessage": "Comparing Local and Org...",
+    "comparingMessage": "Comparing Metadata Types",
+    "examples": [
+        "sfdx ah:metadata:org:compare",
+        "sfdx ah:metadata:org:compare --csv",
+        "sfdx ah:metadata:org:compare --outputfile \"path/to/the/output/file.txt\" --json"
+    ]
+}

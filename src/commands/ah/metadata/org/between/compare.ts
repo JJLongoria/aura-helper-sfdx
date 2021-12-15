@@ -2,17 +2,18 @@ import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
-import { CoreUtils, FileChecker, FileWriter, MetadataDetail, MetadataType, PathUtils } from '@aurahelper/core';
-import CommandUtils from '../../../../libs/utils/commandUtils';
+import { CoreUtils, FileChecker, FileWriter, MetadataType, PathUtils } from '@aurahelper/core';
+import CommandUtils from '../../../../../libs/utils/commandUtils';
 const Validator = CoreUtils.Validator;
 const ProjectUtils = CoreUtils.ProjectUtils;
 const Utils = CoreUtils.Utils;
+const MetadataUtils = CoreUtils.MetadataUtils;
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('aura-helper-sfdx', 'orgDescribe');
+const messages = Messages.loadMessages('aura-helper-sfdx', 'orgBetweenCompare');
 const generalMessages = Messages.loadMessages('aura-helper-sfdx', 'general');
 
-export default class Describe extends SfdxCommand {
+export default class Compare extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
   public static examples = messages.getMessage('examples').split(os.EOL);
   protected static flagsConfig: FlagsConfig = {
@@ -24,32 +25,20 @@ export default class Describe extends SfdxCommand {
       required: false,
       helpValue: '<path/to/project/root>',
     }),
-    all: flags.boolean({
-      char: 'a',
-      description: messages.getMessage('allFlagDescription'),
-      exclusive: ['type'],
+    source: flags.string({
+      char: 's',
+      description: messages.getMessage('sourceFlagDescription'),
+      helpValue: 'usernameOrAlias',
     }),
-    type: flags.array({
+    target: flags.string({
       char: 't',
-      delimiter: ',',
-      description: messages.getMessage('typeFlagDescription'),
-      exclusive: ['all'],
-      helpValue: '<MetadataTypeName>[,<MetadataTypeName>...]',
-    }),
-    group: flags.boolean({
-      description: messages.getMessage('groupFlagDescription'),
-      default: false,
-    }),
-    downloadall: flags.boolean({
-      description: messages.getMessage('downloadAllFlagDescription'),
+      description: messages.getMessage('targetFlagDescription'),
+      helpValue: 'usernameOrAlias',
+      required: true,
     }),
     outputfile: flags.filepath({
       description: generalMessages.getMessage('outputPathFlagDescription'),
       helpValue: '<path/to/output/file>',
-    }),
-    csv: flags.boolean({
-      description: messages.getMessage('csvFlagDescription'),
-      default: false,
     }),
     progress: flags.boolean({
       char: 'p',
@@ -60,9 +49,6 @@ export default class Describe extends SfdxCommand {
 
   public async run(): Promise<{ [key: string]: MetadataType }> {
     this.validateProjectPath();
-    if (this.flags.all === undefined && this.flags.type === undefined) {
-      throw new SfdxError(messages.getMessage('missingTypesToDescribeError'));
-    }
     if (this.flags.outputfile) {
       try {
         this.flags.outputfile = PathUtils.getAbsolutePath(this.flags.outputfile);
@@ -72,57 +58,66 @@ export default class Describe extends SfdxCommand {
       }
     }
     if (!this.flags.progress) {
-      this.ux.startSpinner(generalMessages.getMessage('runningDescribeMessage'));
+      this.ux.startSpinner(messages.getMessage('runningCompareMessage'));
     }
-    const alias = ProjectUtils.getOrgAlias(this.flags.root);
-    const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
-    const connector = new SFConnector(
-      alias,
+    const sourceAlias = ProjectUtils.getOrgAlias(this.flags.root);
+    const sourceNamespace = ProjectUtils.getOrgNamespace(this.flags.root);
+    const connectorSource = new SFConnector(
+      this.flags.source || sourceAlias,
       this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion,
       this.flags.root,
-      namespace
+      sourceNamespace
     );
-    connector.setMultiThread();
-    let detailTypes: MetadataDetail[] | undefined;
-    let strTypes: string[] | undefined;
-    if (this.flags.all) {
-      if (this.flags.progress) {
-        this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
-      } else {
-        this.ux.setSpinnerStatus(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
-      }
-      detailTypes = [];
-      const metadataTypes = await connector.listMetadataTypes();
-      for (const type of metadataTypes) {
-        detailTypes.push(type);
-      }
-    } else if (this.flags.type) {
-      strTypes = CommandUtils.getTypes(this.flags.type);
-    }
+    connectorSource.setMultiThread();
     if (this.flags.progress) {
-      this.ux.log(messages.getMessage('describeOrgTypesMessage'));
+      this.ux.log(messages.getMessage('describeSourceTypesMessage'));
     } else {
-      this.ux.setSpinnerStatus(messages.getMessage('describeOrgTypesMessage'));
+      this.ux.setSpinnerStatus(messages.getMessage('describeSourceTypesMessage'));
     }
-    connector.onAfterDownloadType((status) => {
+    const metadataDetailsSource = await connectorSource.listMetadataTypes();
+    connectorSource.onAfterDownloadType((status) => {
       if (this.flags.progress) {
         this.ux.log(messages.getMessage('afterDownloadMessage', [status.entityType]));
       } else {
         this.ux.setSpinnerStatus(messages.getMessage('afterDownloadMessage', [status.entityType]));
       }
     });
-    const metadata = await connector.describeMetadataTypes(
-      detailTypes || strTypes,
-      this.flags.downloadall,
-      this.flags.group
+    const typesFromSource = await connectorSource.describeMetadataTypes(metadataDetailsSource, false, true);
+    const targetNamespace = ProjectUtils.getOrgNamespace(this.flags.root);
+    const connectorTarget = new SFConnector(
+      this.flags.target,
+      this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion,
+      this.flags.root,
+      targetNamespace
     );
+    connectorTarget.setMultiThread();
+    if (this.flags.progress) {
+      this.ux.log(messages.getMessage('describeTargetTypesMessage'));
+    } else {
+      this.ux.setSpinnerStatus(messages.getMessage('describeTargetTypesMessage'));
+    }
+    const metadataDetailsTarget = await connectorTarget.listMetadataTypes();
+    connectorTarget.onAfterDownloadType((status) => {
+      if (this.flags.progress) {
+        this.ux.log(messages.getMessage('afterDownloadMessage', [status.entityType]));
+      } else {
+        this.ux.setSpinnerStatus(messages.getMessage('afterDownloadMessage', [status.entityType]));
+      }
+    });
+    const typesFromTarget = await connectorTarget.describeMetadataTypes(metadataDetailsTarget, false, true);
+    if (this.flags.progress) {
+      this.ux.log(messages.getMessage('comparingMessage'));
+    } else {
+      this.ux.setSpinnerStatus(messages.getMessage('comparingMessage'));
+    }
+    const compareResult = MetadataUtils.compareMetadata(typesFromSource, typesFromTarget);
     if (!this.flags.json) {
-      if (metadata && Utils.hasKeys(metadata)) {
+      if (compareResult && Utils.hasKeys(compareResult)) {
         if (this.flags.csv) {
-          const csvData = CommandUtils.transformMetadataTypesToCSV(metadata);
+          const csvData = CommandUtils.transformMetadataTypesToCSV(compareResult);
           this.ux.log(csvData);
         } else {
-          const datatable = CommandUtils.transformMetadataTypesToTable(metadata);
+          const datatable = CommandUtils.transformMetadataTypesToTable(compareResult);
           this.ux.table(datatable, {
             columns: [
               {
@@ -153,10 +148,10 @@ export default class Describe extends SfdxCommand {
       if (!FileChecker.isExists(baseDir)) {
         FileWriter.createFolderSync(baseDir);
       }
-      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(metadata, null, 2));
+      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(compareResult, null, 2));
       this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
     }
-    return metadata;
+    return compareResult;
   }
 
   private validateProjectPath(): void {

@@ -1,0 +1,15 @@
+{
+    "commandDescription": "Command to compare two organization to get the differences. Return the metadata that exists on target but not exists on source",
+    "sourceFlagDescription": "Source Salesforce org to compare. If you want to compare your active org with other, this options is not necessary because use the --root option for get the project's auth org. If you choose source, --root will be ignored",
+    "targetFlagDescription": "Target Salesforce org to compare",
+    "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
+    "noDataToShowError": "Not metadata types found to describe",
+    "describeSourceTypesMessage": "Describing Metadata Types from Source",
+    "describeTargetTypesMessage": "Describing Metadata Types from Target",
+    "runningCompareMessage": "Comparing Source and Target...",
+    "comparingMessage": "Comparing Metadata Types",
+    "examples": [
+        "sfdx ah:metadata:org:between:compare -t test.username@salesforceOrg.com.qa",
+        "sfdx ah:metadata:org:between:compare -s test.username@salesforceOrg.com.uat -t test.username@salesforceOrg.com.qa"
+    ]
+}

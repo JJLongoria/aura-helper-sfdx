@@ -4,7 +4,7 @@ const Validator = CoreUtils.Validator;
 const Utils = CoreUtils.Utils;
 
 export default class CommandUtils {
-  public static getPaths(paths: string | string[], root: string, isFolder?: boolean): string[] {
+  public static getProjectPaths(paths: string | string[], root: string, isFolder?: boolean): string[] {
     const result: string[] = [];
     if (!root.endsWith('/') && !root.endsWith('\\')) {
       root += '/';
@@ -13,6 +13,20 @@ export default class CommandUtils {
     for (let typeTmp of resultTmp) {
       typeTmp = typeTmp.trim();
       const path = typeTmp.startsWith('./') && typeTmp !== root ? root + typeTmp.substring(2) : typeTmp;
+      if (!isFolder) {
+        result.push(Validator.validateFilePath(path.trim()));
+      } else {
+        result.push(Validator.validateFolderPath(path.trim()));
+      }
+    }
+    return result;
+  }
+
+  public static getPaths(paths: string | string[], isFolder?: boolean): string[] {
+    const result: string[] = [];
+    const resultTmp: string[] = Utils.forceArray(paths) as string[];
+    for (const typeTmp of resultTmp) {
+      const path = typeTmp.trim();
       if (!isFolder) {
         result.push(Validator.validateFilePath(path.trim()));
       } else {

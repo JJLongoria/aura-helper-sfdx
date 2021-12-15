@@ -71,8 +71,8 @@ export default class Compress extends SfdxCommand {
       compressor.setSortOrder(this.flags.sortorder);
       try {
         const paths: string[] = this.flags.all
-          ? CommandUtils.getPaths(this.flags.root, this.flags.root, true)
-          : CommandUtils.getPaths(this.flags.directory, this.flags.root, true);
+          ? CommandUtils.getProjectPaths(this.flags.root, this.flags.root, true)
+          : CommandUtils.getProjectPaths(this.flags.directory, this.flags.root, true);
         compressor.addPaths(paths);
       } catch (error) {
         const err = error as Error;
@@ -80,7 +80,7 @@ export default class Compress extends SfdxCommand {
       }
     } else {
       try {
-        this.flags.file = CommandUtils.getPaths(this.flags.file, this.flags.root);
+        this.flags.file = CommandUtils.getProjectPaths(this.flags.file, this.flags.root);
       } catch (error) {
         const err = error as Error;
         throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--file', err.message]));

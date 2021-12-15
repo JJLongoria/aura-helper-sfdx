@@ -218,8 +218,7 @@ Command for ignore some metadata types. If you use git or other SVC systems, you
 
 ### **Usage**:
 
-    sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel 
-  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+    sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ### **Options**:
 ```
@@ -327,8 +326,7 @@ Command to describe all or specific Metadata Types like Custom Objects, Custom F
 
 ### **Usage**:
 
-    sfdx ah:metadata:local:describe [-r <filepath>] [-a | -t <array>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel
-  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+    sfdx ah:metadata:local:describe [-r <filepath>] [-a | -t <array>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ### **Options**:
 ```
@@ -514,7 +512,7 @@ Command for retrieve the special metadata types stored in your local project. Th
                                                                         choose retrieve a specific profile, object o record type. Schema -> "Type1" or "Type1,Type2" or "Type1:Object1, Type1:Object2" or "Type1:Object1:Item1" for example:  "Profile, PermissinSet" to retrieve all profiles and permission sets. "Profile:Admin" to retrieve the admin profile. "RecordType:Account:RecordType1" to retrieve the RecordType1 for the object Account or "RecordType:Account" to retrieve all Record Types for Account
     [-i | --includeorg]                                                 With this option, you can retrieve the data from org and not only for local, but only retrieve the types 
                                                                         that you have in your local.
-    [-d | --downloadall]                                                Option to download all Metadata Types from any Namespaces (including managed packages). If this options is 
+    [--downloadall]                                                     Option to download all Metadata Types from any Namespaces (including managed packages). If this options is 
                                                                         not selected, only download and retrieve data from your org namespace
     [-c | --compress]                                                   Add this option for compress modified files for ignore operation.
     [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
@@ -581,12 +579,69 @@ Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and
 
 ## [**Org Metadata Commands**](#org-metadata-commands)
 
+- [**metadata:org:describe**](#metadataorgdescribe)
+
+    Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
+
 - [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
 
     Command to execute an Anonymous Apex script from file against the auth org N times.
 
 
 ---
+
+## [**ah:metadata:org:describe**](#metadataorgapexexecutor)
+Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
+
+### **Usage**:
+
+    sfdx ah:metadata:org:describe [-r <filepath>] [-a | -t <array>] [--group] [--downloadall] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    -a | --all                                                          Describe all metadata types
+    -t | --type <MetadataTypeName>[,<MetadataTypeName>...]              Describe the specified metadata types. You can select a single metadata or a list separated by commas. 
+                                                                        This option does not take effect if you choose describe all.
+    [-g | --group]                                                      Option to group global Quick Actions into GlobalActions group, false to list as object and item
+    [--downloadall]                                                     Option to download all Metadata Types from any Namespaces (including managed packages). If this options is 
+                                                                        not selected, only download data from your org namespace
+    [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+See [**Metadata JSON Format**](#metadata-json-format) section to learn about Metadata JSON Object returned by Aura Helper
+```json
+    {
+      "status": 0,
+      "result": {
+        // Metadata JSON Object
+      }
+    }
+```
+### **Examples**:
+
+Describe all metadata types stored in your local project with progress report and save the response into a file and csv response
+
+    sfdx ah:metadata:local:describe -a -p plaintext -s "path/to/the/output/file.txt" --csv
+
+Describe Custom Objects, Custom Fields, Profiles and ValidationRules with progress report and show results as table (by default)
+
+    sfdx ah:metadata:local:describe -t "CustomObject, CustomField, Profile, ValidatiionRule" -p   
+
+Describe Custom Objects and Custom Fields with json response
+
+    sfdx ah:metadata:local:describe -t "CustomObject, CustomField" --json 
+
+---
+
 
 ## [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
 Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.

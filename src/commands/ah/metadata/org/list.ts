@@ -3,13 +3,12 @@ import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
 import { CoreUtils, FileChecker, FileWriter, MetadataDetail, PathUtils } from '@aurahelper/core';
-import { MetadataFactory } from '@aurahelper/metadata-factory';
 import CommandUtils from '../../../../libs/utils/commandUtils';
 const Validator = CoreUtils.Validator;
 const ProjectUtils = CoreUtils.ProjectUtils;
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('aura-helper-sfdx', 'localList');
+const messages = Messages.loadMessages('aura-helper-sfdx', 'orgList');
 const generalMessages = Messages.loadMessages('aura-helper-sfdx', 'general');
 
 export default class Describe extends SfdxCommand {
@@ -65,26 +64,14 @@ export default class Describe extends SfdxCommand {
     } else {
       this.ux.setSpinnerStatus(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     }
-    const metadata: MetadataDetail[] = [];
     const metadataDetails = await connector.listMetadataTypes();
-    const folderMetadataMap = MetadataFactory.createFolderMetadataMap(metadataDetails);
-    const metadataFromFileSystem = MetadataFactory.createMetadataTypesFromFileSystem(
-      folderMetadataMap,
-      this.flags.root
-    );
-    Object.keys(folderMetadataMap).forEach(function (folder) {
-      const metadataType = folderMetadataMap[folder];
-      if (metadataFromFileSystem[metadataType.xmlName]) {
-        metadata.push(metadataType);
-      }
-    });
     if (!this.flags.json) {
       if (metadataDetails && metadataDetails.length) {
         if (this.flags.csv) {
-          const csvData = CommandUtils.transformMetadataDetailsToCSV(metadata);
+          const csvData = CommandUtils.transformMetadataDetailsToCSV(metadataDetails);
           this.ux.log(csvData);
         } else {
-          const datatable = CommandUtils.transformMetadataDetailsToTable(metadata);
+          const datatable = CommandUtils.transformMetadataDetailsToTable(metadataDetails);
           this.ux.table(datatable, {
             columns: [
               {
@@ -111,10 +98,10 @@ export default class Describe extends SfdxCommand {
       if (!FileChecker.isExists(baseDir)) {
         FileWriter.createFolderSync(baseDir);
       }
-      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(metadata, null, 2));
+      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(metadataDetails, null, 2));
       this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
     }
-    return metadata;
+    return metadataDetails;
   }
 
   private validateProjectPath(): void {

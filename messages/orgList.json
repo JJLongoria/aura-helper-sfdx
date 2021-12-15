@@ -1,0 +1,11 @@
+{
+    "commandDescription": "Command for list all metadata from the auth org",
+    "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
+    "noDataToShowError": "Not metadata types found to list",
+    "runningListMessage": "Listing Types...",
+    "examples": [
+        "sfdx ah:metadata:local:list -p",
+        "sfdx ah:metadata:local:list --csv",
+        "sfdx ah:metadata:local:list -r \"path/to/other/project/root\" --outputfile \"path/to/the/output/file.txt\" --json"
+    ]
+}

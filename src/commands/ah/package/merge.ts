@@ -18,6 +18,14 @@ export default class Merge extends SfdxCommand {
   public static examples = messages.getMessage('examples').split(os.EOL);
 
   protected static flagsConfig: FlagsConfig = {
+    // flag with a value (-n, --name=VALUE)
+    root: flags.filepath({
+      char: 'r',
+      description: generalMessages.getMessage('rootFlagDescription'),
+      default: './',
+      required: false,
+      helpValue: '<path/to/project/root>',
+    }),
     outputpath: flags.filepath({
       description: messages.getMessage('outputPathFlagDescription'),
       helpValue: '<target/files/path>',

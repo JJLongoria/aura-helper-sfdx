@@ -1,0 +1,20 @@
+{
+    "commandDescription": "Command to Check or Repair dependencies errors on your local project. (Only check data and types stored in your local project, do not connect to the org)",
+    "allFlagDescription": "Check or Repair all supported metadata types. (Support up to API v53.0)",
+    "typeFlagDescription": "Check or Repair specified metadata types. You can choose single type or a list separated by commas,  also you can choose to repair a specified objects like \"MetadataTypeAPIName:MetadataObjectAPIName\" or \"MetadataTypeAPIName:ObjectAPIName:ItemAPIName\". For example, \"CustomApplication:AppName1\" for repair only AppName1 Custom App. This option does not take effet if select repair all",
+    "onlyCheckFlagDestription": "Command to check error dependencies and return the errors by file",
+    "compressFlagDescription": "Add this option to compress modified files by repair operation.",
+    "useIgnoreFlagDescription": "Option to ignore to check or repair the metadata included in ignore file",
+    "ignoreFileFlagDescription": "Path to the ignore file. Use this if you don't want to use the project root ignore file or has a different name.",
+    "missingTypesToRepairError": "You must select repair all or repair specific types",
+    "runningRepairMessage": "Repair dependencies...",
+    "runningCheckMessage": "Check dependencies...",
+    "validateIgnoreFileMessage": "Validate ignore file",
+    "processingObjectMessage": "Processing object %s from %s",
+    "processingItemMessage": "Processing item %s(%s) from %s",
+    "outputSavedMessage": "Output saved in: %s",
+    "examples": [
+        "sfdx ah:version",
+        "sfdx ah:version --json"
+    ]
+}

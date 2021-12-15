@@ -14,13 +14,13 @@ SFDX Plugin to work with Salesforce Projects. This application are entire develo
 
 ## [**Features**](#features)
 
-- Simplify your work with **Salesforce and Git** with the command for *create packages* (for deploy and delete) from git changes. **Compare** two *branches*, *commits* or *tags* for create the files for deploy your package.
-- **Repair** file *dependencies errors* on your project files or **Check only** to resolve errors manually.
-- **Compress your XML Files** structure for make easy *identify changes* and resolve *git conflicts*. Also need less storage and work faster.
-- **Retrieve special Metadata Types** like *profiles* or *permissions* sets (and others) with all data without retrieve any file more with a simple command.
+- Simplify your work with **Salesforce and Git** with the command for [**create packages**](#package-git-create) (for deploy and delete) from git changes. **Compare** two *branches*, *commits* or *tags* for create the files for deploy your package.
+- [**Repair**](#metadatalocalrepair) file *dependencies errors* on your project files or [**Check only**](#metadatalocalrepair) to resolve errors manually.
+- [**Compress your XML Files**](#metadata-commands) structure for make easy *identify changes* and resolve *git conflicts*. Also need less storage and work faster.
+- [**Retrieve special Metadata Types**](#metadatalocalretrievespecial) like *profiles* or *permissions* sets (and others) with all data without retrieve any file more with a simple command. Also can [**Retrieve special Metadata Types**](#metadataorgretrievespecial) from the connected org.
 - **Compare** your *local data* with your *authorized organization* for get the differences for delete, retrieve or anything you want. Or **Compare** the Metadata Types *between two orgs* to see the differences.
-- **Merge** diferent **package** or **destructive** files into one file with only one command. 
-- **Ignore** any metadata type from your local project or from the package files for maintance different configuration into your sandbox and production enviroments with simple file and command.
+- [**Merge**](#package-merge-create) diferent **package** or **destructive** files into one file with only one command. 
+- [**Ignore**](#metadatalocalignore) any metadata type from your local project or from the package files for maintance different configuration into your sandbox and production enviroments with simple file and command.
 - Specially designed for **DevOps workflows**.
 - And much more
 
@@ -151,9 +151,9 @@ Metadata commands are the commands for work with your metadata files. You can co
 
     Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
 
-
-
 ---
+
+
 ## [**ah:metadata:local:compress**](#metadatalocalcompress)
 Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
@@ -579,9 +579,55 @@ Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and
 
 ---
 
-
-
 ## [**Org Metadata Commands**](#org-metadata-commands)
+
+- [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
+
+    Command to execute an Anonymous Apex script from file against the auth org N times.
+
+
+---
+
+## [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
+Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
+
+### **Usage**:
+
+    sfdx ah:metadata:org:apex:execute (-f <filepath> | undefined | undefined) [-r <filepath>] [-i <number>] [-l] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    -f | --file                                                         Path to the Anonymous Apex Script file
+    [-i | --iterations]                                                 Option to select the scritp execution number. For example, 3 for execute the script 3 times
+    [-l | --printlog]                                                   Option to print the result log of every execution
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+        "status": 0,
+        "result": {
+            "message": "Apex execution finished succesfully"
+        }
+    }
+```
+### **Examples**:
+
+Execute an script 3 times without printing log with colorized output and progress report
+
+    sfdx ah:metadata:org:apex:execute -f "path/to/script.apex" -i 3
+
+Execute an script 10 times wit printing log, colorized output and progress report
+
+    sfdx ah:metadata:org:apex:execute -f "path/to/script.apex" --iterations 10 --printlog
+
+---
+
 
 # [**Package Commands**](#package-commands)
 The Package commands are commands to create Package or Destructive XML files from different sources. You can create Package or Destructive XML files from git. Compare two branches, commits, tags...  to create package files with git changes, or create package files usings a Metadata JSON Object (See [**Metadata JSON Format**](#metadata-file) section to understand about it), or merge several Package or Destructive files into one file by type, all into only one file or other options to merge. 

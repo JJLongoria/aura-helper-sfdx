@@ -14,7 +14,8 @@
     "processingItemMessage": "Processing item %s(%s) from %s",
     "outputSavedMessage": "Output saved in: %s",
     "examples": [
-        "sfdx ah:version",
-        "sfdx ah:version --json"
+        "sfdx ah:metadata:local:repair -a -c",
+        "sfdx ah:metadata:local:repair -t \"CustomApplication:App1,Profile,PermissionSet:Perm1,PermissionSet:Perm2,CustomField:Account:Custom_field__c\"",
+        "sfdx ah:metadata:local:repair -t \"Profile\" -o -s \"path/to/the/output/errors.txt\""
     ]
 }

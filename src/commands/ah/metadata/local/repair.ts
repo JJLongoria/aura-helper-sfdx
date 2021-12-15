@@ -18,11 +18,19 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('aura-helper-sfdx', 'repair');
 const generalMessages = Messages.loadMessages('aura-helper-sfdx', 'general');
 
-export default class Merge extends SfdxCommand {
+export default class Repair extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
   public static examples = messages.getMessage('examples').split(os.EOL);
 
   protected static flagsConfig: FlagsConfig = {
+    // flag with a value (-n, --name=VALUE)
+    root: flags.filepath({
+      char: 'r',
+      description: generalMessages.getMessage('rootFlagDescription'),
+      default: './',
+      required: false,
+      helpValue: '<path/to/project/root>',
+    }),
     all: flags.boolean({
       char: 'a',
       description: messages.getMessage('allFlagDescription'),

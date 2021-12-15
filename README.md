@@ -147,7 +147,9 @@ Metadata commands are the commands for work with your metadata files. You can co
 
     Command to Check or Repair dependencies errors on your local project. (Only check data and types stored in your local project, do not connect to the org)
 
+- [**ah:metadata:local:special:retrieve**](#metadatalocalretrievespecial)
 
+    Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
 
 
 
@@ -483,19 +485,101 @@ See [**Dependencies Check Response**](#check-response) section to learn about Re
 ```
 ### **Examples**:
 
-Describe all metadata types stored in your local project with progress report and save the response into a file and csv response
+Repair all supported types and compress repaired files
 
-    sfdx ah:metadata:local:describe -a -p plaintext -s "path/to/the/output/file.txt" --csv
+    sfdx ah:metadata:local:repair -a -c
 
-Describe Custom Objects, Custom Fields, Profiles and ValidationRules with progress report and show results as table (by default)
+Repair Custom Aplication named App1, All profiles, Two permission sets Perm1 and Perm2 and one Custom Field
 
-    sfdx ah:metadata:local:describe -t "CustomObject, CustomField, Profile, ValidatiionRule" -p   
+    sfdx ah:metadata:local:repair -t "CustomApplication:App1,Profile,PermissionSet:Perm1,PermissionSet:Perm2,CustomField:Account:Custom_field__c"
 
-Describe Custom Objects and Custom Fields with json response
+Check only the errors on profiles and save the output on a file
 
-    sfdx ah:metadata:local:describe -t "CustomObject, CustomField" --json 
+    sfdx ah:metadata:local:repair -t "Profile" -o -s ""path/to/the/output/errors.txt""
 
 ---
+
+## [**ah:metadata:local:special:retrieve**](#metadatalocalretrievespecial)
+Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
+
+### **Usage**:
+
+    sfdx ah:metadata:local:special:retrieve [-r <filepath>] [-a | -t <array>] [-i] [--downloadall] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [-a | --all]                                                        Retrieve all supported metadata types (Profile,PermissionSet,Translations,RecordType,CustomObject)
+    [-t | --type <MetadataType>[,<Type:Object>,<Type:Object:Item>...]]  Retrieve specifics metadata types. You can choose one or a comma separated list of elements. Also you can 
+                                                                        choose retrieve a specific profile, object o record type. Schema -> "Type1" or "Type1,Type2" or "Type1:Object1, Type1:Object2" or "Type1:Object1:Item1" for example:  "Profile, PermissinSet" to retrieve all profiles and permission sets. "Profile:Admin" to retrieve the admin profile. "RecordType:Account:RecordType1" to retrieve the RecordType1 for the object Account or "RecordType:Account" to retrieve all Record Types for Account
+    [-i | --includeorg]                                                 With this option, you can retrieve the data from org and not only for local, but only retrieve the types 
+                                                                        that you have in your local.
+    [-d | --downloadall]                                                Option to download all Metadata Types from any Namespaces (including managed packages). If this options is 
+                                                                        not selected, only download and retrieve data from your org namespace
+    [-c | --compress]                                                   Add this option for compress modified files for ignore operation.
+    [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
+                                                                        simple XML elements first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+            "id": "RetrieveId",
+            "status": "RetrieveStatus",
+            "done": true,   
+            "success": true,
+            "inboundFiles": [
+                {
+                    "fullName": "fileFullName",
+                    "state": "fileState",
+                    "type": "MetadataType",
+                    "filePath": "path/to/retrieved/file",
+                },
+                {
+                    ...
+                }
+            ],
+            "packages": [
+                {
+                    "name": "packageName",
+                },
+                {
+                    ...
+                }
+            ],
+            "warnings": [
+                {
+                    "fileName": "fileNameValue",
+                    "problem": "problemDescription",
+                },
+                {
+                    ...
+                }
+            ],
+        }
+    }
+```
+### **Examples**:
+
+Retrieve all supported types only including org data and only org namespace data, progress report and file compression
+
+    sfdx ah:metadata:local:special:retrieve -a -c -i -o
+
+Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and RtName Account Recordtype with colorized output and progress report
+
+    sfdx ah:metadata:local:special:retrieve -t "Profile, PermissionSet:Perm1, PermissionSet:Perm2, RecordType:Case, RecordType:Account:RtName"
+
+---
+
+
 
 ## [**Org Metadata Commands**](#org-metadata-commands)
 
@@ -712,35 +796,35 @@ Create a Package XML file and/or Destructive XML file(s) from several package or
 
 Merge package and destructive files by type (default behaviour)
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\"
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml"
 
 Merge package and destructive files by type and create the destructive XML file to deploy before 
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --bytype --deletebefore
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --bytype --deletebefore
 
 Merge only package XML files into one package XML file (destructive files will be omitted)
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --onlypackage
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlypackage
 
 Merge only destructive XML files into one destructive XML file (package files will be omitted)
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --onlydestructive
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlydestructive
 
 Merge only destructive XML files into one destructive XML file (package files will be omitted) and create destructive to deploy before
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --onlydestructive --deletebefore
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlydestructive --deletebefore
 
 Merge all files into only one package XML file (including destructives)
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --fullpackage
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fullpackage
 
 Merge all files into only one destructive XML file (including packages)
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --fulldestructive
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fulldestructive
 
 Merge all files into only one destructive XML file (including packages) to deploy before
 
-    sfdx ah:package:merge -s \"path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml\" --fulldestructive --deletebefore
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fulldestructive --deletebefore
 
 ---
 

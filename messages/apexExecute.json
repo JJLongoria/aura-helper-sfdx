@@ -1,0 +1,14 @@
+{
+    "commandDescription": "Command to execute an Anonymous Apex script from file against the auth org N times.",
+    "fileFlagDescription": "Path to the Anonymous Apex Script file",
+    "printLogFlagDescription": "Option to print the result log of every execution",
+    "iterationsFlagDescription": "Option to select the scritp execution number. For example, 3 for execute the script 3 times",
+    "runningScriptMessage": "Running Apex Executions...",
+    "executingIterationMessage": "Executing Script. Iteration: %d/%d",
+    "finishedIterationMessage": "Iteration: %d/%d finished.",
+    "finishMessage": "Apex execution finished succesfully",
+    "examples": [
+        "sfdx ah:metadata:org:apex:execute -f \"path/to/script.apex\" -i 3",
+        "sfdx ah:metadata:org:apex:execute -f \"path/to/script.apex\" --iterations 10 --printlog"
+    ]
+}

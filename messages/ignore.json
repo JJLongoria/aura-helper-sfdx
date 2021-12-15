@@ -4,7 +4,7 @@
     "typeFlagDescription": "Ignore the specified metadata types according to the ignore file. You can select a sigle or a list separated by commas. This options does not take effect if you choose ignore all",
     "ignoreFileFlagDescription": "Path to the ignore file. Use this if you not want to use the project root ignore file or have different name. By default use %s file from your project root",
     "compressFlagDescription": "Add this option to compress modified files by ignore operation.",
-    "missingTypesToCompressError": "You must select ignore all or ignore specific types",
+    "missingTypesToIgnoreError": "You must select ignore all or ignore specific types",
     "worngIgnoreFilePathError": "Wrong --ignorefile path. Error: %s",
     "processingMetadataType": "'Processing %s Metadata Type'",
     "ignoreFinishSuccesfully": "Ignore metadata finished successfully",

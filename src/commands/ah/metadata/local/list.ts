@@ -54,7 +54,12 @@ export default class Describe extends SfdxCommand {
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
-    const connector = new SFConnector(alias, undefined, this.flags.root, namespace);
+    const connector = new SFConnector(
+      alias,
+      this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion,
+      this.flags.root,
+      namespace
+    );
     if (this.flags.progress) {
       this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     } else {

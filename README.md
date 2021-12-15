@@ -143,6 +143,14 @@ Metadata commands are the commands for work with your metadata files. You can co
 
     Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
+- [**ah:metadata:local:repair**](#metadatalocalrepair)
+
+    Command to Check or Repair dependencies errors on your local project. (Only check data and types stored in your local project, do not connect to the org)
+
+
+
+
+
 ---
 ## [**ah:metadata:local:compress**](#metadatalocalcompress)
 Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
@@ -249,6 +257,7 @@ Ignore only Custom Application, Custom Labels and Profiles specified in .ahignor
     sfdx ah:metadata:local:ignore -t "CustomApplication, Profile, CustomLabels" -i "Path/to/the/file/.myignoreFile.json" -p
 
 ---
+
 ## [**ah:metadata:local:list**](#metadatalocallist) 
 Command for list all Metadata Types stored in your local project. 
 
@@ -337,7 +346,7 @@ Command to describe all or specific Metadata Types like Custom Objects, Custom F
 ```
 
 ### **JSON Response**:
-See [**Metadata JSON Format**](#metadata-json-format) section to understand about Metadata JSON Object returned by Aura Helper
+See [**Metadata JSON Format**](#metadata-json-format) section to learn about Metadata JSON Object returned by Aura Helper
 ```json
     {
       "status": 0,
@@ -362,6 +371,131 @@ Describe Custom Objects and Custom Fields with json response
 
 ---
 
+## [**ah:metadata:local:repair**](#metadatalocalrepair)
+Command to Check or Repair dependencies errors on your local project. (Only check data and types stored in your local project, do not connect to the org)
+
+### **Usage**:
+
+    sfdx ah:metadata:local:repair [-a | -t <array>] [-o] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-u] [-i <filepath>] [--outputfile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [-a | --all]                                                        Check or Repair all supported metadata types. (Support up to API v53.0)
+    [-t | --type <MetadataType>[,<Type:Object>,<Type:Object:Item>...]]  Check or Repair specified metadata types. You can choose single type or a list separated by commas, also 
+                                                                        you can choose to repair a specified objects like "MetadataTypeAPIName:MetadataObjectAPIName" or "MetadataTypeAPIName:ObjectAPIName:ItemAPIName". For example, "CustomApplication:AppName1" for repair only AppName1 Custom App. This option does not take effet if select repair all.
+    [-c | --compress]                                                   Add this option for compress modified files for ignore operation.
+    [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
+                                                                        simple XML elements first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
+    
+    [-u | -useignore]                                                   Option to ignore to check or repair the metadata included in ignore file
+    [-i | --ignorefile]                                                 Path to the ignore file. Use this if you don't want to use the project root ignore file or has a 
+                                                                        different name.
+    [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Repair Response**:
+See [**Dependencies Repair Response**](#repair-response) section to learn about Repair Response
+```json
+    {
+      "status": 0,
+      "result": {
+            "MetadataTypeName": {
+                "metadataType": "MetadataTypeName"
+                "errors": [
+                    {
+                        "file": "path/to/file"
+                        "errors": [
+                            {
+                                "elementPath": "xmlSuperParentTag>xmlParentTag>xmlTag",
+                                "value": "error value",
+                                "metadataType": "error Metadata Type",
+                                "metadataObject": "error Metadata Object",
+                                "metadataItem": "error Metadata Item",
+                                "xmlElement": {
+                                    // xml Element error data
+                                }
+                            },
+                            {
+                                ...
+                            },
+                            {
+                                ...
+                            }
+                        ]
+                    },
+                    {
+                        ...
+                    },
+                    {
+                        ...
+                    }
+                ]
+            }
+        }
+    }
+```
+
+### **JSON Check Response**:
+See [**Dependencies Check Response**](#check-response) section to learn about Repair Response
+```json
+    {
+      "status": 0,
+      "result": {
+            "MetadataTypeName": [
+                {
+                    "object": "MetadataObject",
+                    "item": "MetadataItem",
+                    "line": 16,
+                    "startColumn": 146,
+                    "endColumn": 166,
+                    "message": "MetadataTypeName named MetadataObject.MetadataItem does not exists",
+                    "severity": "Warning",
+                    "file": "/path/to/file"
+                },
+                {
+                    "object": "MetadataObject",
+                    "item": "MetadataItem",
+                    "line": 17,
+                    "startColumn": 146,
+                    "endColumn": 166,
+                    "message": "MetadataTypeName named MetadataObject.MetadataItem does not exists",
+                    "severity": "Warning",
+                    "file": "/path/to/file"
+                },
+            ],
+            "MetadataTypeName": [
+                {
+                    ...
+                },
+                {
+                    ...
+                }
+            ]
+        }
+    }
+```
+### **Examples**:
+
+Describe all metadata types stored in your local project with progress report and save the response into a file and csv response
+
+    sfdx ah:metadata:local:describe -a -p plaintext -s "path/to/the/output/file.txt" --csv
+
+Describe Custom Objects, Custom Fields, Profiles and ValidationRules with progress report and show results as table (by default)
+
+    sfdx ah:metadata:local:describe -t "CustomObject, CustomField, Profile, ValidatiionRule" -p   
+
+Describe Custom Objects and Custom Fields with json response
+
+    sfdx ah:metadata:local:describe -t "CustomObject, CustomField" --json 
+
+---
 
 ## [**Org Metadata Commands**](#org-metadata-commands)
 
@@ -802,6 +936,208 @@ The describe metadata commands and compare commands return the metadata in a JSO
                 ...
             }
         }
+    }
+```
+# [**Dependencies Repair Response**](#repair-response)
+When you repair dependencies with any option (compress or not, repair specified types...) the response error has the next structure:
+```json
+    {
+        "MetadataTypeName": {
+            "metadataType": "MetadataTypeName"
+            "errors": [
+                {
+                    "file": "path/to/file"
+                    "errors": [
+                        {
+                            "elementPath": "xmlSuperParentTag>xmlParentTag>xmlTag",
+                            "value": "error value",
+                            "metadataType": "error Metadata Type",
+                            "metadataObject": "error Metadata Object",
+                            "metadataItem": "error Metadata Item",
+                            "xmlElement": {
+                                // xml Element error data
+                            }
+                        },
+                        {
+                            ...
+                        },
+                        {
+                            ...
+                        }
+                    ]
+                },
+                {
+                    ...
+                },
+                {
+                    ...
+                }
+            ]
+        }
+    }
+```
+### **Example**:
+
+```json
+    {
+        "CustomApplication": {
+            "metadataType": "CustomApplication"
+            "errors": [
+                {
+                    "file": "..../force-app/main/default/applications/customApplicationExample.app-meta.xml"
+                    "errors": [
+                        {
+                            "elementPath": "actionOverrides>content",
+                            "value": "FlexiPageExample",
+                            "metadataType": "FlexiPage",
+                            "metadataObject": "FlexiPageExample",
+                            "xmlElement": {
+                                "actionName": "View",
+                                "comment": "Action override description",
+                                "content": "FlexiPageExample",
+                                "formFactor": "Large",
+                                "pageOrSobjectType": "Account",
+                                "skipRecordTypeSelect": false,
+                                "type": "Flexipage"
+                            }
+                        },
+                        {
+                            ...
+                        },
+                        {
+                            ...
+                        }
+                    ]
+                },
+                {
+                    ...
+                },
+                {
+                    ...
+                }
+            ]
+        },
+        "PermissionSet": {
+            "metadataType": "PermissionSet"
+            "errors": [
+                {
+                    "file": "..../force-app/main/default/permissionsets/permissionSetExample.app-meta.xml"
+                    "errors": [
+                        {
+                            "elementPath": "fieldPermissions>field",
+                            "value": "Account.custom_field__c",
+                            "metadataType": "CustomField",
+                            "metadataObject": "Account",
+                            "metadataItem": "custom_field__c",
+                            "xmlElement": {
+                                "editable": false,
+                                "field": "Account.custom_field__c",
+                                "readable": false
+                            }
+                        },
+                        {
+                            ...
+                        },
+                        {
+                            ...
+                        }
+                    ]
+                },
+                {
+                    ...
+                },
+                {
+                    ...
+                }
+            ]
+        }
+    }
+```
+
+# [**Dependencies Check Response**](#check-response)
+When you only check dependencies errors the response error has the next structure:
+
+```json
+    {
+        "MetadataTypeName": [
+            {
+                "object": "MetadataObject",
+                "item": "MetadataItem",
+                "line": 16,
+                "startColumn": 146,
+                "endColumn": 166,
+                "message": "MetadataTypeName named MetadataObject.MetadataItem does not exists",
+                "severity": "Warning",
+                "file": "/path/to/file"
+            },
+            {
+                "object": "MetadataObject",
+                "item": "MetadataItem",
+                "line": 17,
+                "startColumn": 146,
+                "endColumn": 166,
+                "message": "MetadataTypeName named MetadataObject.MetadataItem does not exists",
+                "severity": "Warning",
+                "file": "/path/to/file"
+            },
+        ],
+        "MetadataTypeName": [
+            {
+                ...
+            },
+            {
+                ...
+            }
+        ]
+    }
+```
+
+### **Example**:
+
+```json
+    {
+        "CustomApplication": [
+            {
+                "object": "FlexiPageExample",
+                "line": 16,
+                "startColumn": 146,
+                "endColumn": 166,
+                "message": "FlexiPage named FlexiPageExample does not exists",
+                "severity": "Warning",
+                "file": "..../force-app/main/default/applications/customApplicationExample.app-meta.xml"
+            },
+            {
+                "object": "FlexiPageExample",
+                "line": 17,
+                "startColumn": 146,
+                "endColumn": 166,
+                "message": "FlexiPage named FlexiPageExample does not exists",
+                "severity": "Warning",
+                "file": "..../force-app/main/default/applications/customApplicationExample.app-meta.xml"
+            },
+        ],
+        "PermissionSet": [
+            {
+                "object": "Account",
+                "item": "custom_field__c",
+                "line": 1771,
+                "startColumn": 56,
+                "endColumn": 85,
+                "message": "CustomField named Account.custom_field__c does not exists",
+                "severity": "Warning",
+                "file": "..../force-app/main/default/permissionsets/permissionSetExample.permissionset-meta.xml"
+            },
+            {
+                "object": "Account",
+                "item": "custom_field2__c",
+                "line": 1772,
+                "startColumn": 56,
+                "endColumn": 85,
+                "message": "CustomField named Account.custom_field2__c does not exists",
+                "severity": "Warning",
+                "file": "..../force-app/main/default/permissionsets/permissionSetExample.permissionset-meta.xml"
+            },
+        ]
     }
 ```
 

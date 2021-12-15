@@ -69,7 +69,7 @@ export default class Ignore extends SfdxCommand {
   public async run(): Promise<AnyJson> {
     this.validateProjectPath();
     if (this.flags.all === undefined && this.flags.type === undefined) {
-      throw new SfdxError(messages.getMessage('missingTypesToCompressError'));
+      throw new SfdxError(messages.getMessage('missingTypesToIgnoreError'));
     }
     if (!this.flags.ignorefile) {
       this.flags.ignorefile = (this.flags.root as string) + '/' + IGNORE_FILE_NAME;
@@ -90,7 +90,12 @@ export default class Ignore extends SfdxCommand {
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
-    const connector = new SFConnector(alias, this.flags.apiversion, this.flags.root, namespace);
+    const connector = new SFConnector(
+      alias,
+      this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion,
+      this.flags.root,
+      namespace
+    );
     if (this.flags.progress) {
       this.ux.log(generalMessages.getMessage('gettingAvailableMetadataTypesMessage'));
     } else {

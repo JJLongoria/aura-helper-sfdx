@@ -1,0 +1,13 @@
+{
+    "commandDescription": "Command to export data from the selected org to work with data:import command.",
+    "queryFlagDescription": "Query to extract data. You can use a simple query (Select [fields] from [object] [where] ...) or a complex query (select [fields], [query], [query] from [object] [where] ...) for export data in tree format",
+    "outputPathFlagDescription": "Path to save the generated output files. By default save result on <actualDir>/export",
+    "prefixFlagDescripition": "Prefix to add to the generated files",
+    "runningExportMessage": "Exporting Data...",
+    "startExtractingDataMessage": "Start Extracting data from %s",
+    "extractedSuccesfullyMessage": "Data extracted succesfully on %s",
+    "examples": [
+        "sfdx ah:data:export -q \"Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account\" -o \"./export/accounts\"",
+        "sfdx ah:data:export -q \"Select Id, Name, BillingNumber, RecordType.DeveloperName from Account\" -o \"./export/accounts\""
+    ]
+}

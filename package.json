@@ -71,6 +71,25 @@
   ],
   "license": "GPL-3.0-only",
   "oclif": {
+    "topics": {
+      "ah:metadata": {
+        "description": "Topic with commands to work with Metadata types and files like list, describe, retrieve special types or compare metadata types and orgs among others.",
+        "subtopics": {
+          "local": {
+            "description": "Topic to group all metadata commands to work with the local project and stored Metadata Types and files"
+          },
+          "org": {
+            "description": "Topic to group all metadata commands to work with the project connected org"
+          }
+        }
+      },
+      "ah:package": {
+        "description": "Topic with commands to create XML Package and Destructive files from several sources. Create package and destructive files from GIT Changes to crete delta package. From Aura Helper JSON Metadata file or merge package and destructive files"
+      },
+      "ah:data": {
+        "description": "Topic with commands work with data against the project connected org. Export or Import tree data without Salesforce"
+      }
+    },
     "commands": "./lib/commands",
     "bin": "sfdx",
     "devPlugins": [

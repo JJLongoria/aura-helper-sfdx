@@ -38,10 +38,6 @@ export default class Retrieve extends SfdxCommand {
       exclusive: ['all'],
       helpValue: '<MetadataTypeName>[,<MetadataTypeName:Object>, <MetadataTypeName:Object:Item>...]',
     }),
-    includeorg: flags.boolean({
-      char: 'i',
-      description: messages.getMessage('includeOrgFlagDestription'),
-    }),
     downloadall: flags.boolean({
       description: messages.getMessage('downloadAllFlagDescription'),
     }),
@@ -90,13 +86,6 @@ export default class Retrieve extends SfdxCommand {
         namespace
       );
       connector.setMultiThread();
-      connector.onLoadingLocal(() => {
-        if (this.flags.progress) {
-          this.ux.log(messages.getMessage('loadingLocalMessage'));
-        } else {
-          this.ux.setSpinnerStatus(messages.getMessage('loadingLocalMessage'));
-        }
-      });
       connector.onLoadingOrg(() => {
         if (this.flags.progress) {
           this.ux.log(messages.getMessage('loadingOrgMessage'));
@@ -134,22 +123,12 @@ export default class Retrieve extends SfdxCommand {
         }
       });
       let retrieveOut = new RetrieveResult('');
-      if (!this.flags.includeorg) {
-        retrieveOut = await connector.retrieveLocalSpecialTypes(
-          PathUtils.getAuraHelperSFDXTempFilesPath(),
-          types,
-          this.flags.compress,
-          this.flags.sortrrder
-        );
-      } else {
-        retrieveOut = await connector.retrieveMixedSpecialTypes(
-          PathUtils.getAuraHelperSFDXTempFilesPath(),
-          types,
-          this.flags.downloadall,
-          this.flags.compress,
-          this.flags.sortrrder
-        );
-      }
+      retrieveOut = await connector.retrieveOrgSpecialTypes(
+        PathUtils.getAuraHelperSFDXTempFilesPath(),
+        types,
+        this.flags.compress,
+        this.flags.sortrrder
+      );
       if (this.flags.progress) {
         this.ux.log(messages.getMessage('retrieveFinishedMessage'));
       } else {

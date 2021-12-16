@@ -173,4 +173,22 @@ export default class CommandUtils {
     }
     return result;
   }
+
+  public static transformPermissionsToCSV(permissions: string[]): string {
+    let result = 'API Name';
+    for (const permission of permissions) {
+      result += '\n' + permission;
+    }
+    return result;
+  }
+
+  public static transformPermissionsToTable(permissions: string[]): AnyJson[] {
+    const result: AnyJson[] = [];
+    for (const permission of permissions) {
+      result.push({
+        name: permission,
+      });
+    }
+    return result;
+  }
 }

@@ -2,16 +2,14 @@ import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
-import { CoreUtils, FileChecker, FileWriter, MetadataType, PathUtils } from '@aurahelper/core';
-import { MetadataFactory } from '@aurahelper/metadata-factory';
-import CommandUtils from '../../../../libs/utils/commandUtils';
+import { CoreUtils, FileChecker, FileWriter, PathUtils } from '@aurahelper/core';
+import CommandUtils from '../../../../../libs/utils/commandUtils';
 const Validator = CoreUtils.Validator;
 const ProjectUtils = CoreUtils.ProjectUtils;
 const Utils = CoreUtils.Utils;
-const MetadataUtils = CoreUtils.MetadataUtils;
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('aura-helper-sfdx', 'orgCompare');
+const messages = Messages.loadMessages('aura-helper-sfdx', 'permissions');
 const generalMessages = Messages.loadMessages('aura-helper-sfdx', 'general');
 
 export default class Compare extends SfdxCommand {
@@ -41,7 +39,7 @@ export default class Compare extends SfdxCommand {
     apiversion: flags.builtin(),
   };
 
-  public async run(): Promise<{ [key: string]: MetadataType }> {
+  public async run(): Promise<string[]> {
     this.validateProjectPath();
     if (this.flags.outputfile) {
       try {
@@ -52,7 +50,9 @@ export default class Compare extends SfdxCommand {
       }
     }
     if (!this.flags.progress) {
-      this.ux.startSpinner(messages.getMessage('runningCompareMessage'));
+      this.ux.startSpinner(messages.getMessage('runningGetPermissionsMessage'));
+    } else {
+      this.ux.log(messages.getMessage('runningGetPermissionsMessage'));
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
@@ -63,57 +63,19 @@ export default class Compare extends SfdxCommand {
       namespace
     );
     connector.setMultiThread();
-    if (this.flags.progress) {
-      this.ux.log(messages.getMessage('describeLocalTypesMessage'));
-    } else {
-      this.ux.setSpinnerStatus(messages.getMessage('describeLocalTypesMessage'));
-    }
-    const metadataDetails = await connector.listMetadataTypes();
-    const folderMetadataMap = MetadataFactory.createFolderMetadataMap(metadataDetails);
-    const typesFromLocal = MetadataFactory.createMetadataTypesFromFileSystem(folderMetadataMap, this.flags.root, true);
-    if (this.flags.progress) {
-      this.ux.log(messages.getMessage('describeOrgTypesMessage'));
-    } else {
-      this.ux.setSpinnerStatus(messages.getMessage('describeOrgTypesMessage'));
-    }
-    connector.onAfterDownloadType((status) => {
-      if (this.flags.progress) {
-        this.ux.log(messages.getMessage('afterDownloadMessage', [status.entityType]));
-      } else {
-        this.ux.setSpinnerStatus(messages.getMessage('afterDownloadMessage', [status.entityType]));
-      }
-    });
-    const typesFromOrg = await connector.describeMetadataTypes(metadataDetails, false, true);
-    if (this.flags.progress) {
-      this.ux.log(messages.getMessage('comparingMessage'));
-    } else {
-      this.ux.setSpinnerStatus(messages.getMessage('comparingMessage'));
-    }
-    const compareResult = MetadataUtils.compareMetadata(typesFromLocal, typesFromOrg);
+    const permissions = await connector.loadUserPermissions(PathUtils.getAuraHelperSFDXTempFilesPath());
     if (!this.flags.json) {
-      if (compareResult && Utils.hasKeys(compareResult)) {
+      if (permissions && permissions.length > 0) {
         if (this.flags.csv) {
-          const csvData = CommandUtils.transformMetadataTypesToCSV(compareResult);
+          const csvData = CommandUtils.transformPermissionsToCSV(permissions);
           this.ux.log(csvData);
         } else {
-          const datatable = CommandUtils.transformMetadataTypesToTable(compareResult);
+          const datatable = CommandUtils.transformPermissionsToTable(permissions);
           this.ux.table(datatable, {
             columns: [
               {
-                key: 'type',
-                label: 'Metadata Type',
-              },
-              {
-                key: 'object',
-                label: 'Metadata Object',
-              },
-              {
-                key: 'item',
-                label: 'Metadata Item',
-              },
-              {
-                key: 'path',
-                label: 'Path',
+                key: 'name',
+                label: 'API Name',
               },
             ],
           });
@@ -127,10 +89,10 @@ export default class Compare extends SfdxCommand {
       if (!FileChecker.isExists(baseDir)) {
         FileWriter.createFolderSync(baseDir);
       }
-      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(compareResult, null, 2));
+      FileWriter.createFileSync(this.flags.outputile, JSON.stringify(permissions, null, 2));
       this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
     }
-    return compareResult;
+    return permissions;
   }
 
   private validateProjectPath(): void {

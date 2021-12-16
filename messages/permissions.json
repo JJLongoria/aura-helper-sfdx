@@ -1,0 +1,11 @@
+{
+    "commandDescription": "Command to get all available User permisions in your org.",
+    "csvFlagDescription": "Option to show the result as CSV instead a table if not select --json flag",
+    "runningGetPermissionsMessage": "Getting available User Permissions...",
+    "noDataToShowError": "Not permissions found to list",
+    "outputSavedMessage": "Output saved in: %s",
+    "examples": [
+        "sfdx ah:metadata:org:permissions:get --json",
+        "sfdx ah:metadata:org:permissions:get -o \"path/to/the/output/errors.txt\""
+    ]
+}

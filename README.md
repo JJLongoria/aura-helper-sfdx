@@ -492,7 +492,7 @@ Repair Custom Aplication named App1, All profiles, Two permission sets Perm1 and
 
 Check only the errors on profiles and save the output on a file
 
-    sfdx ah:metadata:local:repair -t "Profile" -o -s ""path/to/the/output/errors.txt""
+    sfdx ah:metadata:local:repair -t "Profile" -o ""path/to/the/output/errors.txt""
 
 ---
 
@@ -593,6 +593,14 @@ Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and
 - [**ah:metadata:org:between:compare**](#metadataorgcomparebetween)
 
     Command to compare two organization to get the differences. Return the metadata that exists on target but not exists on source
+
+- [**metadata:org:special:retrieve**](#metadataorgretrievespecial)
+
+    Command to retrieve the special metadata types stored in your auth org. The special types are all types generated at runtime when retrieving metadata according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
+
+- [**ah:metadata:org:permissions:get**](#metadataorgpermissions)
+
+    Command to get all available User permisions in your org.
 
 - [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
 
@@ -804,6 +812,130 @@ Compare between to orgs
     sfdx ah:metadata:org:between:compare -s test.username@salesforceOrg.com.uat -t test.username@salesforceOrg.com.qa
 
 ---
+
+## [**ah:metadata:org:special:retrieve**](#metadataorgretrievespecial)
+Command to retrieve the special metadata types stored in your auth org. The special types are all types generated at runtime when retrieving metadata according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
+
+### **Usage**:
+
+    sfdx ah:metadata:org:special:retrieve [-r <filepath>] [-a | -t <array>] [--downloadall] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [-a | --all]                                                        Retrieve all supported metadata types (Profile,PermissionSet,Translations,RecordType,CustomObject)
+    [-t | --type <MetadataType>[,<Type:Object>,<Type:Object:Item>...]]  Retrieve specifics metadata types. You can choose one or a comma separated list of elements. Also you can 
+                                                                        choose retrieve a specific profile, object o record type. Schema -> "Type1" or "Type1,Type2" or "Type1:Object1, Type1:Object2" or "Type1:Object1:Item1" for example:  "Profile, PermissinSet" to retrieve all profiles and permission sets. "Profile:Admin" to retrieve the admin profile. "RecordType:Account:RecordType1" to retrieve the RecordType1 for the object Account or "RecordType:Account" to retrieve all Record Types for Account
+    [--downloadall]                                                     Option to download all Metadata Types from any Namespaces (including managed packages). If this options is 
+                                                                        not selected, only download and retrieve data from your org namespace
+    [-c | --compress]                                                   Add this option for compress modified files for ignore operation.
+    [-s | --sort-order <sortOrder>]                                     Sort order for the XML elements when compress XML files. By default, the elements are sorted with 
+                                                                        simple XML elements first. Values: simpleFirst, complexFirst, alphabetAsc, alphabetDesc
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
+                                                                        spinner loader
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+      "status": 0,
+      "result": {
+            "id": "RetrieveId",
+            "status": "RetrieveStatus",
+            "done": true,   
+            "success": true,
+            "inboundFiles": [
+                {
+                    "fullName": "fileFullName",
+                    "state": "fileState",
+                    "type": "MetadataType",
+                    "filePath": "path/to/retrieved/file",
+                },
+                {
+                    ...
+                }
+            ],
+            "packages": [
+                {
+                    "name": "packageName",
+                },
+                {
+                    ...
+                }
+            ],
+            "warnings": [
+                {
+                    "fileName": "fileNameValue",
+                    "problem": "problemDescription",
+                },
+                {
+                    ...
+                }
+            ],
+        }
+    }
+```
+### **Examples**:
+
+Retrieve all supported types with only org namespace data and file compression
+
+    sfdx ah:metadata:org:special:retrieve -a -c
+
+Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and RtName Account Recordtype
+
+    sfdx ah:metadata:org:special:retrieve -t "Profile, PermissionSet:Perm1, PermissionSet:Perm2, RecordType:Case, RecordType:Account:RtName"
+
+---
+
+
+## [**ah:metadata:org:permissions:get**](#metadataorgpermissions)
+Command to get all available User permisions in your org.
+
+### **Usage**:
+
+    sfdx ah:metadata:org:permissions:get [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [--csv]                                                             Option to show the result as CSV instead a table if not select --json flag.
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+        "status": 0,
+        "result": [
+            "ActivateContract",
+            "ActivateOrder",
+            "ActivitiesAccess",
+            "AddDirectMessageMembers",
+            "AllowUniversalSearch",
+            ...
+        ]
+    }
+```
+### **Examples**:
+
+Execute an script 3 times without printing log with colorized output and progress report
+
+    sfdx ah:metadata:org:apex:execute -f "path/to/script.apex" -i 3
+
+Execute an script 10 times wit printing log, colorized output and progress report
+
+    sfdx ah:metadata:org:apex:execute -f "path/to/script.apex" --iterations 10 --printlog
+
+---
+
 
 
 ## [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)

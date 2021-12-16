@@ -40,6 +40,10 @@ export default class Compare extends SfdxCommand {
       description: generalMessages.getMessage('outputPathFlagDescription'),
       helpValue: '<path/to/output/file>',
     }),
+    csv: flags.boolean({
+      description: messages.getMessage('csvFlagDescription'),
+      default: false,
+    }),
     progress: flags.boolean({
       char: 'p',
       description: generalMessages.getMessage('progressFlagDescription'),

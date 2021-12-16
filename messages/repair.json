@@ -16,6 +16,6 @@
     "examples": [
         "sfdx ah:metadata:local:repair -a -c",
         "sfdx ah:metadata:local:repair -t \"CustomApplication:App1,Profile,PermissionSet:Perm1,PermissionSet:Perm2,CustomField:Account:Custom_field__c\"",
-        "sfdx ah:metadata:local:repair -t \"Profile\" -o -s \"path/to/the/output/errors.txt\""
+        "sfdx ah:metadata:local:repair -t \"Profile\" -o \"path/to/the/output/errors.txt\""
     ]
 }

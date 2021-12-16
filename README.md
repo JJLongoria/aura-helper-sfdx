@@ -1226,6 +1226,66 @@ Merge all files into only one destructive XML file (including packages) to deplo
 
 
 # [**Data Commands**](#data-commands)
+Data commands are the commands to work with data stored in your orgs. You can export and import data between orgs with two simple commands. You can export related objects and import all throgth one command, and Aura Helper automatically match the record types and related objects with their parents. Don't have any salesforce limits and you can export and import all data that you need.
+
+  - [**data:export**](#dataexport)
+
+    Command to export data from the project's auth org or any other org that you have access. This command use the tree:export command from sfdx with plan. If you want to resolve record types automatically on import, you must extract the field "RecordType.DeveloperName" into the query. To resolve parent-child relationship, you must extract the parent field into the childs subquery.
+
+  - [**data:import**](#dataimport)
+
+    Command to import data extracted from data:export (or sfdx tree:export with a plan) and use the tree:import command from sfdx. Unlike the export command. The import command pre process the extracted data before insert to link record types if apply, save and resolve object references, and avoid the salesforce limits. To link record types automatically, you must include in the export query this field "RecordType.DeveloperName" and Aura Helper CLI automatically resolve the record types on target org. To link child objects with their parents, you must extract the parent object into the childs subqueries. Also, you can import data directly from other org.
+
+---
+
+## [**data:export**](#dataexport)
+Command for export data from the project's auth org or any other org that you have access. This command use the tree:export command from sfdx with plan. If you want to resolve record types automatically on import, you must extract the field "RecordType.DeveloperName" into the query. For resolve parent-child relationship, you must extract the parent field into the childs subquery.
+
+
+### **Usage**:
+
+    sfdx ah:data:export --query <string> [-r <filepath>] [-o <filepath>] [--prefix <string>] [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    -q | --query                                                        Query to extract data. You can use a simple query (Select [fields] from [object] [where] ...) or a complex 
+                                                                        query (select [fields], [query], [query] from [object] [where] ...) for export data in tree format
+    [-o | --outputpath]                                                 Path to save the generated output files. By default save result on <actualDir>/export
+    [-u | --targetusername]                                             Username or alias for the target org; overrides default target org
+    [--prefix]                                                          Prefix to add to the generated files
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+        "status": 0,
+        "result": {
+            [
+                "file": "path/to/exported/file",
+                "records": 100,
+                "isPlanFile": true,
+            ],
+            [
+                ...
+            ],
+            ...
+        }
+    }
+```
+### **Examples**:
+
+Export all account records with contacts
+
+    sfdx ah:data:export -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account" -o "./export/accounts"
+
+Export all accounts to link with record type
+
+    sfdx ah:data:export -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" -o "./export/accounts"
 
 # [**Core Commands**](#core-commands)
 

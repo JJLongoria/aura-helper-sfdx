@@ -984,30 +984,30 @@ The Package commands are commands to create Package or Destructive XML files fro
 
 ## [**GIT**](#package-command-git)
 
-- [**ah&colon;package&colon;git:create**](#package-git-create)
+- [**ah:&#8203;package:git:create**](#package-git-create)
 
     Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
 
 ## [**JSON**](#package-command-json)
 
-- [**ah&colon;package&colon;json:create**](#package-git-create)
+- [**ah:&#8203;package:json:create**](#package-git-create)
 
     Create a Package XML file or Destructive XML file from a JSON Metadata File
 
 ## [**Merge**](#package-command-merge)
 
-- [**ah&colon;package&colon;merge**](#package-merge-create)
+- [**ah:&#8203;package:merge**](#package-merge-create)
 
     Create a Package XML file and/or Destructive XML file(s) from several package or destructive files.
 
 ---
 
-## [**ah&colon;package&colon;git:create**](#package-git-create)
+## [**ah:&#8203;package:git:create**](#package-git-create)
 Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
 
 ### **Usage**:
 
-    sfdx ah&colon;package&colon;git:create [-r <filepath>] [--outputpath <filepath>] [-f package|p|destructive|d|both|b] [-b] [-s <string>] [-t <string>] [-r] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+    sfdx ah:package:git:create [-r <filepath>] [--outputpath <filepath>] [-f package|p|destructive|d|both|b] [-b] [-s <string>] [-t <string>] [-r] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ### **Options**:
 ```
@@ -1068,32 +1068,32 @@ See [**Metadata JSON Format**](#metadata-json-format) section to understand abou
 
 Create both files with not commited changes on active branch (default behaviour without parameters)
 
-    sfdx ah&colon;package&colon;git:create
+    sfdx ah:package:git:create
 
 Create both files with changes between to the active branch and another branch. 
 
-    sfdx ah&colon;package&colon;git:create -f both -t Develop --json
+    sfdx ah:package:git:create -f both -t Develop --json
 
 Create package file only with changes between two commits (the source commit must be the most recent commit from both)
 
-    sfdx ah&colon;package&colon;git:create -f package -s 1n3a5d3 -t 4a345da
+    sfdx ah:package:git:create -f package -s 1n3a5d3 -t 4a345da
 
 Create destructive file only to delete metadata before deploy and raw response with changes between to tags (source must be the most recent tag from both) with:
 
-    sfdx ah&colon;package&colon;git:create -f destructive --deletebefore -s v2.0.0 -t v1.0.0 --raw --json
+    sfdx ah:package:git:create -f destructive --deletebefore -s v2.0.0 -t v1.0.0 --raw --json
 
 Create both files with changes between to branches, using ignore files to package and destructive files (using project ignore to package file).
 
-    sfdx ah&colon;package&colon;git:create -f both -s UAT -t main -u --ignoredestructive --destructiveignorefile "./.ahignoreDestructive.json" --json
+    sfdx ah:package:git:create -f both -s UAT -t main -u --ignoredestructive --destructiveignorefile "./.ahignoreDestructive.json" --json
 
 ---
 
-## [**ah&colon;package&colon;json:create**](#package-json-create)
+## [**ah:&#8203;package:json:create**](#package-json-create)
 Create a Package XML file or Destructive XML file from a JSON Metadata File
 
 ### **Usage**:
 
-    sfdx ah&colon;package&colon;json:create -s <filepath> [-r <filepath>] [--outputpath <filepath>] [-d] [-b] [-u] [-i <filepath>] [-w] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+    sfdx ah:package:json:create -s <filepath> [-r <filepath>] [--outputpath <filepath>] [-d] [-b] [-u] [-i <filepath>] [-w] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ### **Options**:
 ```
@@ -1128,29 +1128,29 @@ Create a Package XML file or Destructive XML file from a JSON Metadata File
 
 Create package XML file using data from JSON file
 
-    sfdx ah&colon;package&colon;json:create -s path/to/metadata/json/file.json
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json
 
 Create package XML file using data from JSON file and use project ignore file to ignore Metadata from package 
 
-    sfdx ah&colon;package&colon;json:create -s path/to/metadata/json/file.json -u
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json -u
 
 Create destructive XML file using data from JSON file and use project ignore file to ignore Metadata from package 
 
-    sfdx ah&colon;package&colon;json:create -s path/to/metadata/json/file.json --todelete -u
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json --todelete -u
 
 Create destructive XML file using data from JSON file to deploy before package XML file.
 
-    sfdx ah&colon;package&colon;json:create -s path/to/metadata/json/file.json --todelete --deletebefore
+    sfdx ah:package:json:create -s path/to/metadata/json/file.json --todelete --deletebefore
 
 
 ---
 
-## [**ah&colon;package&colon;merge**](#package-merge-create)
+## [**ah:&#8203;package:merge**](#package-merge-create)
 Create a Package XML file and/or Destructive XML file(s) from several package or destructive files.
 
 ### **Usage**:
 
-    sfdx ah&colon;package&colon;merge -s <array> [--outputpath <filepath>] [--bytype | --fullpackage | --fulldestructive | --onlypackage | --onlydestructive] [-b] [-u] [-i <filepath>  [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+    sfdx ah:package:merge -s <array> [--outputpath <filepath>] [--bytype | --fullpackage | --fulldestructive | --onlypackage | --onlydestructive] [-b] [-u] [-i <filepath>  [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ### **Options**:
 ```
@@ -1192,35 +1192,35 @@ Create a Package XML file and/or Destructive XML file(s) from several package or
 
 Merge package and destructive files by type (default behaviour)
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml"
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml"
 
 Merge package and destructive files by type and create the destructive XML file to deploy before 
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --bytype --deletebefore
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --bytype --deletebefore
 
 Merge only package XML files into one package XML file (destructive files will be omitted)
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlypackage
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlypackage
 
 Merge only destructive XML files into one destructive XML file (package files will be omitted)
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlydestructive
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlydestructive
 
 Merge only destructive XML files into one destructive XML file (package files will be omitted) and create destructive to deploy before
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlydestructive --deletebefore
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --onlydestructive --deletebefore
 
 Merge all files into only one package XML file (including destructives)
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fullpackage
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fullpackage
 
 Merge all files into only one destructive XML file (including packages)
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fulldestructive
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fulldestructive
 
 Merge all files into only one destructive XML file (including packages) to deploy before
 
-    sfdx ah&colon;package&colon;merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fulldestructive --deletebefore
+    sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, path/to/destructiveChangesPost1.xml" --fulldestructive --deletebefore
 
 ---
 

@@ -41,13 +41,11 @@ export default class Import extends SfdxCommand {
     source: flags.number({
       char: 's',
       description: messages.getMessage('sourceFlagDescription'),
-      default: 200,
-      helpValue: '<recordsPerBatch>',
+      helpValue: '<usernameOrAlias>',
     }),
     query: flags.string({
       description: messages.getMessage('queryFlagDescription'),
       helpValue: 'Select ... from ...',
-      required: true,
     }),
     progress: flags.boolean({
       char: 'p',

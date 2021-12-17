@@ -1238,8 +1238,8 @@ Data commands are the commands to work with data stored in your orgs. You can ex
 
 ---
 
-## [**data:export**](#dataexport)
-Command for export data from the project's auth org or any other org that you have access. This command use the tree:export command from sfdx with plan. If you want to resolve record types automatically on import, you must extract the field "RecordType.DeveloperName" into the query. For resolve parent-child relationship, you must extract the parent field into the childs subquery.
+## [**ah:data:export**](#dataexport)
+Command to export data from the project's auth org or any other org that you have access. This command use the tree:export command from sfdx with plan. If you want to resolve record types automatically on import, you must extract the field "RecordType.DeveloperName" into the query. To resolve parent-child relationship, you must extract the parent field into the childs subquery.
 
 
 ### **Usage**:
@@ -1287,7 +1287,82 @@ Export all accounts to link with record type
 
     sfdx ah:data:export -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" -o "./export/accounts"
 
+---
+
+## [**ah:data:import**](#dataimport)
+Command to import data extracted from data:export (or sfdx tree:export with a plan) and use the tree:import command from sfdx. Unlike the export command. The import command pre process the extracted data before insert to link record types if apply, save and resolve object references, and avoid the salesforce limits. To link record types automatically, you must include in the export query this field "RecordType.DeveloperName" and Aura Helper CLI automatically resolve the record types on target org. To link child objects with their parents, you must extract the parent object into the childs subqueries. Also, you can import data directly from other org.
+
+
+### **Usage**:
+
+    sfdx ah:data:import [-r <filepath>] [-f <filepath>] [-l <number>] [-s <number>] [--query <string>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+```
+    [-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+    [-f | --file <path/to/exported/file>]                               Path to the exported file with data:export command for import into the auth org. Must be the -plan file.
+    [-s | --source]                                                     Username or Alias to the source org for import data from the org, not from a file
+    [-q | --query]                                                      Query to extract data. You can use a simple query (Select [fields] from [object] [where] ...) or a complex 
+                                                                        query (select [fields], [query], [query] from [object] [where] ...) for export data in tree format
+    [-l | --limit]                                                      Number of records to insert at one time. Max records per batch are 200. (200 by default)
+    [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
+    [--json]                                                            Format output as JSON.
+    [--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                        Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+        "status": 0,
+        "result": {
+            "success": true,
+            "message": "result message"
+        }
+    }
+```
+### **Examples**:
+
+Import all account records with contacts with from other org
+
+    sfdx ah:data:import -s "aliasOrg" -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account"
+
+Import all accounts from a plan file and process 50 accounts maximum per batch.
+
+    sfdx ah:data:import -f "./export/accounts/accounts-plan.json" -n 50
+
+
 # [**Core Commands**](#core-commands)
+
+Commands to execute operations related with Aura Helper and not with Salesforce like get the installed version or update to the latest version.
+
+  - [**version**](#version)
+  
+    Command for get the installed Aura Helper SFDX version
+
+
+## [**version**](#version) 
+Command for get the installed Aura Helper SFDX version
+
+### **Usage**:
+
+    sfdx ah:version [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **JSON Response**:
+```json
+    {
+        "status": 0,
+        "result": {
+            "version": "1.0.0",
+        }
+    }
+```
+
+### **Examples**:
+
+Get Aura Helper SFDX Installed version
+
+    sfdx ah:version
 
 ---
 

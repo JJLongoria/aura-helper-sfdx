@@ -55,36 +55,42 @@ export default class Describe extends SfdxCommand {
         throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--output-file', err.message]));
       }
     }
-    if (!this.flags.progress) {
-      this.ux.startSpinner(generalMessages.getMessage('runningExportMessage'));
+
+    try {
+      if (!this.flags.progress) {
+        this.ux.startSpinner(messages.getMessage('runningExportMessage'));
+      }
+      if (!this.flags.targetusername) {
+        this.flags.targetusername = ProjectUtils.getOrgAlias(this.flags.root);
+      }
+      const extractigFrom = this.flags.targetusername
+        ? 'Org with username or alias ' + (this.flags.targetusername as string)
+        : 'Auth org';
+      if (this.flags.progress) {
+        this.ux.log(messages.getMessage('startExtractingDataMessage', [extractigFrom]));
+      } else {
+        this.ux.setSpinnerStatus(messages.getMessage('startExtractingDataMessage', [extractigFrom]));
+      }
+      const alias = ProjectUtils.getOrgAlias(this.flags.root);
+      const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
+      const connector = new SFConnector(
+        alias,
+        this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion,
+        this.flags.root,
+        namespace
+      );
+      connector.setMultiThread();
+      const response = await connector.exportTreeData(this.flags.query, this.flags.outputpath, this.flags.prefix);
+      if (this.flags.progress) {
+        this.ux.log(messages.getMessage('extractedSuccesfullyMessage', [this.flags.outputpath]));
+      } else {
+        this.ux.setSpinnerStatus(messages.getMessage('extractedSuccesfullyMessage', [this.flags.outputpath]));
+      }
+      return response;
+    } catch (error) {
+      const err = error as Error;
+      throw new SfdxError(err.message);
     }
-    if (!this.flags.targetusername) {
-      this.flags.targetusername = ProjectUtils.getOrgAlias(this.flags.root);
-    }
-    const extractigFrom = this.flags.targetusername
-      ? 'Org with username or alias ' + (this.flags.targetusername as string)
-      : 'Auth org';
-    if (this.flags.progress) {
-      this.ux.log(generalMessages.getMessage('startExtractingDataMessage', [extractigFrom]));
-    } else {
-      this.ux.setSpinnerStatus(generalMessages.getMessage('startExtractingDataMessage', [extractigFrom]));
-    }
-    const alias = ProjectUtils.getOrgAlias(this.flags.root);
-    const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
-    const connector = new SFConnector(
-      alias,
-      this.flags.apiversion || ProjectUtils.getProjectConfig(this.flags.root).sourceApiVersion,
-      this.flags.root,
-      namespace
-    );
-    connector.setMultiThread();
-    const response = await connector.exportTreeData(this.flags.query, this.flags.outputpath, this.flags.prefix);
-    if (this.flags.progress) {
-      this.ux.log(generalMessages.getMessage('extractedSuccesfullyMessage', [this.flags.outputpath]));
-    } else {
-      this.ux.setSpinnerStatus(generalMessages.getMessage('extractedSuccesfullyMessage', [this.flags.outputpath]));
-    }
-    return response;
   }
 
   private validateProjectPath(): void {

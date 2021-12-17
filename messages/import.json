@@ -31,7 +31,7 @@
     "importedSuccesfullyMessage": "Data imported succesfully into your Auth Org",
     "dataNotImportedMessage": "Data does not import because found errors. Go to %s for see the errors by batch",
     "examples": [
-        "sfdx ah:data:export -q \"Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account\" -o \"./export/accounts\"",
-        "sfdx ah:data:export -q \"Select Id, Name, BillingNumber, RecordType.DeveloperName from Account\" -o \"./export/accounts\""
+        "sfdx ah:data:import -s \"aliasOrg\" -q \"Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from Account\"",
+        "sfdx ah:data:import -f \"./export/accounts/accounts-plan.json\" -n 50"
     ]
 }

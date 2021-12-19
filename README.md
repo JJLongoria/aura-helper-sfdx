@@ -1,6 +1,4 @@
-# **Aura Helper SFDX**
-
-Aura Helper CLI Tools converted into SFDX Plugin
+# [**Aura Helper SFDX**](#sfdxlink)
 
 [![Version](https://img.shields.io/npm/v/sfdx-aura-helper.svg)](https://npmjs.org/package/sfdx-aura-helper)
 [![CircleCI](https://circleci.com/gh/JJLongoria/sfdx-aura-helper/tree/master.svg?style=shield)](https://circleci.com/gh/JJLongoria/sfdx-aura-helper/tree/master)
@@ -14,13 +12,13 @@ SFDX Plugin to work with Salesforce Projects. This application are entire develo
 
 ## [**Features**](#features)
 
-- Simplify your work with **Salesforce and Git** with the command for [**create packages**](#package-git-create) (for deploy and delete) from git changes. **Compare** two *branches*, *commits* or *tags* for create the files for deploy your package.
-- [**Repair**](#metadatalocalrepair) file *dependencies errors* on your project files or [**Check only**](#metadatalocalrepair) to resolve errors manually.
+- Simplify your work with **Salesforce and Git** with the command for [**create packages**](#package-command-git) (for deploy and delete) from git changes. **Compare** two *branches*, *commits* or *tags* for create the files for deploy your package.
+- [**Repair**](#ahmetadatalocalrepair) file *dependencies errors* on your project files or [**Check only**](#ahmetadatalocalrepair) to resolve errors manually.
 - [**Compress your XML Files**](#metadata-commands) structure for make easy *identify changes* and resolve *git conflicts*. Also need less storage and work faster.
-- [**Retrieve special Metadata Types**](#metadatalocalretrievespecial) like *profiles* or *permissions* sets (and others) with all data without retrieve any file more with a simple command. Also can [**Retrieve special Metadata Types**](#metadataorgretrievespecial) from the connected org.
-- **Compare** your *local data* with your *authorized organization* for get the differences for delete, retrieve or anything you want. Or **Compare** the Metadata Types *between two orgs* to see the differences.
-- [**Merge**](#package-merge-create) diferent **package** or **destructive** files into one file with only one command. 
-- [**Ignore**](#metadatalocalignore) any metadata type from your local project or from the package files for maintance different configuration into your sandbox and production enviroments with simple file and command.
+- [**Retrieve special Metadata Types**](#ahmetadatalocalspecialretrieve) like *profiles* or *permissions* sets (and others) with all data without retrieve any file more with a simple command. Also can [**Retrieve special Metadata Types**](#ahmetadataorgspecialretrieve) from the connected org.
+- [**Compare**](#ahmetadataorgcompare) your *local data* with your *authorized organization* for get the differences for delete, retrieve or anything you want. Or [**Compare**](#ahmetadataorgbetweencompare) the Metadata Types *between two orgs* to see the differences.
+- [**Merge**](#ahpackagemerge) diferent **package** or **destructive** files into one file with only one command. 
+- [**Ignore**](#ahmetadatalocalignore) any metadata type from your local project or from the package files for maintance different configuration into your sandbox and production enviroments with simple file and command.
 - Specially designed for **DevOps workflows**.
 - And much more
 
@@ -59,6 +57,12 @@ To install Aura Helper SFDX run the next command:
 
     sfdx plugins:install aura-helper-sfdx
 
+## [**NPM Installation**](#installation-sfdx)
+
+To install Aura Helper SFDX run the next command:
+
+    npm install -g aura-helper-sfdx
+
 ## [**Clone Repository Installation**](#installation-clone)
 
 To install cloning the source code repository, follow the next steps
@@ -69,7 +73,7 @@ To install cloning the source code repository, follow the next steps
 
         sfdx plugins:link
 
-# [**Aura Helper SFDX Commands**](#ah-sfdx-commands)
+# [**Aura Helper SFDX Commands**](#aura-helper-sfdx-commands)
 All commands from Aura Helper SFDX have the next structure: 
 
     sfdx <command:name> [command:input] [options]
@@ -127,34 +131,34 @@ Metadata commands are the commands for work with your metadata files. You can co
 
 ## [**Local Metadata Commands**](#local-metadata-commands)
 
-- [**ah:metadata:local:compress**](#metadatalocalcompress)
+- [**ah:metadata:local:compress**](#ahmetadatalocalcompress)
 
     Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
-- [**ah:metadata:local:ignore**](#metadatalocalignore)
+- [**ah:metadata:local:ignore**](#ahmetadatalocalignore)
 
     Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
 
-- [**ah:metadata:local:list**](#metadatalocallist)
+- [**ah:metadata:local:list**](#ahmetadatalocallist)
 
     Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
-- [**ah:metadata:local:describe**](#metadatalocaldescribe)
+- [**ah:metadata:local:describe**](#ahmetadatalocaldescribe)
 
     Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
-- [**ah:metadata:local:repair**](#metadatalocalrepair)
+- [**ah:metadata:local:repair**](#ahmetadatalocalrepair)
 
     Command to Check or Repair dependencies errors on your local project. (Only check data and types stored in your local project, do not connect to the org)
 
-- [**ah:metadata:local:special:retrieve**](#metadatalocalretrievespecial)
+- [**ah:metadata:local:special:retrieve**](#ahmetadatalocalspecialretrieve)
 
     Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
 
 ---
 
 
-## [**ah:metadata:local:compress**](#metadatalocalcompress)
+## [**ah:metadata:local:compress**](#ahmetadatalocalcompress)
 Command for compress XML files for ocuppy less data storage, and make more usefull with SVC systems like Git. With XML Files compressed, the file confilcts on merges are to much easy to resolve.
 
 ### **Usage**:
@@ -213,7 +217,7 @@ Compress Account and Case object file with json response:
 
 ---
 
-## [**ah:metadata:local:ignore**](#metadatalocalignore)
+## [**ah:metadata:local:ignore**](#ahmetadatalocalignore)
 Command for ignore some metadata types. If you use git or other SVC systems, you can construct a .gitignore file or similar for ignore some files from your SVC. But salesforce have some metadata that can't be ignored with git because have into other files, like custom labels, workflows or user permissios for example. This command allow to you to ignore this types of metadata. This command support all metadata types to ignore. (Can delete entire files and folders)
 
 ### **Usage**:
@@ -258,7 +262,7 @@ Ignore only Custom Application, Custom Labels and Profiles specified in .ahignor
 
 ---
 
-## [**ah:metadata:local:list**](#metadatalocallist) 
+## [**ah:metadata:local:list**](#ahmetadatalocallist) 
 Command for list all Metadata Types stored in your local project. 
 
 ### **Usage**:
@@ -320,7 +324,7 @@ List all types from different project and save the output into a file and json r
     sfdx ah:metadata:local:list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --json
 ---
 
-## [**ah:metadata:local:describe**](#metadatalocaldescribe)
+## [**ah:metadata:local:describe**](#ahmetadatalocaldescribe)
 Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
 
 ### **Usage**:
@@ -334,7 +338,7 @@ Command to describe all or specific Metadata Types like Custom Objects, Custom F
     -t | --type <MetadataTypeName>[,<MetadataTypeName>...]              Describe the specified metadata types. You can select a single metadata or a list separated by commas. 
                                                                         This option does not take effect if you choose describe all.
     [-g | --group]                                                      Option to group global Quick Actions into GlobalActions group, false to list as object and item
-    [--output-file <path/to/output/file>]                               Path to file for redirect the output.
+    [--outputfile <path/to/output/file>]                               Path to file for redirect the output.
     [--apiversion <apiVersion>]                                         Override the api version used for api requests made by this command
     [-p | --progress]                                                   Option to report the command progress (into the selected format) or show a 
                                                                         spinner loader
@@ -370,7 +374,7 @@ Describe Custom Objects and Custom Fields with json response
 
 ---
 
-## [**ah:metadata:local:repair**](#metadatalocalrepair)
+## [**ah:metadata:local:repair**](#ahmetadatalocalrepair)
 Command to Check or Repair dependencies errors on your local project. (Only check data and types stored in your local project, do not connect to the org)
 
 ### **Usage**:
@@ -496,7 +500,7 @@ Check only the errors on profiles and save the output on a file
 
 ---
 
-## [**ah:metadata:local:special:retrieve**](#metadatalocalretrievespecial)
+## [**ah:metadata:local:special:retrieve**](#ahmetadatalocalspecialretrieve)
 Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
 
 ### **Usage**:
@@ -578,38 +582,38 @@ Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and
 
 ## [**Org Metadata Commands**](#org-metadata-commands)
 
-- [**metadata:org:list**](#metadataorglist)
+- [**metadata:org:list**](#ahmetadataorglist)
 
     Command for list all Metadata Types stored in your auth org
 
-- [**metadata:org:describe**](#metadataorgdescribe)
+- [**metadata:org:describe**](#ahmetadataorgdescribe)
 
     Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
 
-- [**ah:metadata:org:compare**](#metadataorgcompare)
+- [**ah:metadata:org:compare**](#ahmetadataorgcompare)
 
     Command for compare your local project with your auth org for get the differences. The result are the metadata types and objects that you have in your org, but don't have in your local project.
 
-- [**ah:metadata:org:between:compare**](#metadataorgcomparebetween)
+- [**ah:metadata:org:between:compare**](#ahmetadataorgbetweencompare)
 
     Command to compare two organization to get the differences. Return the metadata that exists on target but not exists on source
 
-- [**metadata:org:special:retrieve**](#metadataorgretrievespecial)
+- [**metadata:org:special:retrieve**](#ahmetadataorgspecialretrieve)
 
     Command to retrieve the special metadata types stored in your auth org. The special types are all types generated at runtime when retrieving metadata according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
 
-- [**ah:metadata:org:permissions:get**](#metadataorgpermissions)
+- [**ah:metadata:org:permissions:get**](#ahmetadataorgpermissionsget)
 
     Command to get all available User permisions in your org.
 
-- [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
+- [**ah:metadata:org:apex:execute**](#ahmetadataorgapexexecute)
 
     Command to execute an Anonymous Apex script from file against the auth org N times.
 
 
 ---
 
-## [**ah:metadata:org:list**](#metadataorglist) 
+## [**ah:metadata:org:list**](#ahmetadataorglist) 
 Command for list all Metadata Types stored in your local project. 
 
 ### **Usage**:
@@ -672,7 +676,7 @@ List all types from different project and save the output into a file and json r
 ---
 
 
-## [**ah:metadata:org:describe**](#metadataorgapexexecutor)
+## [**ah:metadata:org:describe**](#ahmetadataorgdescribe)
 Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
 
 ### **Usage**:
@@ -725,7 +729,7 @@ Describe Custom Objects and Custom Fields with json response
 ---
 
 
-## [**ah:metadata:org:compare**](#metadataorgcompare)
+## [**ah:metadata:org:compare**](#ahmetadataorgcompare)
 Command for compare your local project with your auth org for get the differences. The result are the metadata types and objects that you have in your org, but don't have in your local project.
 
 ### **Usage**:
@@ -770,7 +774,7 @@ Compare the local and org data with table result
 
 ---
 
-## [**ah:metadata:org:between:compare**](#metadataorgcomparebetween)
+## [**ah:metadata:org:between:compare**](#ahmetadataorgbetweencompare)
 Command to compare two organization to get the differences. Return the metadata that exists on target but not exists on source
 
 ### **Usage**:
@@ -813,7 +817,7 @@ Compare between to orgs
 
 ---
 
-## [**ah:metadata:org:special:retrieve**](#metadataorgretrievespecial)
+## [**ah:metadata:org:special:retrieve**](#ahmetadataorgspecialretrieve)
 Command to retrieve the special metadata types stored in your auth org. The special types are all types generated at runtime when retrieving metadata according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
 
 ### **Usage**:
@@ -892,7 +896,7 @@ Retrieve All Profiles, Perm1 and Perm2 Permission Sets, all Case RecordTypes and
 ---
 
 
-## [**ah:metadata:org:permissions:get**](#metadataorgpermissions)
+## [**ah:metadata:org:permissions:get**](#ahmetadataorgpermissionsget)
 Command to get all available User permisions in your org.
 
 ### **Usage**:
@@ -938,7 +942,7 @@ Execute an script 10 times wit printing log, colorized output and progress repor
 
 
 
-## [**ah:metadata:org:apex:execute**](#metadataorgapexexecutor)
+## [**ah:metadata:org:apex:execute**](#ahmetadataorgapexexecute)
 Command for retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
 
 ### **Usage**:
@@ -984,25 +988,25 @@ The Package commands are commands to create Package or Destructive XML files fro
 
 ## [**GIT**](#package-command-git)
 
-- [**ah:&#8203;package:git:create**](#package-git-create)
+- [**ah:&#8203;package:git:create**](#ahpackagegitcreate)
 
     Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
 
 ## [**JSON**](#package-command-json)
 
-- [**ah:&#8203;package:json:create**](#package-git-create)
+- [**ah:&#8203;package:json:create**](#ahpackagejsoncreate)
 
     Create a Package XML file or Destructive XML file from a JSON Metadata File
 
 ## [**Merge**](#package-command-merge)
 
-- [**ah:&#8203;package:merge**](#package-merge-create)
+- [**ah:&#8203;package:merge**](#ahpackagemerge)
 
     Create a Package XML file and/or Destructive XML file(s) from several package or destructive files.
 
 ---
 
-## [**ah:&#8203;package:git:create**](#package-git-create)
+## [**ah:&#8203;package:git:create**](#ahpackagegitcreate)
 Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files.
 
 ### **Usage**:
@@ -1088,7 +1092,7 @@ Create both files with changes between to branches, using ignore files to packag
 
 ---
 
-## [**ah:&#8203;package:json:create**](#package-json-create)
+## [**ah:&#8203;package:json:create**](#ahpackagejsoncreate)
 Create a Package XML file or Destructive XML file from a JSON Metadata File
 
 ### **Usage**:
@@ -1145,7 +1149,7 @@ Create destructive XML file using data from JSON file to deploy before package X
 
 ---
 
-## [**ah:&#8203;package:merge**](#package-merge-create)
+## [**ah:&#8203;package:merge**](#ahpackagemerge)
 Create a Package XML file and/or Destructive XML file(s) from several package or destructive files.
 
 ### **Usage**:
@@ -1228,17 +1232,17 @@ Merge all files into only one destructive XML file (including packages) to deplo
 # [**Data Commands**](#data-commands)
 Data commands are the commands to work with data stored in your orgs. You can export and import data between orgs with two simple commands. You can export related objects and import all throgth one command, and Aura Helper automatically match the record types and related objects with their parents. Don't have any salesforce limits and you can export and import all data that you need.
 
-  - [**data:export**](#dataexport)
+  - [**data:export**](#ahdataexport)
 
     Command to export data from the project's auth org or any other org that you have access. This command use the tree:export command from sfdx with plan. If you want to resolve record types automatically on import, you must extract the field "RecordType.DeveloperName" into the query. To resolve parent-child relationship, you must extract the parent field into the childs subquery.
 
-  - [**data:import**](#dataimport)
+  - [**data:import**](#ahdataimport)
 
     Command to import data extracted from data:export (or sfdx tree:export with a plan) and use the tree:import command from sfdx. Unlike the export command. The import command pre process the extracted data before insert to link record types if apply, save and resolve object references, and avoid the salesforce limits. To link record types automatically, you must include in the export query this field "RecordType.DeveloperName" and Aura Helper CLI automatically resolve the record types on target org. To link child objects with their parents, you must extract the parent object into the childs subqueries. Also, you can import data directly from other org.
 
 ---
 
-## [**ah:data:export**](#dataexport)
+## [**ah:data:export**](#ahdataexport)
 Command to export data from the project's auth org or any other org that you have access. This command use the tree:export command from sfdx with plan. If you want to resolve record types automatically on import, you must extract the field "RecordType.DeveloperName" into the query. To resolve parent-child relationship, you must extract the parent field into the childs subquery.
 
 
@@ -1289,7 +1293,7 @@ Export all accounts to link with record type
 
 ---
 
-## [**ah:data:import**](#dataimport)
+## [**ah:data:import**](#ahdataimport)
 Command to import data extracted from data:export (or sfdx tree:export with a plan) and use the tree:import command from sfdx. Unlike the export command. The import command pre process the extracted data before insert to link record types if apply, save and resolve object references, and avoid the salesforce limits. To link record types automatically, you must include in the export query this field "RecordType.DeveloperName" and Aura Helper CLI automatically resolve the record types on target org. To link child objects with their parents, you must extract the parent object into the childs subqueries. Also, you can import data directly from other org.
 
 
@@ -1340,6 +1344,7 @@ Commands to execute operations related with Aura Helper and not with Salesforce 
   
     Command for get the installed Aura Helper SFDX version
 
+--- 
 
 ## [**version**](#version) 
 Command for get the installed Aura Helper SFDX version
@@ -1553,6 +1558,7 @@ The describe metadata commands and compare commands return the metadata in a JSO
         }
     }
 ```
+
 # [**Dependencies Repair Response**](#repair-response)
 When you repair dependencies with any option (compress or not, repair specified types...) the response error has the next structure:
 ```json
@@ -1788,16 +1794,28 @@ When you only check dependencies errors the response error has the next structur
 
 
 <!-- toc -->
+* [[**Aura Helper SFDX**](#sfdxlink)](#aura-helper-sfdxsfdxlink)
+* [[**Installation Guide**](#installation-guide)](#installation-guideinstallation-guide)
+* [[**Aura Helper SFDX Commands**](#aura-helper-sfdx-commands)](#aura-helper-sfdx-commandsaura-helper-sfdx-commands)
+* [[**Help**](#help)](#helphelp)
+* [[**Metadata Commands**](#metadata-commands)](#metadata-commandsmetadata-commands)
+* [[**Package Commands**](#package-commands)](#package-commandspackage-commands)
+* [[**Data Commands**](#data-commands)](#data-commandsdata-commands)
+* [[**Core Commands**](#core-commands)](#core-commandscore-commands)
+* [[**Ignore File**](#ignore-file)](#ignore-fileignore-file)
+* [[**Metadata JSON Format**](#metadata-file)](#metadata-json-formatmetadata-file)
+* [[**Dependencies Repair Response**](#repair-response)](#dependencies-repair-responserepair-response)
+* [[**Dependencies Check Response**](#check-response)](#dependencies-check-responsecheck-response)
 * [Debugging your plugin](#debugging-your-plugin)
 <!-- tocstop -->
 <!-- install -->
 <!-- usage -->
 ```sh-session
-$ npm install -g sfdx-aura-helper
+$ npm install -g aura-helper-sfdx
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-aura-helper/0.0.0 win32-x64 node-v16.10.0
+aura-helper-sfdx/1.0.0 win32-x64 node-v16.10.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -1805,26 +1823,459 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:data:export --query <string> [-r <filepath>] [-o <filepath>] [--prefix <string>] [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahdataexport---query-string--r-filepath--o-filepath---prefix-string--p--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:data:import [-r <filepath>] [-f <filepath>] [-l <number>] [-s <number>] [--query <string>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahdataimport--r-filepath--f-filepath--l-number--s-number---query-string--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:local:compress [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -d <array> | -f <array>] [-p] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadatalocalcompress--r-filepath--s-simplefirstcomplexfirstalphabetascalphabetdesc--a---d-array---f-array--p---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:local:describe [-r <filepath>] [-a | -t <array>] [--group] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadatalocaldescribe--r-filepath--a---t-array---group---outputfile-filepath---csv--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadatalocalignore--r-filepath--s-simplefirstcomplexfirstalphabetascalphabetdesc--a---t-array--i-filepath--c--p---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:local:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadatalocallist--r-filepath---outputfile-filepath---csv--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:local:repair [-r <filepath>] [-a | -t <array>] [-o] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-u] [-i <filepath>] [--outputfile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadatalocalrepair--r-filepath--a---t-array--o--c--s-simplefirstcomplexfirstalphabetascalphabetdesc--u--i-filepath---outputfile-filepath--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:local:special:retrieve [-r <filepath>] [-a | -t <array>] [-i] [--downloadall] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadatalocalspecialretrieve--r-filepath--a---t-array--i---downloadall--c--s-simplefirstcomplexfirstalphabetascalphabetdesc--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:org:apex:execute (-f <filepath> | undefined | undefined) [-r <filepath>] [-i <number>] [-l] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadataorgapexexecute--f-filepath--undefined--undefined--r-filepath--i-number--l--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:org:between:compare -t <string> [-r <filepath>] [-s <string>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadataorgbetweencompare--t-string--r-filepath--s-string---outputfile-filepath---csv--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:org:compare [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadataorgcompare--r-filepath---outputfile-filepath---csv--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:org:describe [-r <filepath>] [-a | -t <array>] [--group] [--downloadall] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadataorgdescribe--r-filepath--a---t-array---group---downloadall---outputfile-filepath---csv--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:org:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadataorglist--r-filepath---outputfile-filepath---csv--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:org:permissions:get [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadataorgpermissionsget--r-filepath---outputfile-filepath---csv--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:metadata:org:special:retrieve [-r <filepath>] [-a | -t <array>] [--downloadall] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahmetadataorgspecialretrieve--r-filepath--a---t-array---downloadall--c--s-simplefirstcomplexfirstalphabetascalphabetdesc--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:package:git:create [-r <filepath>] [--outputpath <filepath>] [-f package|p|destructive|d|both|b] [-b] [-s <string>] [-t <string>] [-r] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahpackagegitcreate--r-filepath---outputpath-filepath--f-packagepdestructivedbothb--b--s-string--t-string--r--u--i-filepath---ignoredestructive---destructiveignorefile-filepath--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:package:json:create -s <filepath> [-r <filepath>] [--outputpath <filepath>] [-d] [-b] [-u] [-i <filepath>] [-w] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahpackagejsoncreate--s-filepath--r-filepath---outputpath-filepath--d--b--u--i-filepath--w--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:package:merge -s <array> [-r <filepath>] [--outputpath <filepath>] [--bytype | --fullpackage | --fulldestructive | --onlypackage | --onlydestructive] [-b] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahpackagemerge--s-array--r-filepath---outputpath-filepath---bytype----fullpackage----fulldestructive----onlypackage----onlydestructive--b--u--i-filepath---ignoredestructive---destructiveignorefile-filepath--p---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx ah:version [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-ahversion---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx ah:data:export --query <string> [-r <filepath>] [-o <filepath>] [--prefix <string>] [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-print a greeting and your org IDs
+Command to export data from the selected org to work with data:import command.
 
 ```
 USAGE
-  $ sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  $ sfdx ah:data:export --query <string> [-r <filepath>] [-o <filepath>] [--prefix <string>] [-p] [-u <string>] 
+  [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -o, --outputpath=<path/to/output/file>
+      [default: ./export] Path to save the generated output files. By default save result on <actualDir>/export
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -u, --targetusername=targetusername
+      username or alias for the target org; overrides default target org
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+  --prefix=<filePrefix>
+      Prefix to add to the generated files
+
+  --query=Select ... from ...
+      (required) Query to extract data. You can use a simple query (Select [fields] from [object] [where] ...) or a
+      complex query (select [fields], [query], [query] from [object] [where] ...) for export data in tree format
+
+EXAMPLES
+  sfdx ah:data:export -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from Contacts) from 
+  Account" -o "./export/accounts"
+  sfdx ah:data:export -q "Select Id, Name, BillingNumber, RecordType.DeveloperName from Account" -o "./export/accounts"
+```
+
+_See code: [src/commands/ah/data/export.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/data/export.ts)_
+
+## `sfdx ah:data:import [-r <filepath>] [-f <filepath>] [-l <number>] [-s <number>] [--query <string>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command for import the data extracted with data:export command into the project connected org
+
+```
+USAGE
+  $ sfdx ah:data:import [-r <filepath>] [-f <filepath>] [-l <number>] [-s <number>] [--query <string>] [-p] 
+  [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -f, --file=<path/to/exported/file>
+      Path to the exported file with data:export command for import into the auth org. Must be the -plan file
+
+  -l, --limit=<recordsPerBatch>
+      [default: 200] Number of records to insert at one time. Max records per batch are 200. (200 by default)
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --source=<usernameOrAlias>
+      Username or Alias to the source org for import data from the org, not from a file
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+  --query=Select ... from ...
+      Query to extract data. You can use a simple query (Select [fields] from [object] [where] ...) or a complex query
+      (select [fields], [query], [query] from [object] [where] ...) for export data in tree format
+
+EXAMPLES
+  sfdx ah:data:import -s "aliasOrg" -q "Select Id, Name, BillingNumber, (Select Id, Name, AccountId, Phone from 
+  Contacts) from Account"
+  sfdx ah:data:import -f "./export/accounts/accounts-plan.json" -n 50
+```
+
+_See code: [src/commands/ah/data/import.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/data/import.ts)_
+
+## `sfdx ah:metadata:local:compress [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -d <array> | -f <array>] [-p] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Compress XML Metadata Files for best conflict handling with SVC systems. Works with relative or absolute paths.
+
+```
+USAGE
+  $ sfdx ah:metadata:local:compress [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -d 
+  <array> | -f <array>] [-p] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -a, --all                                                                         Compress all XML files with support
+                                                                                    compression in your project.
+
+  -d, --directory=<path/to/directory>[,<path/to/directory>...]                      Compress XML Files from specific
+                                                                                    directory. This options does not
+                                                                                    take effect if you choose compress
+                                                                                    all.
+
+  -f, --file=<path/to/file>[,<path/to/file>...]                                     Compress the specified XML file.
+                                                                                    This options does not take effect if
+                                                                                    you choose compress directory or
+                                                                                    all.
+
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  -s, --sortorder=(simpleFirst|complexFirst|alphabetAsc|alphabetDesc)               [default: simpleFirst] Sort order
+                                                                                    for the XML elements when compress
+                                                                                    XML files. By default, the elements
+                                                                                    are sorted with simple XML elements
+                                                                                    first.
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+EXAMPLES
+  sfdx ah:metadata:local:compress -a
+  sfdx ah:metadata:local:compress -d force-app/main/default/objects --json
+  sfdx ah:metadata:local:compress -d force-app/main/default/objects, force-app/main/default/applications
+  sfdx ah:metadata:local:compress -f force-app/main/default/objects/Account/Account.object-meta-xml -p
+  sfdx ah:metadata:local:compress -f force-app/main/default/objects/Account/Account.object-meta-xml, 
+  force-app/main/default/objects/Case/Case.object-meta-xml --json
+```
+
+_See code: [src/commands/ah/metadata/local/compress.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/local/compress.ts)_
+
+## `sfdx ah:metadata:local:describe [-r <filepath>] [-a | -t <array>] [--group] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to describe all or specific Metadata Types like Custom Objects, Custom Fields, Apex Classes... that you have in your local project.
+
+```
+USAGE
+  $ sfdx ah:metadata:local:describe [-r <filepath>] [-a | -t <array>] [--group] [--outputfile <filepath>] [--csv] [-p] 
+  [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -a, --all                                                                         Describe all metadata types stored
+                                                                                    in your local project
+
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  -t, --type=<MetadataTypeName>[,<MetadataTypeName>...]                             Describe the specified metadata
+                                                                                    types. You can select a single
+                                                                                    metadata or a list separated by
+                                                                                    commas. This option does not take
+                                                                                    effect if you choose describe all
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --csv                                                                             Option to show the result as CSV
+                                                                                    instead a table if not select --json
+                                                                                    flag
+
+  --group                                                                           Option to group global Quick Actions
+                                                                                    into GlobalActions group, false to
+                                                                                    list as object and item
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --outputfile=<path/to/output/file>                                                Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:local:describe -a -p plaintext -s "path/to/the/output/file.txt" --csv
+  sfdx ah:metadata:local:describe -t "CustomObject, CustomField, Profile, ValidatiionRule" -p
+  sfdx ah:metadata:local:describe -t "CustomObject, CustomField" --json
+```
+
+_See code: [src/commands/ah/metadata/local/describe.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/local/describe.ts)_
+
+## `sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command for ignore metadata from your project. Use .ahignore.json file for perform this operation. This command will be delete the ignored metadata from your project folder
+
+```
+USAGE
+  $ sfdx ah:metadata:local:ignore [-r <filepath>] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-a | -t 
+  <array>] [-i <filepath>] [-c] [-p] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -f, --force                                                                       example boolean flag
-  -n, --name=name                                                                   name to print
+  -a, --all
+      Ignore all metadata types according to the ignore file
 
-  -u, --targetusername=targetusername                                               username or alias for the target
-                                                                                    org; overrides default target org
+  -c, --compress
+      Add this option to compress modified files by ignore operation.
 
-  -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
-                                                                                    org; overrides default dev hub org
+  -i, --ignorefile=<path/to/ignore/file>
+      [default: ./.ahignore.json] Path to the ignore file. Use this if you not want to use the project root ignore file or
+      have different name. By default use .ahignore.json file from your project root
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --sortorder=(simpleFirst|complexFirst|alphabetAsc|alphabetDesc)
+      [default: simpleFirst] Sort order for the XML elements when compress XML files. By default, the elements are sorted
+      with simple XML elements first.
+
+  -t, --type=<MetadataTypeName>[,<MetadataTypeName>...]
+      Ignore the specified metadata types according to the ignore file. You can select a sigle or a list separated by
+      commas. This options does not take effect if you choose ignore all
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+EXAMPLES
+  sfdx ah:metadata:local:ignore -a --json
+  sfdx ah:metadata:local:ignore -t  "CustomApplication, Profile, CustomLabels" -i "Path/to/the/file/.myignoreFile.json" 
+  -p
+```
+
+_See code: [src/commands/ah/metadata/local/ignore.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/local/ignore.ts)_
+
+## `sfdx ah:metadata:local:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command for list all metadata from the local project
+
+```
+USAGE
+  $ sfdx ah:metadata:local:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] 
+  [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --csv                                                                             Option to show the result as CSV
+                                                                                    instead a table if not select --json
+                                                                                    flag
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --outputfile=<path/to/output/file>                                                Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:local:list -p
+  sfdx ah:metadata:local:list --csv
+  sfdx ah:metadata:local:list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --json
+```
+
+_See code: [src/commands/ah/metadata/local/list.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/local/list.ts)_
+
+## `sfdx ah:metadata:local:repair [-r <filepath>] [-a | -t <array>] [-o] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-u] [-i <filepath>] [--outputfile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to Check or Repair dependencies errors on your local project. (Only check data and types stored in your local project, do not connect to the org)
+
+```
+USAGE
+  $ sfdx ah:metadata:local:repair [-r <filepath>] [-a | -t <array>] [-o] [-c] [-s 
+  simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-u] [-i <filepath>] [--outputfile <filepath>] [-p] [--apiversion 
+  <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -a, --all
+      Check or Repair all supported metadata types. (Support up to API v53.0)
+
+  -c, --compress
+      Add this option to compress modified files by repair operation.
+
+  -i, --ignorefile=<path/to/ignore/file>
+      Path to the ignore file. Use this if you don't want to use the project root ignore file or has a different name.
+
+  -o, --onlycheck
+      Command to check error dependencies and return the errors by file
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --sortorder=(simpleFirst|complexFirst|alphabetAsc|alphabetDesc)
+      [default: simpleFirst] Sort order for the XML elements when compress XML files. By default, the elements are sorted
+      with simple XML elements first.
+
+  -t, --type=<MetadataTypeName>[,<MetadataTypeName:Object>, <MetadataTypeName:Object:Item>...]
+      Check or Repair specified metadata types. You can choose single type or a list separated by commas,  also you can
+      choose to repair a specified objects like "MetadataTypeAPIName:MetadataObjectAPIName" or
+      "MetadataTypeAPIName:ObjectAPIName:ItemAPIName". For example, "CustomApplication:AppName1" for repair only AppName1
+      Custom App. This option does not take effet if select repair all
+
+  -u, --useignore
+      Option to ignore to check or repair the metadata included in ignore file
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+  --outputfile=<path/to/output/file>
+      Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:local:repair -a -c
+  sfdx ah:metadata:local:repair -t 
+  "CustomApplication:App1,Profile,PermissionSet:Perm1,PermissionSet:Perm2,CustomField:Account:Custom_field__c"
+  sfdx ah:metadata:local:repair -t "Profile" -o "path/to/the/output/errors.txt"
+```
+
+_See code: [src/commands/ah/metadata/local/repair.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/local/repair.ts)_
+
+## `sfdx ah:metadata:local:special:retrieve [-r <filepath>] [-a | -t <array>] [-i] [--downloadall] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
+
+```
+USAGE
+  $ sfdx ah:metadata:local:special:retrieve [-r <filepath>] [-a | -t <array>] [-i] [--downloadall] [-c] [-s 
+  simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -a, --all
+      Retrieve all supported metadata types (Profile,PermissionSet,Translations,RecordType,CustomObject)
+
+  -c, --compress
+      Add this option to compress modified files by retrieve operation.
+
+  -i, --includeorg
+      With this option, you can retrieve the data from org and not only for local, but only retrieve the types that you
+      have in your local.
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --sortorder=(simpleFirst|complexFirst|alphabetAsc|alphabetDesc)
+      [default: simpleFirst] Sort order for the XML elements when compress XML files. By default, the elements are sorted
+      with simple XML elements first.
+
+  -t, --type=<MetadataTypeName>[,<MetadataTypeName:Object>, <MetadataTypeName:Object:Item>...]
+      Retrieve specifics metadata types. You can choose one or a comma separated list of elements. Also you can choose
+      retrieve a specific profile, object o record type. Schema -> "Type1" or "Type1,Type2" or "Type1:Object1,
+      Type1:Object2" or "Type1:Object1:Item1" for example:  "Profile, PermissinSet" to retrieve all profiles and
+      permission sets. "Profile:Admin" to retrieve the admin profile. "RecordType:Account:RecordType1" to retrieve the
+      RecordType1 for the object Account or "RecordType:Account" to retrieve all Record Types for Account
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --downloadall
+      Option to download all Metadata Types from any Namespaces (including managed packages). If this options is not
+      selected, only download and retrieve data from your org namespace
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+EXAMPLES
+  sfdx ah:metadata:local:special:retrieve -a -c -i
+  sfdx ah:metadata:local:special:retrieve -t "Profile, PermissionSet:Perm1, PermissionSet:Perm2, RecordType:Case, 
+  RecordType:Account:RtName"
+```
+
+_See code: [src/commands/ah/metadata/local/special/retrieve.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/local/special/retrieve.ts)_
+
+## `sfdx ah:metadata:org:apex:execute (-f <filepath> | undefined | undefined) [-r <filepath>] [-i <number>] [-l] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to execute an Anonymous Apex script from file against the auth org N times.
+
+```
+USAGE
+  $ sfdx ah:metadata:org:apex:execute (-f <filepath> | undefined | undefined) [-r <filepath>] [-i <number>] [-l] [-p] 
+  [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -f, --file=<path/to/apex/file>                                                    (required) Path to the Anonymous
+                                                                                    Apex Script file
+
+  -i, --iterations=iterations                                                       [default: 1] Option to select the
+                                                                                    scritp execution number. For
+                                                                                    example, 3 for execute the script 3
+                                                                                    times
+
+  -l, --printlog                                                                    Option to print the result log of
+                                                                                    every execution
+
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
 
   --apiversion=apiversion                                                           override the api version used for
                                                                                     api requests made by this command
@@ -1835,11 +2286,530 @@ OPTIONS
                                                                                     this command invocation
 
 EXAMPLES
-  sfdx hello:org --targetusername myOrg@example.com --targetdevhubusername devhub@org.com
-  sfdx hello:org --name myname --targetusername myOrg@example.com
+  sfdx ah:metadata:org:apex:execute -f "path/to/script.apex" -i 3
+  sfdx ah:metadata:org:apex:execute -f "path/to/script.apex" --iterations 10 --printlog
 ```
 
-_See code: [src/commands/hello/org.ts](https://github.com/JJLongoria/sfdx-aura-helper/blob/v0.0.0/src/commands/hello/org.ts)_
+_See code: [src/commands/ah/metadata/org/apex/execute.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/org/apex/execute.ts)_
+
+## `sfdx ah:metadata:org:between:compare -t <string> [-r <filepath>] [-s <string>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to compare two organization to get the differences. Return the metadata that exists on target but not exists on source
+
+```
+USAGE
+  $ sfdx ah:metadata:org:between:compare -t <string> [-r <filepath>] [-s <string>] [--outputfile <filepath>] [--csv] 
+  [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --source=usernameOrAlias
+      Source Salesforce org to compare. If you want to compare your active org with other, this options is not necessary
+      because use the --root option for get the project's auth org. If you choose source, --root will be ignored
+
+  -t, --target=usernameOrAlias
+      (required) Target Salesforce org to compare
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --csv
+      Option to show the result as CSV instead a table if not select --json flag
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+  --outputfile=<path/to/output/file>
+      Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:org:between:compare -t test.username@salesforceOrg.com.qa
+  sfdx ah:metadata:org:between:compare -s test.username@salesforceOrg.com.uat -t test.username@salesforceOrg.com.qa
+```
+
+_See code: [src/commands/ah/metadata/org/between/compare.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/org/between/compare.ts)_
+
+## `sfdx ah:metadata:org:compare [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to compare your local project with your auth org for get the differences. The result are the metadata types and objects that you have in your org, but don't have in your local project.
+
+```
+USAGE
+  $ sfdx ah:metadata:org:compare [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json]
+   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --csv                                                                             Option to show the result as CSV
+                                                                                    instead a table if not select --json
+                                                                                    flag
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --outputfile=<path/to/output/file>                                                Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:org:compare
+  sfdx ah:metadata:org:compare --csv
+  sfdx ah:metadata:org:compare --outputfile "path/to/the/output/file.txt" --json
+```
+
+_See code: [src/commands/ah/metadata/org/compare.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/org/compare.ts)_
+
+## `sfdx ah:metadata:org:describe [-r <filepath>] [-a | -t <array>] [--group] [--downloadall] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to describe all or specific Metadata Types likes Custom Objects, Custom Fields, Apex Classes... that you have in your auth org
+
+```
+USAGE
+  $ sfdx ah:metadata:org:describe [-r <filepath>] [-a | -t <array>] [--group] [--downloadall] [--outputfile <filepath>] 
+  [--csv] [-p] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -a, --all                                                                         Describe all metadata types
+
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  -t, --type=<MetadataTypeName>[,<MetadataTypeName>...]                             Describe the specified metadata
+                                                                                    types. You can select a single
+                                                                                    metadata or a list separated by
+                                                                                    commas. This option does not take
+                                                                                    effect if you choose describe all
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --csv                                                                             Option to show the result as CSV
+                                                                                    instead a table if not select --json
+                                                                                    flag
+
+  --downloadall                                                                     Option to download all Metadata
+                                                                                    Types from any Namespaces (including
+                                                                                    managed packages). If this options
+                                                                                    is not selected, only download data
+                                                                                    from your org namespace
+
+  --group                                                                           Option to group global Quick Actions
+                                                                                    into GlobalActions group, false to
+                                                                                    list as object and item
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --outputfile=<path/to/output/file>                                                Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:org:describe -a -p plaintext -s "path/to/the/output/file.txt" --csv
+  sfdx ah:metadata:org:describe -t "CustomObject, CustomField, Profile, ValidatiionRule" -p
+  sfdx ah:metadata:org:describe -t "CustomObject, CustomField" --json
+```
+
+_See code: [src/commands/ah/metadata/org/describe.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/org/describe.ts)_
+
+## `sfdx ah:metadata:org:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command for list all metadata from the auth org
+
+```
+USAGE
+  $ sfdx ah:metadata:org:list [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] 
+  [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --csv                                                                             Option to show the result as CSV
+                                                                                    instead a table if not select --json
+                                                                                    flag
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --outputfile=<path/to/output/file>                                                Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:org:list -p
+  sfdx ah:metadata:org:list --csv
+  sfdx ah:metadata:org:list -r "path/to/other/project/root" --outputfile "path/to/the/output/file.txt" --json
+```
+
+_See code: [src/commands/ah/metadata/org/list.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/org/list.ts)_
+
+## `sfdx ah:metadata:org:permissions:get [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to get all available User permisions in your org.
+
+```
+USAGE
+  $ sfdx ah:metadata:org:permissions:get [-r <filepath>] [--outputfile <filepath>] [--csv] [-p] [--apiversion <string>] 
+  [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --csv                                                                             Option to show the result as CSV
+                                                                                    instead a table if not select --json
+                                                                                    flag
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --outputfile=<path/to/output/file>                                                Path to file for redirect the output
+
+EXAMPLES
+  sfdx ah:metadata:org:permissions:get --json
+  sfdx ah:metadata:org:permissions:get -o "path/to/the/output/errors.txt"
+```
+
+_See code: [src/commands/ah/metadata/org/permissions/get.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/org/permissions/get.ts)_
+
+## `sfdx ah:metadata:org:special:retrieve [-r <filepath>] [-a | -t <array>] [--downloadall] [-c] [-s simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command to retrieve the special metadata types stored in your local project. The special types are the types generated at runtime when retrieving data from org according the package data. Files like permission sets, profiles or translations. For example, with this command you can retrieve all permissions from a profile without retrieve anything more. Also you can retrieve only the Custom Object XML Files without retrieve anything more.
+
+```
+USAGE
+  $ sfdx ah:metadata:org:special:retrieve [-r <filepath>] [-a | -t <array>] [--downloadall] [-c] [-s 
+  simpleFirst|complexFirst|alphabetAsc|alphabetDesc] [-p] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -a, --all
+      Retrieve all supported metadata types (Profile,PermissionSet,Translations,RecordType,CustomObject)
+
+  -c, --compress
+      Add this option to compress modified files by retrieve operation.
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --sortorder=(simpleFirst|complexFirst|alphabetAsc|alphabetDesc)
+      [default: simpleFirst] Sort order for the XML elements when compress XML files. By default, the elements are sorted
+      with simple XML elements first.
+
+  -t, --type=<MetadataTypeName>[,<MetadataTypeName:Object>, <MetadataTypeName:Object:Item>...]
+      Retrieve specifics metadata types. You can choose one or a comma separated list of elements. Also you can choose
+      retrieve a specific profile, object o record type. Schema -> "Type1" or "Type1,Type2" or "Type1:Object1,
+      Type1:Object2" or "Type1:Object1:Item1" for example:  "Profile, PermissinSet" to retrieve all profiles and
+      permission sets. "Profile:Admin" to retrieve the admin profile. "RecordType:Account:RecordType1" to retrieve the
+      RecordType1 for the object Account or "RecordType:Account" to retrieve all Record Types for Account
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --downloadall
+      Option to download all Metadata Types from any Namespaces (including managed packages). If this options is not
+      selected, only download and retrieve data from your org namespace
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+EXAMPLES
+  sfdx ah:metadata:local:special:retrieve -a -c -i
+  sfdx ah:metadata:local:special:retrieve -t "Profile, PermissionSet:Perm1, PermissionSet:Perm2, RecordType:Case, 
+  RecordType:Account:RtName"
+```
+
+_See code: [src/commands/ah/metadata/org/special/retrieve.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/metadata/org/special/retrieve.ts)_
+
+## `sfdx ah:package:git:create [-r <filepath>] [--outputpath <filepath>] [-f package|p|destructive|d|both|b] [-b] [-s <string>] [-t <string>] [-r] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Create a Package XML file and/or Destructive XML file from Git Changes to create a delta package to deploy and/or delete Metadata. Compare between two branches, commits or tags (even only your active branch) to create the files
+
+```
+USAGE
+  $ sfdx ah:package:git:create [-r <filepath>] [--outputpath <filepath>] [-f package|p|destructive|d|both|b] [-b] [-s 
+  <string>] [-t <string>] [-r] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] 
+  [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -b, --deletebefore
+      Option to create the Descructive XML file to deploy it before package file (delete files before deploy new changes
+      insted delete files after deploy changes).
+
+  -f, --filetype=<fileTypeValue>
+      [default: both] Option to select the generated file type(s). You can choose between package (p), destructive (d) or
+      both (b). Both by default
+
+  -i, --ignorefile=<path/to/ignore/file>
+      Path to the ignore file. Use this if you don't want to use the project root ignore file or has a different name.
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --raw
+      Option to return the raw data instead create xml files. This option returns a JSON Object with the extracted data
+      from git changes. Only work with --json flag
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --source=source
+      Source branch, commit, tag... to compare changes and create delta files. That is the new code source or the "source
+      salesforce org to get changes". You can select only source to create files from active branch changes (If not select
+      source, also get the active branch)
+
+  -t, --target=target
+      Target branch, commit, tag... to compare changes and create delta files. That is the old code source or the "target
+      salesforce org to deploy changes"
+
+  -u, --useignore
+      Option to ignore the metadata included in ignore file from the package
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --destructiveignorefile=<path/to/ignore/file>
+      Path to use different ignore file to ignore destructive changes instead the ignore file to ignore changes to deploy
+
+  --ignoredestructive
+      Option to ignore metadata from destructive changes created file
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+  --outputpath=<target/files/path>
+      [default: ./manifest] Path to save the generated files. By default is your manifest folder
+
+EXAMPLES
+  sfdx ah:package:git:create
+  sfdx ah:package:git:create -f both -t Develop --json
+  sfdx ah:package:git:create -f package -s 1n3a5d3 -t 4a345da
+  sfdx ah:package:git:create -f destructive --deletebefore -s v2.0.0 -t v1.0.0 --raw --json
+  sfdx ah:package:git:create -f both -s UAT -t main -u --ignoredestructive --destructiveignorefile 
+  "./.ahignoreDestructive.json" --json
+```
+
+_See code: [src/commands/ah/package/git/create.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/package/git/create.ts)_
+
+## `sfdx ah:package:json:create -s <filepath> [-r <filepath>] [--outputpath <filepath>] [-d] [-b] [-u] [-i <filepath>] [-w] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Create a Package XML file or Destructive XML file from a JSON Metadata File
+
+```
+USAGE
+  $ sfdx ah:package:json:create -s <filepath> [-r <filepath>] [--outputpath <filepath>] [-d] [-b] [-u] [-i <filepath>] 
+  [-w] [-p] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -b, --deletebefore                                                                Option to create the Descructive XML
+                                                                                    file to deploy it before package
+                                                                                    file (delete files before deploy new
+                                                                                    changes insted delete files after
+                                                                                    deploy changes).
+
+  -d, --todelete                                                                    Option to create the package to
+                                                                                    delete metadata (Destructive XML
+                                                                                    File)
+
+  -i, --ignorefile=<path/to/ignore/file>                                            Path to the ignore file. Use this if
+                                                                                    you don't want to use the project
+                                                                                    root ignore file or has a different
+                                                                                    name.
+
+  -p, --progress                                                                    Option to report the command
+                                                                                    progress (into the selected format)
+                                                                                    or show a spinner loader
+
+  -r, --root=<path/to/project/root>                                                 [default: ./] Path to project root.
+                                                                                    By default is your current folder.
+
+  -s, --source=<path/to/metadata/json>                                              (required) Metadata JSON file path
+                                                                                    to create the Package or Destructive
+                                                                                    file
+
+  -u, --useignore                                                                   Option to ignore the metadata
+                                                                                    included in ignore file from the
+                                                                                    package
+
+  -w, --wildcards                                                                   Option to use wildcards instead the
+                                                                                    explicit names when apply
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --outputpath=<target/files/path>                                                  [default: ./manifest] Path to save
+                                                                                    the generated file. By default is
+                                                                                    your manifest folder
+
+EXAMPLES
+  sfdx ah:package:json:create -s path/to/metadata/json/file.json
+  sfdx ah:package:json:create -s path/to/metadata/json/file.json -u
+  sfdx ah:package:json:create -s path/to/metadata/json/file.json --todelete -u
+  sfdx ah:package:json:create -s path/to/metadata/json/file.json --todelete --deletebefore
+```
+
+_See code: [src/commands/ah/package/json/create.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/package/json/create.ts)_
+
+## `sfdx ah:package:merge -s <array> [-r <filepath>] [--outputpath <filepath>] [--bytype | --fullpackage | --fulldestructive | --onlypackage | --onlydestructive] [-b] [-u] [-i <filepath>] [--ignoredestructive] [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Create a Package XML file and/or Destructive XML file(s) from several package or destructive files.
+
+```
+USAGE
+  $ sfdx ah:package:merge -s <array> [-r <filepath>] [--outputpath <filepath>] [--bytype | --fullpackage | 
+  --fulldestructive | --onlypackage | --onlydestructive] [-b] [-u] [-i <filepath>] [--ignoredestructive] 
+  [--destructiveignorefile <filepath>] [-p] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -b, --deletebefore
+      Option to create the Descructive XML file to deploy it before package file (delete files before deploy new changes
+      insted delete files after deploy changes).
+
+  -i, --ignorefile=<path/to/ignore/file>
+      Path to the ignore file. Use this if you don't want to use the project root ignore file or has a different name.
+
+  -p, --progress
+      Option to report the command progress (into the selected format) or show a spinner loader
+
+  -r, --root=<path/to/project/root>
+      [default: ./] Path to project root. By default is your current folder.
+
+  -s, --source=<path/to/package/file>,<path/to/package/file>,[<path/to/destructive/file>...]
+      (required) Paths to the package XML and/or Destructive XML files separated by commas
+
+  -u, --useignore
+      Option to ignore the metadata included in ignore file from the package
+
+  --apiversion=apiversion
+      override the api version used for api requests made by this command
+
+  --bytype
+      Merge packages by type, that is, the package XML files into ine package xml file and destructive files into one
+      destructive. Default option.
+
+  --destructiveignorefile=<path/to/ignore/file>
+      Path to use different ignore file to ignore destructive changes instead the ignore file to ignore changes to deploy
+
+  --fulldestructive
+      Merge all package and destructive XML files into one destructive XML file
+
+  --fullpackage
+      Merge all package and destructive XML files into one package XML file
+
+  --ignoredestructive
+      Option to ignore metadata from destructive changes created file
+
+  --json
+      format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)
+      [default: warn] logging level for this command invocation
+
+  --onlydestructive
+      Merge only the destructive XML files into one destructive XML file
+
+  --onlypackage
+      Merge only the package XML files into one package XML file
+
+  --outputpath=<target/files/path>
+      [default: ./manifest] Path to save the generated files. By default is your manifest folder
+
+EXAMPLES
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml"
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml" --bytype --deletebefore
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml" --onlypackage
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml" --onlydestructive
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml" --onlydestructive --deletebefore
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml" --fullpackage
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml" --fulldestructive
+  sfdx ah:package:merge -s "path/to/package1.xml, path/to/package2.xml, path/to/destructiveChanges1.xml, 
+  path/to/destructiveChangesPost1.xml" --fulldestructive --deletebefore
+```
+
+_See code: [src/commands/ah/package/merge.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/package/merge.ts)_
+
+## `sfdx ah:version [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+Command for get the installed Aura Helper SFDX version
+
+```
+USAGE
+  $ sfdx ah:version [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+EXAMPLES
+  sfdx ah:version
+  sfdx ah:version --json
+```
+
+_See code: [src/commands/ah/version.ts](https://github.com/JJLongoria/aura-helper-sfdx/blob/v1.0.0/src/commands/ah/version.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin

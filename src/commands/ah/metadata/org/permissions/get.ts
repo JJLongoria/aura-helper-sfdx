@@ -6,7 +6,6 @@ import { CoreUtils, FileChecker, FileWriter, PathUtils } from '@aurahelper/core'
 import CommandUtils from '../../../../../libs/utils/commandUtils';
 const Validator = CoreUtils.Validator;
 const ProjectUtils = CoreUtils.ProjectUtils;
-const Utils = CoreUtils.Utils;
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('aura-helper-sfdx', 'permissions');

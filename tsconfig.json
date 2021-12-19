@@ -4,12 +4,13 @@
     "outDir": "lib",
     "allowJs": true,
     "rootDir": "src",
-    "emitDeclarationOnly": true,
+    "declaration": true,
 		"sourceMap": true,
     "skipLibCheck": true
   },
   "include": ["./src/**/*.ts"],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "lib"
   ]
 }

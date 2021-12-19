@@ -1,12 +1,11 @@
 import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
-import { AnyJson, ensureJsonMap } from '@salesforce/ts-types';
+import { AnyJson } from '@salesforce/ts-types';
 import { SFConnector } from '@aurahelper/connector';
 import { CoreUtils, ExportTreeDataResult, FileChecker, FileReader, FileWriter, PathUtils } from '@aurahelper/core';
 const Validator = CoreUtils.Validator;
 const ProjectUtils = CoreUtils.ProjectUtils;
-const MathUtils = CoreUtils.MathUtils;
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('aura-helper-sfdx', 'import');
@@ -55,16 +54,11 @@ export default class Import extends SfdxCommand {
   };
 
   private importConnector: SFConnector;
-  private extractingFinished = false;
-  private deletingFinished = false;
   private refsByObjectType: { [key: string]: ReferenceByObject } = {};
   private recordTypeByObject: { [key: string]: RecordTypeData } = {};
   private objectsHierarchyByType: { [key: string]: ObjectHierarchyData } = {};
   private savedIdsByReference: { [key: string]: AnyJson } = {};
   private totalBatches = 0;
-  private username: string | undefined;
-  private increment: number;
-  private percentage: number;
   private insertErrorsByBatch: { [key: string]: AnyJson } = {};
 
   public async run(): Promise<AnyJson> {
@@ -428,8 +422,6 @@ export default class Import extends SfdxCommand {
         this.ux.setSpinnerStatus(messages.getMessage('startInsertJobMessage'));
       }
       const batchFolder = PathUtils.getAuraHelperSFDXTempFilesPath() + '/import-export';
-      this.increment = MathUtils.round(100 / this.totalBatches, 2);
-      this.percentage = 0;
 
       for (const plan of planData) {
         const mastersFolder = plan.sobject + '/masters';
@@ -457,7 +449,6 @@ export default class Import extends SfdxCommand {
           }
         }
         for (const batchFile of batchFiles) {
-          this.percentage += this.increment;
           const batchName = batchFile.replace('.json', '');
           if (this.flags.progress) {
             this.ux.log(messages.getMessage('runningBatchMessage', [batchName]));
@@ -502,7 +493,6 @@ export default class Import extends SfdxCommand {
           }
         }
         for (const batchFile of batchFiles) {
-          this.percentage += this.increment;
           const batchName = batchFile.replace('.json', '');
           if (this.flags.progress) {
             this.ux.log(messages.getMessage('runningBatchMessage', [batchName]));
@@ -594,7 +584,6 @@ export default class Import extends SfdxCommand {
         }
         idsByType[sObject].push(refData['id'] as string);
       });
-      this.deletingFinished = false;
       for (const sobject of Object.keys(idsByType)) {
         if (!this.flags.json) {
           if (this.flags.progress) {
@@ -613,10 +602,8 @@ export default class Import extends SfdxCommand {
           this.ux.setSpinnerStatus(messages.getMessage('rollbackFinishMessage', [sobject]));
         }
       }
-      this.deletingFinished = true;
       return;
     } catch (error) {
-      this.deletingFinished = true;
       const err = error as Error;
       throw new SfdxError(err.message);
     }

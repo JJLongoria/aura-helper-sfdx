@@ -66,9 +66,9 @@ export default class Compress extends SfdxCommand {
       throw new SfdxError(messages.getMessage('missingCompressTargetError'));
     }
     const compressor = new XMLCompressor();
+    compressor.setSortOrder(this.flags.sortorder);
     if (this.flags.all || this.flags.directory) {
       const param = this.flags.all ? '--root' : '--directory';
-      compressor.setSortOrder(this.flags.sortorder);
       try {
         const paths: string[] = this.flags.all
           ? CommandUtils.getProjectPaths(this.flags.root, this.flags.root, true)

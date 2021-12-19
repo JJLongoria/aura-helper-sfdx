@@ -12,7 +12,7 @@
     "afterDownloadMessage": "%s downloaded",
     "onRetrieveMessage": "Retriving Metadata Types. This operation can will take several minutes, please wait.",
     "copyFileMessage":"Copying %s to %s",
-    "retrieveInProgressMessage":"%s Retrieve in progress. Please wait.",
+    "retrieveInProgressMessage":"(%s) Retrieve in progress. Please wait.",
     "retrieveFinishedMessage":"Retrieve metadata finished successfully",
     "examples": [
         "sfdx ah:metadata:local:special:retrieve -a -c -i",

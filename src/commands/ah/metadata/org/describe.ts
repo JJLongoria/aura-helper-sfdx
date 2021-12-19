@@ -72,7 +72,7 @@ export default class Describe extends SfdxCommand {
       }
     }
     if (!this.flags.progress) {
-      this.ux.startSpinner(generalMessages.getMessage('runningDescribeMessage'));
+      this.ux.startSpinner(messages.getMessage('runningDescribeMessage'));
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);

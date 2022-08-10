@@ -10,7 +10,7 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('aura-helper-sfdx', 'export');
 const generalMessages = Messages.loadMessages('aura-helper-sfdx', 'general');
 
-export default class Describe extends SfdxCommand {
+export default class Export extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
   public static examples = messages.getMessage('examples').split(os.EOL);
   protected static supportsUsername = true;

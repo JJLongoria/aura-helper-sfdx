@@ -1,0 +1,13 @@
+{
+    "commandDescription": "Command to extract all test classes from commits messages from GIT differences between branches, commits or tags",
+    "sourceFlagDescription": "Source branch, commit, tag... to extract test classes from commit messages",
+    "targetFlagDescription": "Target branch, commit, tag... to extract test classes from commit messages",
+    "startTagFlagDescription": "Start Tag for Test Classes names on git commit message. (default: --TESTS START--)",
+    "endTagFlagDescription": "End Tag for Test Classes names on git commit message (default: --TESTS END--)",
+    "runningExtractTestClassesMessage": "Extracting Test Classes from git commits messages...",
+    "examples": [
+        "sfdx ah:git:test:extract -s branchX -t main",
+        "sfdx ah:git:test:extract -s branchX -t main --json",
+        "sfdx ah:git:test:extract -s branchX -t main --starttag \"MyCustom Test Start Tag\" --endtag \"MyCustom Test End Tag\" --json"
+    ]
+}

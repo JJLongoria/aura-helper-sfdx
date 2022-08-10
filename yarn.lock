@@ -22,10 +22,10 @@
     fs-extra "^9.1.0"
     unzipper "^0.10.11"
 
-"@aurahelper/core@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@aurahelper/core/-/core-2.2.0.tgz#5059b294561ee57c09118322dcd6b5a98b00576a"
-  integrity sha512-3nC00W2JtXzqBr8xvVoJW4ogW/60TlaBA+fUr5sUoKtgB2iwjZRD1M1N7OtUesCkLMebLGvJMxfpqySYnEpNSg==
+"@aurahelper/core@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@aurahelper/core/-/core-2.3.0.tgz#2163ef531c6ed205b2318bcc2e894dee692e21d4"
+  integrity sha512-Gq2X0hHRT5L76nO4vYmCYzBlLD30JDeAYB/RVOLfC6Yk6q7cKVBJGhW9YTJD8MaCVklErvX8boBkL5DcbASaFA==
   dependencies:
     fs-extra "^9.1.0"
     unzipper "^0.10.11"
@@ -41,12 +41,12 @@
     "@aurahelper/xml-compressor" "^2.0.1"
     "@aurahelper/xml-definitions" "^2.0.1"
 
-"@aurahelper/git-manager@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@aurahelper/git-manager/-/git-manager-2.0.2.tgz#55bfcda9f1c6eb254547a13edc506825762f2611"
-  integrity sha512-DAAbw8lxs4xiO2jR4nj11/1yc1Cw9Ey/8Hpv5QC+46kqnYaWWh5m1c92ODs/rCxjLgSca4ExoTWjUUkNzMEmmg==
+"@aurahelper/git-manager@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@aurahelper/git-manager/-/git-manager-2.1.3.tgz#3babed6ad02975186bd98203a027d4fbcd1a8eb4"
+  integrity sha512-I+2qaGBplrrQS5PYgwqwge3PTqhA/BExkOx2DmqAqc/GMG0/kCO3F79cHVrki8dr/OjIkUdxcnpJ8JQLO8o6jg==
   dependencies:
-    "@aurahelper/core" "^2.0.0"
+    "@aurahelper/core" "^2.3.0"
 
 "@aurahelper/ignore@^2.0.0":
   version "2.0.0"

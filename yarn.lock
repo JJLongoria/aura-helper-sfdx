@@ -30,6 +30,14 @@
     fs-extra "^9.1.0"
     unzipper "^0.10.11"
 
+"@aurahelper/core@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@aurahelper/core/-/core-2.3.1.tgz#b5675f712a8fd776e87df347e70552dac608bcc4"
+  integrity sha512-cuJ+uyUIpSaB0HIrzhbml/XKVmVzSvSZbPKhUj5ooBmjowIga8OMLsBr4oho4DlbLzvZrRql9GDSOZnBwwMnZA==
+  dependencies:
+    fs-extra "^9.1.0"
+    unzipper "^0.10.11"
+
 "@aurahelper/dependencies-manager@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@aurahelper/dependencies-manager/-/dependencies-manager-2.0.1.tgz#3789ade0106c1fdcb4d48c4287b942d65d9758d1"

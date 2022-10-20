@@ -113,7 +113,7 @@ export default class Create extends SfdxCommand {
       if (this.flags.useignore) {
         typesFromGit = await this.ignoreMetadata(typesFromGit);
       }
-      this.fixTypes(typesFromGit);
+      // this.fixTypes(typesFromGit);
       if (this.flags.json && this.flags.raw) {
         return typesFromGit;
       } else {

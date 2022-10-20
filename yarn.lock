@@ -2,14 +2,14 @@
 # yarn lockfile v1
 
 
-"@aurahelper/connector@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@aurahelper/connector/-/connector-2.1.0.tgz#075842204664a39a0a257d4fa4d81a00b544324e"
-  integrity sha512-XQFu4t3JTdRHcXuda4s3NpiC1J2RdwM2NPNJRG+y7rAuerG/XqhV68GPV7BdDKdof0LLPCbTq+XBNipcQwS2wA==
+"@aurahelper/connector@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@aurahelper/connector/-/connector-2.1.1.tgz#5863ce836bc4aa0feafce47b383397eef4be763c"
+  integrity sha512-3uGw5EplAmoFlAQMrlYzLOZzzq81CjTYAL910cRIN4swV/vgiGQW2votyioEiqrw+2Hx7JhGwH6uLmUPfiBjCg==
   dependencies:
     "@aurahelper/core" "^2.1.0"
     "@aurahelper/languages" "^2.0.0"
-    "@aurahelper/metadata-factory" "^2.1.0"
+    "@aurahelper/metadata-factory" "^2.1.1"
     "@aurahelper/package-generator" "^2.0.0"
     "@aurahelper/xml-compressor" "^2.0.0"
     "@salesforce/core" "^2.31.1"
@@ -79,6 +79,14 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@aurahelper/metadata-factory/-/metadata-factory-2.1.0.tgz#5f784939ee2e5b96f82c1acb7aec95c61e994f75"
   integrity sha512-Pdpwt1u5afIJLBYLDRcHMYZX1EuTR5h439VHSINnbsU5OnVjp889CpsGh3Jc0XjKHBL/Omwqt5siSkxZXx9DpA==
+  dependencies:
+    "@aurahelper/core" "^2.1.0"
+    "@aurahelper/languages" "^2.0.0"
+
+"@aurahelper/metadata-factory@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@aurahelper/metadata-factory/-/metadata-factory-2.1.1.tgz#11d18a7c407d1176717f84ff46719f0d71faadbe"
+  integrity sha512-xsy04fzU5MbaSjsd0/7vhgLdHWfE0h6+zo5DPnv8pd9FEHspuMVtgDwz60jOP+zmaqt97Xi7eJgAubo6LLYeGA==
   dependencies:
     "@aurahelper/core" "^2.1.0"
     "@aurahelper/languages" "^2.0.0"

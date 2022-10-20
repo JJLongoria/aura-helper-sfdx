@@ -146,7 +146,7 @@ export default class Create extends SfdxCommand {
     }
   }
 
-  private fixTypes(typesFromGit: TypesFromGit): void {
+  /* private fixTypes(typesFromGit: TypesFromGit): void {
     const typesToFix = {};
     typesToFix[MetadataTypes.SHARING_CRITERIA_RULE] = MetadataTypes.SHARING_RULES;
     typesToFix[MetadataTypes.SHARING_OWNER_RULE] = MetadataTypes.SHARING_RULES;
@@ -199,7 +199,7 @@ export default class Create extends SfdxCommand {
         }
       }
     }
-  }
+  }*/
 
   private createPackages(typesFromGit: TypesFromGit): PackageGeneratorResult {
     const result = new PackageGeneratorResult();

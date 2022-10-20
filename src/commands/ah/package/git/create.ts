@@ -165,14 +165,14 @@ export default class Create extends SfdxCommand {
         let anyChecked = false;
         if (typesFromGit.toDeploy[mtKey]) {
           const mtType = typesFromGit.toDeploy[mtKey];
-          if (mtType.hasChilds()) {
-            for (const moKey of Object.keys(mtType.getChilds())) {
+          if (mtType.childs && Object.keys(mtType.childs).length > 0) {
+            for (const moKey of Object.keys(mtType.childs)) {
               const mtObject = mtType.childs[moKey];
               if (mtObject.checked) {
                 anyChecked = true;
               }
-              if (mtObject.hasChilds()) {
-                for (const miKey of Object.keys(mtObject.getChilds())) {
+              if (mtObject.childs && Object.keys(mtType.childs).length > 0) {
+                for (const miKey of Object.keys(mtObject.childs)) {
                   if (mtObject.childs[miKey].checked) {
                     anyChecked = true;
                   }

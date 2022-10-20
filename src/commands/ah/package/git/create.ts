@@ -147,7 +147,6 @@ export default class Create extends SfdxCommand {
   }
 
   private fixTypes(typesFromGit: TypesFromGit): void {
-    this.ux.log('Fixing Types....');
     const typesToFix = {};
     typesToFix[MetadataTypes.SHARING_CRITERIA_RULE] = MetadataTypes.SHARING_RULES;
     typesToFix[MetadataTypes.SHARING_OWNER_RULE] = MetadataTypes.SHARING_RULES;
@@ -186,7 +185,6 @@ export default class Create extends SfdxCommand {
           }
         }
       }
-      this.ux.logJson(typesToAdd);
       for (const toAdd of typesToAdd) {
         const splits = toAdd.split(':');
         const mtType = splits[0];

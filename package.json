@@ -2,7 +2,7 @@
   "name": "aura-helper-sfdx",
   "displayName": "Aura Helper SFDX",
   "description": "Aura Helper CLI aplication Tools converted into SFDX Plugin",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Juan José Longoria López",
   "bugs": "https://github.com/JJLongoria/aura-helper-sfdx/issues",
   "dependencies": {

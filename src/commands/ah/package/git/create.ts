@@ -2,7 +2,17 @@ import * as os from 'os';
 import { FlagsConfig, SfdxCommand, flags } from '@salesforce/command';
 import { Messages, SfdxError } from '@salesforce/core';
 import { SFConnector } from '@aurahelper/connector';
-import { CoreUtils, FileChecker, GitDiff, PackageGeneratorResult, PathUtils, TypesFromGit } from '@aurahelper/core';
+import {
+  CoreUtils,
+  FileChecker,
+  GitDiff,
+  MetadataObject,
+  MetadataType,
+  MetadataTypes,
+  PackageGeneratorResult,
+  PathUtils,
+  TypesFromGit,
+} from '@aurahelper/core';
 import { MetadataFactory } from '@aurahelper/metadata-factory';
 import { GitManager } from '@aurahelper/git-manager';
 import { Ignore } from '@aurahelper/ignore';
@@ -103,6 +113,7 @@ export default class Create extends SfdxCommand {
       if (this.flags.useignore) {
         typesFromGit = await this.ignoreMetadata(typesFromGit);
       }
+      this.fixTypes(typesFromGit);
       if (this.flags.json && this.flags.raw) {
         return typesFromGit;
       } else {
@@ -132,6 +143,63 @@ export default class Create extends SfdxCommand {
     }
     if (!FileChecker.isSFDXRootPath(this.flags.root)) {
       throw new SfdxError(generalMessages.getMessage('projectNotFoundError'));
+    }
+  }
+
+  private fixTypes(typesFromGit: TypesFromGit): void {
+    this.ux.log('Fixing Types....');
+    const typesToFix = {};
+    typesToFix[MetadataTypes.SHARING_CRITERIA_RULE] = MetadataTypes.SHARING_RULES;
+    typesToFix[MetadataTypes.SHARING_OWNER_RULE] = MetadataTypes.SHARING_RULES;
+    typesToFix[MetadataTypes.SHARING_GUEST_RULE] = MetadataTypes.SHARING_RULES;
+    typesToFix[MetadataTypes.SHARING_TERRITORY_RULE] = MetadataTypes.SHARING_RULES;
+    typesToFix[MetadataTypes.WORKFLOW_OUTBOUND_MESSAGE] = MetadataTypes.WORKFLOW;
+    typesToFix[MetadataTypes.WORKFLOW_KNOWLEDGE_PUBLISH] = MetadataTypes.WORKFLOW;
+    typesToFix[MetadataTypes.WORKFLOW_TASK] = MetadataTypes.WORKFLOW;
+    typesToFix[MetadataTypes.WORKFLOW_RULE] = MetadataTypes.WORKFLOW;
+    typesToFix[MetadataTypes.WORKFLOW_FIELD_UPDATE] = MetadataTypes.WORKFLOW;
+    typesToFix[MetadataTypes.WORKFLOW_ALERT] = MetadataTypes.WORKFLOW;
+    if (typesFromGit.toDeploy) {
+      const typesToAdd: string[] = [];
+      for (const mtKey of Object.keys(typesToFix)) {
+        const parentType = typesToFix[mtKey] as string;
+        let anyChecked = false;
+        if (typesFromGit.toDeploy[mtKey]) {
+          const mtType = typesFromGit.toDeploy[mtKey];
+          if (mtType.hasChilds()) {
+            for (const moKey of Object.keys(mtType.getChilds())) {
+              const mtObject = mtType.childs[moKey];
+              if (mtObject.checked) {
+                anyChecked = true;
+              }
+              if (mtObject.hasChilds()) {
+                for (const miKey of Object.keys(mtObject.getChilds())) {
+                  if (mtObject.childs[miKey].checked) {
+                    anyChecked = true;
+                  }
+                }
+              }
+              if (anyChecked && !typesToAdd.includes[parentType + ':' + moKey]) {
+                typesToAdd.push(parentType + ':' + moKey);
+              }
+            }
+          }
+        }
+      }
+      this.ux.logJson(typesToAdd);
+      for (const toAdd of typesToAdd) {
+        const splits = toAdd.split(':');
+        const mtType = splits[0];
+        const moType = splits[1];
+        if (!typesFromGit.toDeploy[mtType]) {
+          typesFromGit.toDeploy[mtType] = new MetadataType(mtType, false);
+          typesFromGit.toDeploy[mtType].childs[moType] = new MetadataObject(moType, true);
+        } else if (!typesFromGit.toDeploy[mtType].childs[moType]) {
+          typesFromGit.toDeploy[mtType].childs[moType] = new MetadataObject(moType, true);
+        } else {
+          typesFromGit.toDeploy[mtType].childs[moType].checked = true;
+        }
+      }
     }
   }
 

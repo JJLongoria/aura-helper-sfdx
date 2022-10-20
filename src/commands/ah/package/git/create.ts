@@ -6,9 +6,9 @@ import {
   CoreUtils,
   FileChecker,
   GitDiff,
-  MetadataObject,
+  /* MetadataObject,
   MetadataType,
-  MetadataTypes,
+  MetadataTypes,*/
   PackageGeneratorResult,
   PathUtils,
   TypesFromGit,

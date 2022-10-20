@@ -6,9 +6,9 @@ import {
   CoreUtils,
   FileChecker,
   GitDiff,
-  /* MetadataObject,
+  MetadataObject,
   MetadataType,
-  MetadataTypes,*/
+  MetadataTypes,
   PackageGeneratorResult,
   PathUtils,
   TypesFromGit,
@@ -113,7 +113,7 @@ export default class Create extends SfdxCommand {
       if (this.flags.useignore) {
         typesFromGit = await this.ignoreMetadata(typesFromGit);
       }
-      // this.fixTypes(typesFromGit);
+      this.fixTypes(typesFromGit);
       if (this.flags.json && this.flags.raw) {
         return typesFromGit;
       } else {
@@ -146,7 +146,7 @@ export default class Create extends SfdxCommand {
     }
   }
 
-  /* private fixTypes(typesFromGit: TypesFromGit): void {
+  private fixTypes(typesFromGit: TypesFromGit): void {
     const typesToFix = {};
     typesToFix[MetadataTypes.SHARING_CRITERIA_RULE] = MetadataTypes.SHARING_RULES;
     typesToFix[MetadataTypes.SHARING_OWNER_RULE] = MetadataTypes.SHARING_RULES;
@@ -199,7 +199,7 @@ export default class Create extends SfdxCommand {
         }
       }
     }
-  }*/
+  }
 
   private createPackages(typesFromGit: TypesFromGit): PackageGeneratorResult {
     const result = new PackageGeneratorResult();

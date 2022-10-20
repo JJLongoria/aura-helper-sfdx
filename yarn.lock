@@ -91,6 +91,14 @@
     "@aurahelper/core" "^2.1.0"
     "@aurahelper/languages" "^2.0.0"
 
+"@aurahelper/metadata-factory@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@aurahelper/metadata-factory/-/metadata-factory-2.1.4.tgz#b14a84e23a22289bc8f6820f66d5fc06ba7c7aa7"
+  integrity sha512-aUd1dIWjyi6QMen4gmybu1WrmeOinCturn5BY4K0fZemaEPDw2Mf/PwhSUZr3jVTdnVCgRVcpP2WKqQePcMUnQ==
+  dependencies:
+    "@aurahelper/core" "^2.1.0"
+    "@aurahelper/languages" "^2.0.0"
+
 "@aurahelper/package-generator@^2.0.0", "@aurahelper/package-generator@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@aurahelper/package-generator/-/package-generator-2.1.0.tgz#b3f2ec0681da46f70bae8f74914da06a1dce70ef"

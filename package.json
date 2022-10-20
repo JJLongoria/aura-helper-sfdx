@@ -11,7 +11,7 @@
     "@aurahelper/dependencies-manager": "^2.0.1",
     "@aurahelper/git-manager": "^2.1.3",
     "@aurahelper/ignore": "^2.0.0",
-    "@aurahelper/metadata-factory": "^2.1.1",
+    "@aurahelper/metadata-factory": "^2.1.4",
     "@aurahelper/package-generator": "^2.1.0",
     "@aurahelper/xml-compressor": "^2.0.1",
     "@aurahelper/xml-definitions": "^2.0.1",

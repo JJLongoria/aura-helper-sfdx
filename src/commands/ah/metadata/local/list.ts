@@ -51,6 +51,8 @@ export default class Describe extends SfdxCommand {
     }
     if (!this.flags.progress) {
       this.ux.startSpinner(messages.getMessage('runningListMessage'));
+    } else {
+      this.ux.log(messages.getMessage('runningListMessage'));
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
@@ -113,7 +115,7 @@ export default class Describe extends SfdxCommand {
         FileWriter.createFolderSync(baseDir);
       }
       FileWriter.createFileSync(this.flags.outputile, JSON.stringify(metadata, null, 2));
-      this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
+      this.ux.log(generalMessages.getMessage('outputSavedMessage', [this.flags.outputfile]));
     }
     return metadata;
   }

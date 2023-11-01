@@ -1,7 +1,7 @@
 {
     "commandDescription": "Command to execute an Anonymous Apex script from file against the auth org N times.",
     "fileFlagDescription": "Path to the Anonymous Apex Script file",
-    "printLogFlagDescription": "Option to print the result log of every execution",
+    "printLogFlagDescription": "Option to print the result log of every execution. Depends on --progress flag",
     "iterationsFlagDescription": "Option to select the scritp execution number. For example, 3 for execute the script 3 times",
     "runningScriptMessage": "Running Apex Executions...",
     "executingIterationMessage": "Executing Script. Iteration: %d/%d",

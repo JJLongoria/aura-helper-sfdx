@@ -64,7 +64,7 @@ export default class Repair extends SfdxCommand {
     }),
     ignorefile: flags.filepath({
       char: 'i',
-      description: messages.getMessage('ignoreFileFlagDescription'),
+      description: messages.getMessage('ignoreFileFlagDescription', [IGNORE_FILE_NAME]),
       helpValue: '<path/to/ignore/file>',
     }),
     outputfile: flags.filepath({
@@ -155,9 +155,9 @@ export default class Repair extends SfdxCommand {
         }
         FileWriter.createFileSync(this.flags.outputfile, JSON.stringify(result, null, 2));
         if (this.flags.progress) {
-          this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
+          this.ux.log(generalMessages.getMessage('outputSavedMessage', [this.flags.outputfile]));
         } else {
-          this.ux.stopSpinner(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
+          this.ux.stopSpinner(generalMessages.getMessage('outputSavedMessage', [this.flags.outputfile]));
         }
       }
       return result;

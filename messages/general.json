@@ -7,5 +7,5 @@
     "projectNotFoundError": "This command is required to run from within an SFDX project",
     "wrongParamPath": "'Wrong %s path. Select a valid path. Error: %s",
     "gettingAvailableMetadataTypesMessage": "Getting All Available Metadata Types",
-    "outputSavedMessage": "'Output saved in: %s"
+    "outputSavedMessage": "Output saved in: %s"
 }

@@ -86,7 +86,7 @@ export default class Merge extends SfdxCommand {
   };
 
   public run(): Promise<PackageGeneratorResult> {
-    return new Promise<PackageGeneratorResult>((resolve) => {
+    return new Promise<PackageGeneratorResult>((resolve, reject) => {
       this.validateProjectPath();
       this.validateOutputPath();
       if (this.flags.progress) {
@@ -110,7 +110,7 @@ export default class Merge extends SfdxCommand {
         }
       } catch (error) {
         const err = error as Error;
-        throw new SfdxError(err.message);
+        reject(new SfdxError(err.message));
       }
     });
   }
@@ -122,9 +122,9 @@ export default class Merge extends SfdxCommand {
     );
     if (this.flags.useignore) {
       packageGenerator.setIgnoreFile(this.flags.ignorefile);
-      if (this.flags.ignoredestructive) {
-        packageGenerator.setDestructiveIgnoreFile(this.flags.destructiveignorefile);
-      }
+    }
+    if (this.flags.ignoredestructive && this.flags.destructiveignorefile) {
+      packageGenerator.setDestructiveIgnoreFile(this.flags.destructiveignorefile);
     }
     packageGenerator.setBeforeDeploy(this.flags.deletebefore);
     const byTypeDefault =
@@ -166,12 +166,14 @@ export default class Merge extends SfdxCommand {
   }
 
   private validateIgnoreFiles(): void {
-    if (this.flags.useignore) {
+    if (this.flags.useignore || this.flags.ignoredestructive) {
       if (this.flags.progress) {
         this.ux.log(messages.getMessage('validateIgnoreFilesMessage'));
       } else {
         this.ux.setSpinnerStatus(messages.getMessage('validateIgnoreFilesMessage'));
       }
+    }
+    if (this.flags.useignore) {
       if (!this.flags.ignorefile) {
         this.flags.ignorefile = (this.flags.root as string) + '/' + IGNORE_FILE_NAME;
       }
@@ -182,14 +184,16 @@ export default class Merge extends SfdxCommand {
         const err = error as Error;
         throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--ignorefile', err.message]));
       }
-      if (this.flags.ignoredestructive && this.flags.destructiveignorefile) {
-        try {
-          Validator.validateJSONFile(this.flags.destructiveignorefile);
-          this.flags.destructiveignorefile = PathUtils.getAbsolutePath(this.flags.destructiveignorefile);
-        } catch (error) {
-          const err = error as Error;
-          throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--destructiveignorefile', err.message]));
-        }
+    }
+    if (this.flags.ignoredestructive && !this.flags.destructiveignorefile) {
+      this.flags.destructiveignorefile = (this.flags.root as string) + '/' + IGNORE_FILE_NAME;
+    } else if (this.flags.ignoredestructive) {
+      try {
+        Validator.validateJSONFile(this.flags.destructiveignorefile);
+        this.flags.destructiveignorefile = PathUtils.getAbsolutePath(this.flags.destructiveignorefile);
+      } catch (error) {
+        const err = error as Error;
+        throw new SfdxError(generalMessages.getMessage('wrongParamPath', ['--destructiveignorefile', err.message]));
       }
     }
   }

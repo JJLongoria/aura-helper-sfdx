@@ -68,7 +68,6 @@ export default class Create extends SfdxCommand {
       description: messages.getMessage('targetFlagDescription'),
     }),
     raw: flags.boolean({
-      char: 'r',
       description: messages.getMessage('rawFlagDescription'),
     }),
     useignore: flags.boolean({
@@ -178,7 +177,7 @@ export default class Create extends SfdxCommand {
                   }
                 }
               }
-              if (anyChecked && !typesToAdd.includes[parentType + ':' + moKey]) {
+              if (anyChecked && !typesToAdd.includes(parentType + ':' + moKey)) {
                 typesToAdd.push(parentType + ':' + moKey);
               }
             }

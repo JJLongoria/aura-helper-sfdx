@@ -7,7 +7,9 @@
     "describeSourceTypesMessage": "Describing Metadata Types from Source",
     "describeTargetTypesMessage": "Describing Metadata Types from Target",
     "runningCompareMessage": "Comparing Source and Target...",
+    "afterDownloadMessage": "%s downloaded",
     "comparingMessage": "Comparing Metadata Types",
+    "comparingFinish": "Comparing Metadata Types finished",
     "examples": [
         "sfdx ah:metadata:org:between:compare -t test.username@salesforceOrg.com.qa",
         "sfdx ah:metadata:org:between:compare -s test.username@salesforceOrg.com.uat -t test.username@salesforceOrg.com.qa"

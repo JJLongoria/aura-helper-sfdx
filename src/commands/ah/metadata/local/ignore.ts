@@ -87,6 +87,8 @@ export default class Ignore extends SfdxCommand {
     }
     if (!this.flags.progress) {
       this.ux.startSpinner(messages.getMessage('runningIgnoreMessage'));
+    } else {
+      this.ux.log(messages.getMessage('runningIgnoreMessage'));
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);

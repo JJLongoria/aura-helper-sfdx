@@ -5,7 +5,9 @@
     "describeOrgTypesMessage": "Describing Org Metadata Types",
     "describeLocalTypesMessage": "Describing Local Metadata Types",
     "runningCompareMessage": "Comparing Local and Org...",
+    "afterDownloadMessage": "%s downloaded",
     "comparingMessage": "Comparing Metadata Types",
+    "comparingFinish": "Comparing Metadata Types finished",
     "examples": [
         "sfdx ah:metadata:org:compare",
         "sfdx ah:metadata:org:compare --csv",

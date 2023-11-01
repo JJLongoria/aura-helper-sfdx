@@ -6,7 +6,7 @@
     "compressFlagDescription": "Add this option to compress modified files by ignore operation.",
     "missingTypesToIgnoreError": "You must select ignore all or ignore specific types",
     "worngIgnoreFilePathError": "Wrong --ignorefile path. Error: %s",
-    "processingMetadataType": "'Processing %s Metadata Type'",
+    "processingMetadataType": "Processing %s Metadata Type",
     "ignoreFinishSuccesfully": "Ignore metadata finished successfully",
     "runningIgnoreMessage": "Ignoring Metadata...",
     "examples": [

@@ -139,7 +139,7 @@ export default class Retrieve extends SfdxCommand {
           PathUtils.getAuraHelperSFDXTempFilesPath(),
           types,
           this.flags.compress,
-          this.flags.sortrrder
+          this.flags.sortorder
         );
       } else {
         retrieveOut = await connector.retrieveMixedSpecialTypes(
@@ -147,7 +147,7 @@ export default class Retrieve extends SfdxCommand {
           types,
           this.flags.downloadall,
           this.flags.compress,
-          this.flags.sortrrder
+          this.flags.sortorder
         );
       }
       if (this.flags.progress) {

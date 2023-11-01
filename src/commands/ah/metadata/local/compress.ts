@@ -89,6 +89,8 @@ export default class Compress extends SfdxCommand {
     }
     if (!this.flags.progress) {
       this.ux.startSpinner(messages.getMessage('compressProgress'));
+    } else {
+      this.ux.log(messages.getMessage('compressProgress'));
     }
     let totalFiles = 0;
     let compressed = 0;

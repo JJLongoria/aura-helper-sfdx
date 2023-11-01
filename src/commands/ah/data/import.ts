@@ -37,7 +37,7 @@ export default class Import extends SfdxCommand {
       min: 1,
       max: 200,
     }),
-    source: flags.number({
+    source: flags.string({
       char: 's',
       description: messages.getMessage('sourceFlagDescription'),
       helpValue: '<usernameOrAlias>',

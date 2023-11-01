@@ -122,12 +122,12 @@ export default class Retrieve extends SfdxCommand {
           );
         }
       });
-      let retrieveOut = new RetrieveResult('');
-      retrieveOut = await connector.retrieveOrgSpecialTypes(
+      const retrieveOut = await connector.retrieveOrgSpecialTypes(
         PathUtils.getAuraHelperSFDXTempFilesPath(),
         types,
+        this.flags.downloadall,
         this.flags.compress,
-        this.flags.sortrrder
+        this.flags.sortorder
       );
       if (this.flags.progress) {
         this.ux.log(messages.getMessage('retrieveFinishedMessage'));

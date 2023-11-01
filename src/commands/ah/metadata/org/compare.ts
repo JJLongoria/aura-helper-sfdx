@@ -53,6 +53,8 @@ export default class Compare extends SfdxCommand {
     }
     if (!this.flags.progress) {
       this.ux.startSpinner(messages.getMessage('runningCompareMessage'));
+    } else {
+      this.ux.log(messages.getMessage('runningCompareMessage'));
     }
     const alias = ProjectUtils.getOrgAlias(this.flags.root);
     const namespace = ProjectUtils.getOrgNamespace(this.flags.root);
@@ -129,6 +131,11 @@ export default class Compare extends SfdxCommand {
       }
       FileWriter.createFileSync(this.flags.outputile, JSON.stringify(compareResult, null, 2));
       this.ux.log(messages.getMessage('outputSavedMessage', [this.flags.outputfile]));
+    }
+    if (!this.flags.progress) {
+      this.ux.stopSpinner(messages.getMessage('comparingFinish'));
+    } else {
+      this.ux.log(messages.getMessage('comparingFinish'));
     }
     return compareResult;
   }

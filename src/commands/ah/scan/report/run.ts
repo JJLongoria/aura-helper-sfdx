@@ -208,6 +208,7 @@ export default class Run extends SfdxCommand {
       description: generalMessages.getMessage('progressFlagDescription'),
     }),
     outputdir: flags.directory({
+      char: 'o',
       description: messages.getMessage('outputDirFlagDescription'),
       helpValue: '<path/to/output/file>',
       default: './ScanResult',

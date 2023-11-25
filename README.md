@@ -45,6 +45,10 @@ Supported Operative Systems:
 
 - [**Metadata JSON Format**](#metadata-json-format)
 
+- [**Dependencies Repair Response**](#repair-respose)
+
+- [**Dependencies Check Response**](#check-response)
+
 ---
 
 # [**Installation Guide**](#installation-guide)
@@ -102,6 +106,9 @@ Aura Helper SFDX has little bit different commands organizations. To make it mor
   - [**merge**](#package-command-merge)
 
 - [**Data Commands**](#data-commands)
+<p></p>
+
+- [**Scan Commands**](#scan-commands)
 <p></p>
 
 - [**Core Commands**](#core-commands)
@@ -1336,6 +1343,198 @@ Import all accounts from a plan file and process 50 accounts maximum per batch.
     sfdx ah:data:import -f "./export/accounts/accounts-plan.json" -n 50
 
 
+
+# [**Scan Commands**](#scan-commands)
+
+Scan commands are commands to execute static code analisis on yout project with SFDX Scanner. You can execute the scan to analyze the entire project and check Quality Gates to maintenance your Quality Code. Like SonarQube or other similar tools. Also create an HTML Reports with metrics and project statistics, file problems and more. 
+
+  - [**scan:report:run**](#ahscanreportrun)
+
+    Command to execute a full scan on your project and create an HTML report with the results. Also check que quality gates for project to pass or not pass the scan and maintencance yout code quality.
+
+  - [**scan:report:open**](#ahscanreportopen)
+
+    Open the HTML report created with the scan:report:run command.
+
+  - [**scan:report:quality**](#ahscanreportquality)
+
+    Set your custom quality gates for every salesforce project. One Quality gate by project.
+
+--- 
+
+## [**ah:scan:report:run**](#ahscanreportrun)
+
+Command to execute a full scan on your project and create an HTML report with the results. Also check que quality gates for project to pass or not pass the scan and maintencance yout code quality.
+
+### **Usage**:
+
+    sfdx ah:scan:report:run [-r <filepath>] [-o <folderpath>] [-q <string>] [-p] [--categories <categories>] [--pmdruleset <filepath>] [--eslintruleset <filepath>] [--open] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+
+```
+[-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+[-o | --outputdir <path/to/output/folder>]                          Path to save the generated report. By default is your project root folder
+[-q | --qualitygate <qualityGateName>]                              Name of the quality gate to check the project. By default is "aura-helper"
+[--categories <categories>]                                         Comma Separated Categories to analize. By default analize all categories. Available categories: Design, Best Practices, Security, Performance, Code Style, Documentation, Error Prone, problem, suggestion, Insecure Dependencies.
+[--pmdruleset <filepath>]                                           Path to the PMD ruleset file. By default is the ruleset included on the package
+[--eslintruleset <filepath>]                                        Path to the Eslint ruleset file. By default is the ruleset included on the package
+[--open]                                                            Option to open the generated report
+[-p | --progress]                                                   Option to report the command progress (into the selected format) or show a spinner loader
+[--json]                                                            Format output as JSON.
+[--loglevel <LOGLEVEL>]                                             The logging level for this command invocation. Logs are stored in $HOME/.sfdx/sfdx.log.     
+                                                                    Permissible values are: trace, debug, info, warn, error, fatal, TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default value: warn
+```
+
+### **JSON Response**:
+```json
+    {
+        "status": 0,
+        "result": {
+            "passed": boolean,
+            "messages": string[],
+            "output": string,
+            "debt": number,
+            "debtDuration": string,
+            "totalErrors": number,
+            "bugs": number,
+            "vulnerabilities": number,
+            "codeSmells": number,
+            "uncatalogued": number,
+            "securityHotspots": number,
+            "blockers": number,
+            "criticals": number,
+            "majors": number,
+            "minors": number,
+            "infos": number,
+            "designs": number,
+            "bestPractices": number,
+            "securities": number,
+            "performances": number,
+            "codeStyles": number,
+            "documentations": number,
+            "errors": number,
+            "problems": number,
+            "suggestions": number,
+            "insecureDependencies": number,
+            "duplicatedBlocks": number,
+            "measuresFailed"?: string[],
+            "branch": string,
+            "org": string,
+        }
+    }
+```
+### **Examples**:
+
+Running a report for the current folder project and save the results on the default folder
+
+    sfdx ah:scan:report:run
+
+Running a report for the current folder project and save the results on the default folder and get results as JSON (for CI/CD)
+
+    sfdx ah:scan:report:run --outputdir "/path/to/output/folder" --json
+
+Running a report only for the Security and Performance categories
+
+    sfdx ah:scan:report:run --outputdir "/path/to/output/folder" --categories "Security,Performance"
+
+Running a report for all categories except Security
+
+    sfdx ah:scan:report:run --outputdir "/path/to/output/folder" --categories "!Security"
+
+Running a report with the Auta Helper Moderate Quality Gate
+
+    sfdx ah:scan:report:run --outputdir "/path/to/output/folder" --qualitygate Moderate
+
+Running a report with the project custom Quality Gate. Can create custom quality gates using the command "sf ah scan report quality"
+
+    sfdx ah:scan:report:run --outputdir "/path/to/output/folder" --qualitygate Custom
+
+--- 
+
+## [**ah:scan:report:open**](#ahscanreportopen)
+
+Open the HTML report created with the scan:report:run command.
+
+### **Usage**:
+
+    sfdx ah:scan:report:open [-i <folderpath>] [-p]
+
+### **Options**:
+
+```
+[-i | --inputdir <path/to/input/folder>]                            Path to the generated report folder. By default is
+[-p | --port] <port>                                                Port to open the report. By default is 5000
+```
+### **JSON Response**:
+```json
+    {
+        "status": 0,
+        "result": {
+            "maxDebt": string,
+            "maxBlockers": number,
+            "maxCriticals": number,
+            "maxMajors": number,
+            "maxMinors": number,
+            "maxInfos": number,
+            "maxDuplicates": number,
+            "maxBugs": number,
+        }
+    }
+```
+
+### **Examples**:
+
+Open the report on the current folder
+
+    sfdx ah:scan:report:open
+
+Open the report on the folder "path/reports"
+
+    sfdx ah:scan:report:open --inputdir "path/reports"
+
+Open the report on the folder "path/reports" and running on custom port
+
+    sfdx ah:scan:report:open --inputdir "path/reports" --port 7500
+
+---
+
+## [**ah:scan:report:quality**](#ahscanreportquality)
+
+Set your custom quality gates for every salesforce project. One Quality gate by project.
+
+### **Usage**:
+
+    sfdx ah:scan:report:quality [-r <filepath>] [-i] [--maxdebt] [--maxbugs] [--maxblockers] [--maxcriticals] [--maxmajors] [--maxminors] [--maxinfos] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+### **Options**:
+
+```
+[-r | --root <path/to/project/root>]                                Path to project root. By default is your current folder.
+[-i | --interactive]                                                Run command in interactive mode. If the flag is not present, the command will use the default values for the flags.
+[--maxdebt <maxdebt>]                                               Set the maximum technical debt to check on scan report. If the technical debt is greater than the maximum, the scan will finish with not passed result. By default use the maximum technical debt of the selected Quality Gate.
+[--maxbugs <maxbugs>]                                               Set the maximum bugs to check on scan report. If the bugs are greater than the maximum, the scan will finish with not passed result. By default use the maximum bugs of the selected Quality Gate.
+[--maxblockers <maxblockers>]                                       Set the maximum blockers to check on scan report. If the blockers are greater than the maximum, the scan will finish with not passed result. By default use the maximum blockers of the selected Quality Gate.
+[--maxcriticals <maxcriticals>]                                     Set the maximum criticals to check on scan report. If the criticals are greater than the maximum, the scan will finish with not passed result. By default use the maximum criticals of the selected Quality Gate.
+[--maxmajors <maxmajors>]                                           Set the maximum majors to check on scan report. If the majors are greater than the maximum, the scan will finish with not passed result. By default use the maximum majors of the selected Quality Gate.
+[--maxminors <maxminors>]                                           Set the maximum minors to check on scan report. If the minors are greater than the maximum, the scan will finish with not passed result. By default use the maximum minors of the selected Quality Gate.
+[--maxinfos <maxinfos>]                                             Set the maximum infos to check on scan report. If the infos are greater than the maximum, the scan will finish with not passed result. By                             
+```
+
+### **Examples**:
+
+Set the quality gate for the current folder project. The command run in interactive mode, that is, the command will ask for the values of the quality gate for every measure.
+
+    sfdx ah:scan:report:quality
+
+Set the quality gate for the selected project.
+
+    sfdx ah:scan:report:quality --root 'path/to/project/folder' --interactive
+
+Set the quality gate for the selected project. This command is not interactive (best for CI/CD). The command wil set the specified values for the quality gate. If the values are not specified, the measure not take effect on reports, that is, always pass the measures you need to check because all not specified measures are set to Not Defined.
+
+    sfdx ah:scan:report:quality --root 'path/to/project/folder' --max-debt "1Y 2M 3W 4D 5h 6m" --max-bugs 10 --max-blockers 10 --max-criticals 10 --max-majors 10 --max-minors 10 --max-infos 10
+
 # [**Core Commands**](#core-commands)
 
 Commands to execute operations related with Aura Helper and not with Salesforce like get the installed version or update to the latest version.
@@ -1370,6 +1569,7 @@ Get Aura Helper SFDX Installed version
     sfdx ah:version
 
 ---
+
 
 # [**Ignore File**](#ignore-file)
 

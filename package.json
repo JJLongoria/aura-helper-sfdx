@@ -164,7 +164,8 @@
   },
   "repository": "https://github.com/JJLongoria/aura-helper-sfdx",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p . && yarn copyfiles",
+    "copyfiles": "copyfiles -u 1 src/assets/** lib",
     "link": "sfdx plugins:link",
     "watch": "tsc -p . --watch",
     "lint": "eslint src/**/*.ts test/**/*.ts",

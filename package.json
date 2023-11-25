@@ -2,17 +2,17 @@
   "name": "aura-helper-sfdx",
   "displayName": "Aura Helper SFDX",
   "description": "Aura Helper CLI aplication Tools converted into SFDX Plugin",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "author": "Juan José Longoria López",
   "bugs": "https://github.com/JJLongoria/aura-helper-sfdx/issues",
   "dependencies": {
     "@aurahelper/connector": "^2.2.1",
-    "@aurahelper/core": "^2.6.2",
+    "@aurahelper/core": "^2.7.0",
     "@aurahelper/dependencies-manager": "^2.0.2",
     "@aurahelper/git-manager": "^2.1.5",
     "@aurahelper/ignore": "^2.0.1",
     "@aurahelper/metadata-factory": "^2.1.6",
-    "@aurahelper/package-generator": "^2.1.0",
+    "@aurahelper/package-generator": "^2.1.1",
     "@aurahelper/xml-compressor": "^2.0.2",
     "@aurahelper/xml-definitions": "^2.0.1",
     "@oclif/command": "^1",
@@ -20,6 +20,8 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2.0.0",
     "@salesforce/core": "^2",
+    "@types/live-server": "^1.2.3",
+    "live-server": "^1.2.2",
     "tslib": "^2"
   },
   "devDependencies": {
@@ -36,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^4",
     "@typescript-eslint/parser": "^4",
     "chai": "^4",
+    "copyfiles": "^2.4.1",
     "eslint": "^7",
     "eslint-config-oclif": "^3.1",
     "eslint-config-prettier": "^8",
@@ -68,7 +71,13 @@
   ],
   "homepage": "https://github.com/JJLongoria/aura-helper-sfdx",
   "keywords": [
+    "force",
+    "salesforce",
+    "sfdx",
+    "salesforcedx",
     "sfdx-plugin",
+    "sf-plugin",
+    "sf",
     "aura-helper-framework",
     "aura helper framework",
     "Aura Helper Framework",
@@ -88,7 +97,24 @@
     "Apex",
     "force.com",
     "DevOps",
-    "devops"
+    "devops",
+    "Describe Metadata",
+    "List Metadata",
+    "Deploy Metadata",
+    "Retrieve Metadata",
+    "Describe SObjects",
+    "git",
+    "package-git",
+    "git package",
+    "package",
+    "Static Code Analysis",
+    "Salesforce Scanner",
+    "Salesforce Code Scanner",
+    "Code Scanner",
+    "Code Analysis",
+    "Code Quality",
+    "Code Quality Gates",
+    "PMD"
   ],
   "license": "GPL-3.0-only",
   "oclif": {
@@ -120,6 +146,14 @@
       },
       "ah:data": {
         "description": "Topic with commands work with data against the project connected org. Export or Import tree data without Salesforce"
+      },
+      "ah:scan": {
+        "description": "Topic to work with Static Code Analysis, generate reports, customize code quality gates, etc.",
+        "subtopics": {
+          "report": {
+            "description": "Topic to work with Static Code Analysis Reports created by Aura Helper. You can create yout quality gates by project, run or view reports with Code Analysis results and statistics"
+          }
+        }
       }
     },
     "commands": "./lib/commands",

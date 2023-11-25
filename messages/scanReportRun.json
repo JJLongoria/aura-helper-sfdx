@@ -1,0 +1,23 @@
+{
+    "commandDescription": "Execute an entire project code analisys and generate a complex and navigable report in HTML like SonarQube or Similars",
+    "outputDirFlagDescription": "Path to save the generated output files. By default save result on <actualDir>/ScanResult",
+    "categoriesFlagDescription": "Comma Separated Categories to analize. By default analize all categories. Available categories: %s.",
+    "pdmRuleSetFlagDescription": "PMD Custom Rule Set File. By default use the default Rule Set file of Salesforce Code Analizer",
+    "eslintRuleSetFlagDescription": "eslint Custom Rule Set File. By default use the default Rule Set file of Salesforce Code Analizer",
+    "qualityGateFlagDescription": "Quality Gate to finish the scan with error. By default use the Low Aura Helper Quality Gate. Available Quality Gates: %s. Also can create or modify your custom quality gates for any project. Only one custom qualitu gate by project.",
+    "openFlagDescription": "Open Automatically the generated report when finish the scan in the default browser.",
+    "runningScanMessage": "Running Scanner...",
+    "startReportMessage": "Start analizing results to create report",
+    "createResultMessage": "Creating HTML Report...",
+    "reportSuccessMessage": "Report created successfully on %s. Open the %sindex.html file to see the report",
+    "openReportCommandMessage": "To run the generated report to see the results, run the command the next command\n\tsf ah scan report open --input-dir \"%s\"\n",
+    "openningReportMessage": "Opening report.... Press Ctrl+C to close the server",
+    "examples": [
+        "sfdx ah:scan:report:run",
+        "sfdx ah:scan:report:run --output-dir \"/path/to/output/folder\" --json",
+        "sfdx ah:scan:report:run --output-dir \"/path/to/output/folder\" --categories \"Security,Performance\"",
+        "sfdx ah:scan:report:run --output-dir \"/path/to/output/folder\" --categories \"!Security\"",
+        "sfdx ah:scan:report:run --output-dir \"/path/to/output/folder\" --quality-gate Moderate",
+        "sfdx ah:scan:report:run --output-dir \"/path/to/output/folder\" --quality-gate Custom"
+    ]
+}

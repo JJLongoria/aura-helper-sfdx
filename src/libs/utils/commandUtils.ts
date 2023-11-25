@@ -9,7 +9,7 @@ export default class CommandUtils {
     if (!root.endsWith('/') && !root.endsWith('\\')) {
       root += '/';
     }
-    const resultTmp: string[] = Utils.forceArray(paths) as string[];
+    const resultTmp: string[] = Utils.forceArray<string>(paths);
     for (let typeTmp of resultTmp) {
       typeTmp = typeTmp.trim();
       const path = typeTmp.startsWith('./') && typeTmp !== root ? root + typeTmp.substring(2) : typeTmp;
@@ -24,7 +24,7 @@ export default class CommandUtils {
 
   public static getPaths(paths: string | string[], isFolder?: boolean): string[] {
     const result: string[] = [];
-    const resultTmp: string[] = Utils.forceArray(paths) as string[];
+    const resultTmp: string[] = Utils.forceArray<string>(paths);
     for (const typeTmp of resultTmp) {
       const path = typeTmp.trim();
       if (!isFolder) {
@@ -38,7 +38,7 @@ export default class CommandUtils {
 
   public static getTypes(type: string | string[]): string[] {
     const types: string[] = [];
-    const typesTmp: string[] = Utils.forceArray(type) as string[];
+    const typesTmp: string[] = Utils.forceArray<string>(type);
     for (const typeTmp of typesTmp) {
       types.push(typeTmp.trim());
     }
@@ -47,7 +47,7 @@ export default class CommandUtils {
 
   public static getAdvanceTypes(type: string | string[]): { [key: string]: MetadataType } {
     const types: { [key: string]: MetadataType } = {};
-    const typesTmp: string[] = Utils.forceArray(type) as string[];
+    const typesTmp: string[] = Utils.forceArray<string>(type);
     for (const typeTmp of typesTmp) {
       if (typeTmp.indexOf(':') !== -1) {
         const splits = typeTmp.split(':');

@@ -1,0 +1,22 @@
+{
+    "commandDescription": "Set your Custom Quality Gates for the selected project. Only one custom quality gate by project. The Quality Gate is used by the command `scan:report` to process the results and finish the scan with pass or not pass result, depending on the results of the Quality Gate.",
+    "interactiveFlagDescription": "Run command in interactive mode. If the flag is not present, the command will use the default values for the flags.",
+    "maxDebtFlagDescription": "Set the maximum technical debt to check on scan report. If the technical debt is greater than the maximum, the scan will finish with not passed result. By default use the maximum technical debt of the selected Quality Gate.",
+    "maxBugsFlagDescription": "Set the maximum bugs to check on scan report. If the bugs are greater than the maximum, the scan will finish with not passed result. By default use the maximum bugs of the selected Quality Gate.",
+    "maxBlockersFlagDescription": "Set the maximum blockers to check on scan report. If the blockers are greater than the maximum, the scan will finish with not passed result. By default use the maximum blockers of the selected Quality Gate.",
+    "maxCriticalsFlagDescription": "Set the maximum criticals to check on scan report. If the criticals are greater than the maximum, the scan will finish with not passed result. By default use the maximum criticals of the selected Quality Gate.",
+    "maxMajorsFlagDescription": "Set the maximum majors to check on scan report. If the majors are greater than the maximum, the scan will finish with not passed result. By default use the maximum majors of the selected Quality Gate.",
+    "maxMinorsFlagDescription": "Set the maximum minors to check on scan report. If the minors are greater than the maximum, the scan will finish with not passed result. By default use the maximum minors of the selected Quality Gate.",
+    "maxInfosFlagDescription": "Set the maximum infos to check on scan report. If the infos are greater than the maximum, the scan will finish with not passed result. By default use the maximum infos of the selected Quality Gate.",
+    "runningScanMessage": "Running Scanner...",
+    "startReportMessage": "Start analizing results to create report",
+    "createResultMessage": "Creating HTML Report...",
+    "reportSuccessMessage": "Report created successfully on %s. Open the %sindex.html file to see the report",
+    "openReportCommandMessage": "To run the generated report to see the results, run the command the next command\n\tsf ah scan report open --input-dir \"%s\"\n",
+    "openningReportMessage": "Opening report.... Press Ctrl+C to close the server",
+    "examples": [
+        "sfdx ah:scan:report:quality",
+        "sfdx ah:scan:report:quality --root \"path/to/project/folder\" --interactive",
+        "sfdx ah:scan:report:quality --root \"path/to/project/folder\" --max-debt \"1Y 2M 3W 4D 5h 6m\" --max-bugs 10 --max-blockers 10 --max-criticals 10 --max-majors 10 --max-minors 10 --max-infos 10"
+    ]
+}

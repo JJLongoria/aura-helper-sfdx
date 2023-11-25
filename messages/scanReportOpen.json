@@ -1,0 +1,13 @@
+{
+    "commandDescription": "Open an Aura Helper Code Analysis Report to view the results of the scan. To close the server report, press Ctrl+C in the terminal window",
+    "inputDirFlagDescription": "Path to the report folder to open. Defaults to the current working directory",
+    "portFlagDescription": "Port to use for the server. Defaults to 5000",
+    "openReportMessage": "Opening server. Press Ctrl+C to close the server",
+    "openBrowserMessage": "Opening browser...",
+    "noIndexError": "No index.html file found in %s",
+    "examples": [
+        "sfdx ah:scan:report:open",
+        "sfdx ah:scan:report:open --input-dir \"path/reports\"",
+        "sfdx ah:scan:report:open --input-dir \"path/reports\" --port 7500"
+    ]
+}

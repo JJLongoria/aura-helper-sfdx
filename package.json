@@ -2,7 +2,7 @@
   "name": "aura-helper-sfdx",
   "displayName": "Aura Helper SFDX",
   "description": "Aura Helper CLI aplication Tools converted into SFDX Plugin",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "author": "Juan José Longoria López",
   "bugs": "https://github.com/JJLongoria/aura-helper-sfdx/issues",
   "dependencies": {
@@ -65,6 +65,7 @@
   },
   "files": [
     "/lib",
+    "/lib/assets",
     "/messages",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
@@ -171,7 +172,7 @@
     "lint": "eslint src/**/*.ts test/**/*.ts",
     "postpack": "rimraf oclif.manifest.json",
     "posttest": "eslint src/**/*.ts test/**/*.ts",
-    "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme && yarn copyfiles",
     "test": "nyc --extension .ts --require ts-node/register mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif-dev readme && git add README.md"
   }
